@@ -3,7 +3,7 @@
 
     <div class="explain">
       <p>You’ll wont find detail but brain access facilities</p>
-      <p>Having the card doesn’t make you a coach.</p>
+      <p>Having cards doesn’t make you a coach.</p>
       <p>Take care of people you help!</p>
       <p>Warning : At this time it uses © materials</p>
     </div>
