@@ -13,6 +13,7 @@
   "dependencies": {
     "@nuxtjs/pwa": "^3.0.0-beta.14",
     "cross-env": "^5.2.0",
+    "firebase": "^5.9.3",
     "nuxt": "^2.4.0"
   },
   "devDependencies": {

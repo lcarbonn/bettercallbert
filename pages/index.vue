@@ -5,7 +5,7 @@
       <article class="item" 
         v-for="theme in themes"
         v-bind:key="theme.id">
-        <Item v-bind:theme="theme.title" v-bind:class="theme.color"/>
+        <Item v-bind:id="theme.id" v-bind:theme="theme.title" v-bind:color="theme.color"/>
       </article>
     </div>
     <AppFooter/>
@@ -13,31 +13,36 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import AppHeader from '~/components/AppHeader.vue'
-import AppFooter from '~/components/AppFooter.vue'
-import Item from '~/components/Item.vue'
+import AppHeader from '~/components/AppHeader.vue';
+import AppFooter from '~/components/AppFooter.vue';
+import Item from '~/components/Item.vue';
+import { DB } from '@/plugins/firebase.js';
 
 export default {
   components: {
-    Logo,
     AppFooter,
     AppHeader,
-    Item
+    Item,
+    DB
   },
 
   data() {return {
-    themes: [
-      { id: 1, title: 'Facilitation', color:'themeone' },
-      { id: 2, title: 'Innovation Game', color:'themeone' },
-      { id: 3, title: 'Lean', color:'themetwo' },
-      { id: 4, title: 'Agile', color:'themetwo' },
-      { id: 5, title: 'Scrum', color:'themetwo' },
-      { id: 6, title: 'User Story', color:'themetwo' },
-      { id: 7, title: 'Lean Startup', color:'themethree' },
-      { id: 8, title: 'Design Thinking', color:'themethree' },
-    ]
-  }}
+    themes: []
+  }},
+
+  created () {
+    console.log("created");
+      DB.collection("themes").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            console.log(`${doc.id} => ${doc.data().title}`);
+            this.themes.push({
+              id: doc.id,
+              title: doc.data().title,
+              color: doc.data().color
+            })
+        });
+      });
+  },
 
 }
 </script>

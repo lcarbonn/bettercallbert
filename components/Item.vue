@@ -1,17 +1,26 @@
 <template>
-  <div class="theme">{{ theme }}</div>
+    <nuxt-link :to="'themes/'+id" class="theme" v-bind:class="color">
+      {{ theme }}
+    </nuxt-link>
 </template>
 
 <script>
 
-    export default {
-        props: ['theme', 'color']
-    }
+  export default {
+    props: ['id', 'theme', 'color']
+
+    // created() {
+    //   alert(this.id);
+    // }
+
+  }
 
 </script>
 
 <style>
 .theme {
+  display: flex;
+  flex-direction: column;  
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-weight: 500;
@@ -21,6 +30,7 @@
   letter-spacing: 1px;
   text-align: center;
   height: 100%;
+  text-decoration: none !important;
 }
 
 .themeone {
@@ -37,5 +47,4 @@
   background-color: white;
   color:black;
 }
-
 </style>
