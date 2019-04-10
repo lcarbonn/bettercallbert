@@ -31,7 +31,6 @@ export default {
   }},
 
   created () {
-    console.log("created");
       DB.collection("themes").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data().title}`);
