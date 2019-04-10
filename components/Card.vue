@@ -2,7 +2,9 @@
     <div>
         <nuxt-link :to="'/'" class="home">Home</nuxt-link>
         <div class="card" v-bind:class="color">
-          <span>{{title}}</span>
+          <p>{{title}}</p>
+          <p><img class="image" v-bind:src="'/cards/'+src"/></p>
+
         </div>
     </div>
 </template>
@@ -19,7 +21,8 @@ export default {
 
   data() { return {
     title:'',
-    color:''
+    color:'',
+    src:''
   }},
 
   created () {
@@ -34,6 +37,7 @@ export default {
             console.log(`${doc.id} => ${doc.data().title}`);
             this.title=doc.data().title;
             this.color=doc.data().color;
+            this.src=doc.data().src;
           }
         })
   }
@@ -44,6 +48,9 @@ export default {
 
 <style>
 .card {
+  display: flex;
+  flex-flow: column;
+  text-align: center;
   color:white;
   width:20rem;
   height: 30rem;
@@ -67,5 +74,9 @@ export default {
 .home {
   text-decoration: none !important;
   color:white;
+}
+
+.image {
+  padding: 10px;
 }
 </style>
