@@ -1,6 +1,7 @@
 <template>
   <section class="wrapper">
     <AppHeader/>
+    <Menu/>
     <div class="main">
         <Card v-bind:id="id"/>
     </div>
@@ -11,12 +12,14 @@
 <script>
 import AppHeader from '~/components/AppHeader.vue';
 import AppFooter from '~/components/AppFooter.vue';
+import Menu from '~/components/Menu.vue';
 import Card from '~/components/Card.vue';
 
 export default {
   components: {
     AppFooter,
     AppHeader,
+    Menu,
     Card,
   },
 

@@ -1,11 +1,7 @@
 <template>
-    <div>
-        <nuxt-link :to="'/'" class="home">Home</nuxt-link>
-        <div class="card" v-bind:class="color">
-          <p>{{title}}</p>
-          <p><img class="image" v-bind:src="'/cards/'+src"/></p>
-
-        </div>
+    <div class="card" v-bind:class="color">
+      <p>{{title}}</p>
+      <p><img v-if="src!=null" class="image" v-bind:src="'/cards/'+src"/></p>
     </div>
 </template>
 
@@ -69,11 +65,6 @@ export default {
 .theme:hover {
   background-color: white;
   color:black;
-}
-
-.home {
-  text-decoration: none !important;
-  color:white;
 }
 
 .image {

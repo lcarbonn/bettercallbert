@@ -1,11 +1,12 @@
 <template>
   <section class="wrapper">
     <AppHeader/>
+    <Menu/>
     <div class="main">
       <article class="item" 
         v-for="theme in themes"
         v-bind:key="theme.id">
-        <Item v-bind:id="theme.id" v-bind:theme="theme.title" v-bind:color="theme.color"/>
+        <Theme v-bind:id="theme.id" v-bind:theme="theme.title" v-bind:color="theme.color"/>
       </article>
     </div>
     <AppFooter/>
@@ -15,14 +16,16 @@
 <script>
 import AppHeader from '~/components/AppHeader.vue';
 import AppFooter from '~/components/AppFooter.vue';
-import Item from '~/components/Item.vue';
+import Menu from '~/components/Menu.vue';
+import Theme from '~/components/Theme.vue';
 import { DB } from '@/plugins/firebase.js';
 
 export default {
   components: {
     AppFooter,
     AppHeader,
-    Item,
+    Menu,
+    Theme,
     DB
   },
 
