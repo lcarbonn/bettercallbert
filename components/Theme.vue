@@ -1,13 +1,19 @@
 <template>
-    <nuxt-link :to="'themes/'+id" class="theme" v-bind:class="color">
-      {{ theme }}
+    <nuxt-link :to="'themes/'+theme.id" class="theme" v-bind:class="theme.color">
+      {{ theme.title }}
+      <img v-if="theme.src!=null" class="image" v-bind:src="'/cards/'+theme.src"/>
     </nuxt-link>
 </template>
 
 <script>
 
   export default {
-    props: ['id', 'theme', 'color']
+    props: {
+        theme: {
+            type: Object,
+            default: null
+        }
+    }
 
     // created() {
     //   alert(this.id);
@@ -17,20 +23,29 @@
 
 </script>
 
-<style>
+<style scoped>
 .theme {
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
+  background-color: rgb(245, 150, 126);
+  text-align: center;
+  height: 100%;
+  text-decoration: none !important;
+  color:white;
+}
+
+p {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-weight: 500;
   font-size: 1.5rem;
-  background-color: rgb(245, 150, 126);
-  color: white;
   letter-spacing: 1px;
-  text-align: center;
-  height: 100%;
-  text-decoration: none !important;
 }
 
 .themeone {
@@ -46,5 +61,13 @@
 .theme:hover {
   background-color: white;
   color:black;
+}
+
+.image {
+  padding: 10px;
+  transform: rotate(90deg);
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
 }
 </style>

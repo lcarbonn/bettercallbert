@@ -1,7 +1,7 @@
 <template>
     <div class="card" v-bind:class="color">
-      <p>{{title}}</p>
-      <p><img v-if="src!=null" class="image" v-bind:src="'/cards/'+src"/></p>
+      <span>{{title}}</span>
+      <img v-if="src!=null" class="image" v-bind:src="'/cards/'+src"/>
     </div>
 </template>
 
@@ -42,7 +42,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .card {
   display: flex;
   flex-flow: column;
@@ -69,5 +69,9 @@ export default {
 
 .image {
   padding: 10px;
+  transform: rotate(90deg);
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
 }
 </style>

@@ -6,7 +6,7 @@
       <article class="item" 
         v-for="theme in themes"
         v-bind:key="theme.id">
-        <Theme v-bind:id="theme.id" v-bind:theme="theme.title" v-bind:color="theme.color"/>
+        <Theme v-bind:theme="theme"/>
       </article>
     </div>
     <AppFooter/>
@@ -40,7 +40,8 @@ export default {
             this.themes.push({
               id: doc.id,
               title: doc.data().title,
-              color: doc.data().color
+              color: doc.data().color,
+              src: doc.data().src,
             })
         });
       });
@@ -49,7 +50,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .wrapper {
   display: flex;  
