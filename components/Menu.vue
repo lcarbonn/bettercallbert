@@ -2,7 +2,7 @@
   <div class="menu">
     <span><nuxt-link :to="'/'" class="menu-item">Home</nuxt-link></span>
     <span v-for="menu in menus" v-bind:key="menu.id">
-      <nuxt-link :to="'/'+menu.id" class="menu-item" v-bind:class="menu.color">{{menu.title}}</nuxt-link>
+      <nuxt-link :to="'/'" class="menu-item" v-bind:class="menu.color">{{menu.title}}</nuxt-link>
     </span>
   </div>
 </template>
