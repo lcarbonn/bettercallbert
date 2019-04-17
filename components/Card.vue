@@ -1,55 +1,46 @@
 <template>
-    <div class="card" v-bind:class="color">
-      <span>{{title}}</span>
-      <img v-if="src!=null" class="image" v-bind:src="'/cards/'+src"/>
-    </div>
+    <nuxt-link :to="'cards/'+card.id" class="card" v-bind:class="card.color">
+      {{ card.title }}
+      <img v-if="card.src!=null" class="image" v-bind:src="'/cards/'+card.src"/>
+    </nuxt-link>
 </template>
 
 <script>
-import { DB } from '@/plugins/firebase.js';
 
-export default {
-  components: {
-    DB
-  },
-
-  props: ['id'],
-
-  data() { return {
-    title:'',
-    color:'',
-    src:''
-  }},
-
-  created () {
-      console.log("card created id="+this.id);
-      var docRef = DB.collection("themes").doc(this.id);
-      var getDoc = docRef.get()
-        .then(doc => {
-          if (!doc.exists) {
-            console.log('No such document!');
-            this.title="No yet such document!";
-          } else {
-            console.log(`${doc.id} => ${doc.data().title}`);
-            this.title=doc.data().title;
-            this.color=doc.data().color;
-            this.src=doc.data().src;
-          }
-        })
-  }
-
+  export default {
+    props: {
+        card: {
+            type: Object,
+            default: null
+        }
+    }
   }
 
 </script>
 
 <style scoped>
 .card {
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
+  background-color: rgb(245, 150, 126);
   text-align: center;
+  height: 100%;
+  text-decoration: none !important;
   color:white;
-  width:20rem;
-  height: 30rem;
+}
+
+p {
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
 }
 
 .themeone {
@@ -62,7 +53,7 @@ export default {
   background-color: rgb(178, 209, 127);
 }
 
-.theme:hover {
+.card:hover {
   background-color: white;
   color:black;
 }

@@ -3,7 +3,7 @@
     <AppHeader/>
     <Menu/>
     <div class="main">
-        <Card v-bind:id="id"/>
+        <CardDetail v-bind:id="id"/>
     </div>
     <AppFooter/>
   </section>
@@ -13,14 +13,14 @@
 import AppHeader from '~/components/AppHeader.vue';
 import AppFooter from '~/components/AppFooter.vue';
 import Menu from '~/components/Menu.vue';
-import Card from '~/components/Card.vue';
+import CardDetail from '~/components/CardDetail.vue';
 
 export default {
   components: {
     AppFooter,
     AppHeader,
     Menu,
-    Card,
+    CardDetail,
   },
 
     data() {

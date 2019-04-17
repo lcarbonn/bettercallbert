@@ -1,12 +1,12 @@
 <template>
-    <div class="menu">
-        <ul>
-        <li><nuxt-link :to="'/'" class="menu-item">Home</nuxt-link></li>
-        </ul>
-    </div>
+  <div class="menu">
+    <ul>
+      <li><nuxt-link :to="'/'" class="menu-item">Home</nuxt-link></li>
+    </ul>
+  </div>
 </template>
 
-<style>
+<style scoped>
 
 .menu {
   text-align: left;

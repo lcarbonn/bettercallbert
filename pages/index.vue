@@ -4,9 +4,9 @@
     <Menu/>
     <div class="main">
       <article class="item" 
-        v-for="theme in themes"
-        v-bind:key="theme.id">
-        <Theme v-bind:theme="theme"/>
+        v-for="card in cards"
+        v-bind:key="card.id">
+        <Card v-bind:card="card"/>
       </article>
     </div>
     <AppFooter/>
@@ -17,7 +17,7 @@
 import AppHeader from '~/components/AppHeader.vue';
 import AppFooter from '~/components/AppFooter.vue';
 import Menu from '~/components/Menu.vue';
-import Theme from '~/components/Theme.vue';
+import Card from '~/components/Card.vue';
 import { DB } from '@/plugins/firebase.js';
 
 export default {
@@ -25,24 +25,29 @@ export default {
     AppFooter,
     AppHeader,
     Menu,
-    Theme,
+    Card,
     DB
   },
 
   data() {return {
-    themes: []
+    cards: [],
+    themeslist:[],
   }},
 
   created () {
       DB.collection("themes").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data().title}`);
-            this.themes.push({
+            this.cards.push({
               id: doc.id,
               title: doc.data().title,
               color: doc.data().color,
-              src: doc.data().src,
+              src: doc.data().src
             })
+            if (this.themeslist.indexOf(doc.data().color) == -1 ){
+              console.log("new theme:"+doc.data().color);
+              this.themeslist.push(doc.data().color,);
+            }
         });
       });
   },

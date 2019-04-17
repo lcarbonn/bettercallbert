@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 
 .AppFooter {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',

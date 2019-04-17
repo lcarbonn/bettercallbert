@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 
 .header {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
