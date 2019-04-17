@@ -1,7 +1,7 @@
 <template>
   <section class="wrapper">
     <AppHeader/>
-    <Menu/>
+    <Menu v-bind:menus="themes"/>
     <div class="main">
       <article class="item" 
         v-for="card in cards"
@@ -31,23 +31,32 @@ export default {
 
   data() {return {
     cards: [],
-    themeslist:[],
+    themes:[],
   }},
 
   created () {
-      DB.collection("themes").get().then((querySnapshot) => {
+      DB.collection("cards").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-            console.log(`${doc.id} => ${doc.data().title}`);
+            console.log(`card:${doc.id} => ${doc.data().title}`);
             this.cards.push({
               id: doc.id,
               title: doc.data().title,
-              color: doc.data().color,
-              src: doc.data().src
+              themeId: doc.data().themeId,
+              src: doc.data().src,
+              color: "themeone",
+              isRotate: doc.data().isRotate
             })
-            if (this.themeslist.indexOf(doc.data().color) == -1 ){
-              console.log("new theme:"+doc.data().color);
-              this.themeslist.push(doc.data().color,);
-            }
+        });
+      });
+
+      DB.collection("themes").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            console.log(`theme:${doc.id} => ${doc.data().title}`);
+            this.themes.push({
+              id: doc.id,
+              title: doc.data().title,
+              color: doc.data().color
+            })
         });
       });
   },

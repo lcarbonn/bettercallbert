@@ -1,7 +1,7 @@
 <template>
     <div class="card" v-bind:class="color">
       <span>{{title}}</span>
-      <img v-if="src!=null" class="image" v-bind:src="'/cards/'+src"/>
+      <img v-if="src!=null" class="image" v-bind:class="{ rotate: isRotate }" v-bind:src="'/cards/'+src"/>
     </div>
 </template>
 
@@ -18,22 +18,23 @@ export default {
   data() { return {
     title:'',
     color:'',
-    src:''
+    src:'',
+    isRotate:false
   }},
 
   created () {
-      console.log("card created id="+this.id);
-      var docRef = DB.collection("themes").doc(this.id);
+      var docRef = DB.collection("cards").doc(this.id);
       var getDoc = docRef.get()
         .then(doc => {
           if (!doc.exists) {
-            console.log('No such document!');
+            console.log('No such document with this id:'+this.id);
             this.title="No yet such document!";
           } else {
-            console.log(`${doc.id} => ${doc.data().title}`);
+            console.log(`card:${doc.id} => ${doc.data().title}`);
             this.title=doc.data().title;
             this.color=doc.data().color;
             this.src=doc.data().src;
+            this.isRotate=doc.data().isRotate;
           }
         })
   }
@@ -69,9 +70,13 @@ export default {
 
 .image {
   padding: 10px;
-  transform: rotate(90deg);
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
 }
+
+.rotate {
+  transform: rotate(90deg);
+}
+
 </style>

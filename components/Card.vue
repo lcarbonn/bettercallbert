@@ -1,7 +1,7 @@
 <template>
     <nuxt-link :to="'cards/'+card.id" class="card" v-bind:class="card.color">
-      {{ card.title }}
-      <img v-if="card.src!=null" class="image" v-bind:src="'/cards/'+card.src"/>
+      <span>{{ card.title }}</span>
+      <img v-if="card.src!=null" class="image" v-bind:class="{ rotate: card.isRotate }" v-bind:src="'/cards/'+card.src"/>
     </nuxt-link>
 </template>
 
@@ -25,10 +25,9 @@
   font-weight: 500;
   font-size: 1.5rem;
   letter-spacing: 1px;
-
   display: flex;
   flex-direction: column;
-  background-color: rgb(245, 150, 126);
+  background-color: black;
   text-align: center;
   height: 100%;
   text-decoration: none !important;
@@ -60,9 +59,12 @@ p {
 
 .image {
   padding: 10px;
-  transform: rotate(90deg);
-  max-height: 100%;
+  max-height: 80%;
   max-width: 100%;
   object-fit: contain;
+}
+
+.rotate {
+  transform: rotate(90deg);
 }
 </style>
