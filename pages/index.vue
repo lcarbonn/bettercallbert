@@ -36,8 +36,8 @@ export default {
   methods: {
 
     async getCards() {
-      let querySnapshot = await DB.collection("cards").get();
       let cards = [];
+      let querySnapshot = await DB.collection("cards").get();
       querySnapshot.forEach((doc) => {
         console.log(`card:${doc.id} => ${doc.data().title}`);
         cards.push({
@@ -52,8 +52,8 @@ export default {
     },
 
     async getThemes() {
+      let themes = [];
       let querySnapshot = await DB.collection("themes").get();
-      let themes = []
       querySnapshot.forEach((doc) => {
         console.log(`theme:${doc.id} => ${doc.data().title}`);
         themes.push({

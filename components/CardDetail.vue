@@ -18,28 +18,39 @@ export default {
   data() { return {
     title:'',
     color:'',
-    src:'',
-    isRotate:false
+    src:null,
+    isRotate:false,
   }},
 
-  created () {
-      var docRef = DB.collection("cards").doc(this.id);
-      var getDoc = docRef.get()
-        .then(doc => {
-          if (!doc.exists) {
-            console.log('No such document with this id:'+this.id);
-            this.title="No yet such document!";
-          } else {
-            console.log(`card:${doc.id} => ${doc.data().title}`);
-            this.title=doc.data().title;
-            this.color=doc.data().color;
-            this.src=doc.data().src;
-            this.isRotate=doc.data().isRotate;
-          }
-        })
+  methods: {
+    async getColor(idTheme) {
+      let doc = await DB.collection("themes").doc(idTheme).get();
+        if (!doc.exists) {
+          console.log('No such theme with this id:'+idTheme);
+          return null;
+        } else {
+          console.log(`theme:${idTheme} => ${doc.data().color}`);
+          return doc.data().color;
+        }
+    }
+  },
+
+  created: async function() {
+      let doc = await DB.collection("cards").doc(this.id).get();
+        if (!doc.exists) {
+          console.log('No such card with this id:'+this.id);
+          this.title="No yet such card!";
+        } else {
+          console.log(`card:${doc.id} => ${doc.data().title}`);
+          this.title=doc.data().title;
+          this.src=doc.data().src;
+          this.isRotate=doc.data().isRotate;
+          let color = await this.getColor(doc.data().idTheme);
+          if(color!=null) this.color = color;
+        }
   }
 
-  }
+}
 
 </script>
 
