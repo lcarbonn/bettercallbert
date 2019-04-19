@@ -100,17 +100,5 @@ export default {
 .cards li {
     list-style: none;
     margin: 5px;
-    width: 20rem;
-    height: 20rem;
 }
-
-/* Medium screens */
-@media all and (max-width: 800px) {
-  .item {
-    /* When on medium sized screens, reduced size */
-  width:10rem;
-  height: 10rem;
-  }
-}
-
 </style>

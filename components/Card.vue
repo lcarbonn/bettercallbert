@@ -30,8 +30,8 @@
   align-items: center;
   background-color: rgb(245, 150, 126);
   text-align: center;
-  height: 100%;
-  width: 100%;
+  height: 20rem;
+  width: 20rem;
   text-decoration: none !important;
   color:white;
 }
@@ -61,4 +61,15 @@
 .rotate {
   transform: rotate(90deg);
 }
+
+/* Medium screens */
+@media all and (max-width: 800px) {
+  .card {
+    /* When on medium sized screens, reduced size */
+  font-size: 0.8rem;
+  width: 8rem;
+  height: 8rem;
+  }
+}
+
 </style>
