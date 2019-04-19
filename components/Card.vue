@@ -27,19 +27,13 @@
   letter-spacing: 1px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   background-color: rgb(245, 150, 126);
   text-align: center;
   height: 100%;
+  width: 100%;
   text-decoration: none !important;
   color:white;
-}
-
-p {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 500;
-  font-size: 1.5rem;
-  letter-spacing: 1px;
 }
 
 .themeone {
@@ -59,7 +53,7 @@ p {
 
 .image {
   padding: 10px;
-  max-height: 100%;
+  max-height: 80%;
   max-width: 100%;
   object-fit: contain;
 }

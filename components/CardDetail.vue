@@ -48,10 +48,10 @@ export default {
   background-color: rgb(245, 150, 126);
   display: flex;
   flex-flow: column;
+  align-items: center;
   text-align: center;
   color:white;
   width:20rem;
-  height: 30rem;
 }
 
 .themeone {
@@ -71,8 +71,8 @@ export default {
 
 .image {
   padding: 10px;
-  max-height: 100%;
-  max-width: 100%;
+  max-height: 80%;
+  max-width: 80%;
   object-fit: contain;
 }
 
