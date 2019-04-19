@@ -27,7 +27,7 @@
   letter-spacing: 1px;
   display: flex;
   flex-direction: column;
-  background-color: black;
+  background-color: rgb(245, 150, 126);
   text-align: center;
   height: 100%;
   text-decoration: none !important;
@@ -59,7 +59,7 @@ p {
 
 .image {
   padding: 10px;
-  max-height: 80%;
+  max-height: 100%;
   max-width: 100%;
   object-fit: contain;
 }

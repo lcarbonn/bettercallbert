@@ -34,31 +34,41 @@ export default {
     themes:[],
   }},
 
-  created () {
-      DB.collection("cards").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            console.log(`card:${doc.id} => ${doc.data().title}`);
-            this.cards.push({
-              id: doc.id,
-              title: doc.data().title,
-              themeId: doc.data().themeId,
-              src: doc.data().src,
-              color: "themeone",
-              isRotate: doc.data().isRotate
-            })
-        });
-      });
+  methods: {
 
-      DB.collection("themes").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            console.log(`theme:${doc.id} => ${doc.data().title}`);
-            this.themes.push({
-              id: doc.id,
-              title: doc.data().title,
-              color: doc.data().color
-            })
+    getCards() {
+        DB.collection("cards").get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              console.log(`card:${doc.id} => ${doc.data().title}`);
+              this.cards.push({
+                id: doc.id,
+                title: doc.data().title,
+                themeId: doc.data().themeId,
+                src: doc.data().src,
+                color: "themeone",
+                isRotate: doc.data().isRotate,
+                color: doc.data().color
+              })
+          });
         });
-      });
+    },
+
+    getThemes() {
+        DB.collection("themes").get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              console.log(`theme:${doc.id} => ${doc.data().title}`);
+              this.themes.push({
+                id: doc.id,
+                title: doc.data().title,
+                color: doc.data().color
+              })
+          });
+        });
+    }
+  },
+
+  created () {
+    this.getCards();
   },
 
 }

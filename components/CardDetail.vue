@@ -45,6 +45,7 @@ export default {
 
 <style scoped>
 .card {
+  background-color: rgb(245, 150, 126);
   display: flex;
   flex-flow: column;
   text-align: center;
