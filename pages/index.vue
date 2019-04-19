@@ -2,13 +2,11 @@
   <section class="wrapper">
     <AppHeader/>
     <Menu v-bind:menus="themes"/>
-    <div class="main">
-      <article class="item" 
-        v-for="card in cards"
-        v-bind:key="card.id">
+    <ul class="cards">
+      <li v-for="card in cards" v-bind:key="card.id">
         <Card v-bind:card="card"/>
-      </article>
-    </div>
+      </li>
+    </ul>
     <AppFooter/>
   </section>
 </template>
@@ -47,6 +45,7 @@ export default {
                 src: doc.data().src,
                 color: "themeone",
                 isRotate: doc.data().isRotate,
+                // TODO : color from theme
                 color: doc.data().color
               })
           });
@@ -69,6 +68,7 @@ export default {
 
   created () {
     this.getCards();
+    //this.getThemes();
   },
 
 }
@@ -90,17 +90,18 @@ export default {
   flex: 1 100%;
 }
 
-.main {
+.cards {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
   align-items: stretch;
 }
 
-.item {
-  width:20rem;
-  height: 20rem;
-  margin: 5px;
+.cards li {
+    list-style: none;
+    margin: 5px;
+    width: 20rem;
+    height: 20rem;
 }
 
 /* Medium screens */

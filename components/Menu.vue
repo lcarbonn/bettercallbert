@@ -1,10 +1,10 @@
 <template>
-  <div class="menu">
-    <span><nuxt-link :to="'/'" class="menu-item">Home</nuxt-link></span>
-    <span v-for="menu in menus" v-bind:key="menu.id">
+  <ul class="menu">
+    <li><nuxt-link :to="'/'" class="menu-item">Home</nuxt-link></li>
+    <li v-for="menu in menus" v-bind:key="menu.id">
       <nuxt-link :to="'/'" class="menu-item" v-bind:class="menu.color">{{menu.title}}</nuxt-link>
-    </span>
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -29,11 +29,18 @@
   margin: 5px;
 }
 
-.menu-item {
-  border-top: 1px #e94f2b solid;
+.menu li {
+  list-style: none;
+  margin-right: 5px;
+}
+
+.menu a {
   text-decoration: none !important;
   color:grey;
-  margin-right: 5px;
+}
+
+.menu-item {
+    border-top: 1px #e94f2b solid;
 }
 
 .themeone {
@@ -46,7 +53,7 @@
   border-top-color: rgb(178, 209, 127);
 }
 
-.menu-item:hover {
+.menu li:hover {
   color:white;
 }
 
