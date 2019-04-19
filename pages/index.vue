@@ -1,13 +1,14 @@
 <template>
   <section class="wrapper">
-    <AppHeader/>
-    <Menu v-bind:menus="themes"/>
+    <AppHeader v-bind:isAll="true"/>
+    <!-- <Menu v-bind:menus="themes"/> -->
+    <Menu/>
     <ul class="cards">
       <li v-for="card in cards" v-bind:key="card.id">
         <Card v-bind:card="card"/>
       </li>
     </ul>
-    <AppFooter/>
+    <AppFooter v-bind:isAll="true"/>
   </section>
 </template>
 
@@ -34,6 +35,14 @@ export default {
 
   methods: {
 
+    associateColors() {
+      console.log("associate");
+      this.cards.forEach((card) => {
+        console.log(`card:${card.id} => ${card.themeId}`);
+      }
+      )
+    },
+
     getCards() {
         DB.collection("cards").get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -45,8 +54,6 @@ export default {
                 src: doc.data().src,
                 color: "themeone",
                 isRotate: doc.data().isRotate,
-                // TODO : color from theme
-                color: doc.data().color
               })
           });
         });
@@ -63,12 +70,13 @@ export default {
               })
           });
         });
-    }
+    },
+
   },
 
   created () {
     this.getCards();
-    //this.getThemes();
+    this.getThemes();
   },
 
 }

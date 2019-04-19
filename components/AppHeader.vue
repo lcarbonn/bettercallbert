@@ -1,9 +1,19 @@
 <template>
   <div class="header">
     <header>Better Call Bert</header>
-    <p>Agile Cards for coach memory failure</p>
+    <p v-if="isAll">Agile Cards for coach memory failure</p>
   </div>
 </template>
+
+<script>
+
+  export default {
+    props: {
+      isAll:false
+    }
+  }
+
+</script>
 
 <style scoped>
 

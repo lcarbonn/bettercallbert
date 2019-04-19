@@ -1,7 +1,7 @@
 <template>
   <div class="AppFooter">
 
-    <div class="explain">
+    <div class="explain" v-if="isAll">
       <p>You’ll wont find detail but brain access facilities</p>
       <p>Having cards doesn’t make you a coach.</p>
       <p>Take care of people you help!</p>
@@ -10,6 +10,16 @@
     <span><br/>Copyright © 2019 - Agilized in Toulouse, France</span>
   </div>
 </template>
+
+<script>
+
+  export default {
+    props: {
+      isAll:false
+    }
+  }
+
+</script>
 
 <style scoped>
 
