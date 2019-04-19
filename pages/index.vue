@@ -35,50 +35,57 @@ export default {
 
   methods: {
 
-    associateColors() {
+    async getCards() {
+      let querySnapshot = await DB.collection("cards").get();
+      let cards = [];
+      querySnapshot.forEach((doc) => {
+        console.log(`card:${doc.id} => ${doc.data().title}`);
+        cards.push({
+          id: doc.id,
+          title: doc.data().title,
+          idTheme: doc.data().idTheme,
+          src: doc.data().src,
+          isRotate: doc.data().isRotate,
+        })
+      });
+      return cards;
+    },
+
+    async getThemes() {
+      let querySnapshot = await DB.collection("themes").get();
+      let themes = []
+      querySnapshot.forEach((doc) => {
+        console.log(`theme:${doc.id} => ${doc.data().title}`);
+        themes.push({
+          id: doc.id,
+          title: doc.data().title,
+          color: doc.data().color
+        })
+      });
+      return themes;
+    },
+
+    associateColors(cards, themes) {
       console.log("associate");
-      this.cards.forEach((card) => {
-        console.log(`card:${card.id} => ${card.themeId}`);
-      }
-      )
+      cards.forEach((card) => {
+        console.log(`card:${card.id} => idTheme: ${card.idTheme}`);
+        if(card.idTheme!=null) {
+          let theme = themes.find(theme => theme.id == card.idTheme)
+          console.log(`card:${card.id} => color: ${theme.color}`);
+          if(theme.color!=null) card.color = theme.color;
+        }
+      })
+      return cards;
     },
 
-    getCards() {
-        DB.collection("cards").get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-              console.log(`card:${doc.id} => ${doc.data().title}`);
-              this.cards.push({
-                id: doc.id,
-                title: doc.data().title,
-                themeId: doc.data().themeId,
-                src: doc.data().src,
-                color: "themeone",
-                isRotate: doc.data().isRotate,
-              })
-          });
-        });
-    },
-
-    getThemes() {
-        DB.collection("themes").get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-              console.log(`theme:${doc.id} => ${doc.data().title}`);
-              this.themes.push({
-                id: doc.id,
-                title: doc.data().title,
-                color: doc.data().color
-              })
-          });
-        });
-    },
 
   },
 
-  created () {
-    this.getCards();
-    this.getThemes();
+  created: async function() {
+    let cards = await this.getCards();
+    this.themes = await this.getThemes();
+    this.cards = this.associateColors(cards, this.themes);
   },
-
 }
 </script>
 
