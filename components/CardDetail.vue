@@ -1,7 +1,8 @@
 <template>
     <div class="card" v-bind:class="color">
       <span>{{title}}</span>
-      <img v-if="src!=null" class="image" v-bind:class="{ rotate: isRotate }" v-bind:src="'/cards/'+src"/>
+      <img v-if="src!=null" class="image" v-bind:alt="title" v-bind:title="title" 
+        v-bind:class="{ rotate: isRotate }" v-bind:src="'/cards/'+src"/>
     </div>
 </template>
 
@@ -82,12 +83,13 @@ export default {
 
 .image {
   padding: 10px;
-  max-height: 80%;
-  max-width: 80%;
+  height: 100%;
+  max-width: 100%;
   object-fit: contain;
 }
 
 .rotate {
+  height: 80%;
   transform: rotate(90deg);
 }
 
