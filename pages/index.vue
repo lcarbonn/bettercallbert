@@ -74,8 +74,8 @@ export default {
 
     async getCards() {
       let cards = [];
-      // var querySnapshot = await DB.collection("cards").orderBy('idTheme').get();
-      let querySnapshot = await DB.collection("cards").get();
+      let querySnapshot = await DB.collection("cards").orderBy('idTheme').get();
+      // let querySnapshot = await DB.collection("cards").get();
       querySnapshot.forEach((doc) => {
         console.log(`get card:${doc.id} => ${doc.data().title}`);
         cards.push({
