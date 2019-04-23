@@ -2,7 +2,8 @@
     <div class="card" v-bind:class="color">
       <span>{{title}}</span>
       <img v-if="src!=null" class="image" v-bind:alt="title" v-bind:title="title" 
-        v-bind:class="{ rotate: isRotate }" v-bind:src="'/cards/'+src"/>
+        v-bind:class="{ rotate: isRotate }" v-bind:src="src"/>
+      <span v-if="link!=null"><a v-bind:href="link" target="_blank">Jump to source</a></span>
     </div>
 </template>
 
@@ -21,6 +22,7 @@ export default {
     color:'',
     src:null,
     isRotate:false,
+    link:null,
   }},
 
   methods: {
@@ -46,8 +48,11 @@ export default {
           this.title=doc.data().title;
           this.src=doc.data().src;
           this.isRotate=doc.data().isRotate;
-          let color = await this.getColor(doc.data().idTheme);
-          if(color!=null) this.color = color;
+          this.link=doc.data().link;
+          if(doc.data().idTheme!=null) {
+            let color = await this.getColor(doc.data().idTheme);
+            if(color!=null) this.color = color;
+          }
         }
   }
 
@@ -57,6 +62,11 @@ export default {
 
 <style scoped>
 .card {
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
   background-color: rgb(245, 150, 126);
   display: flex;
   flex-flow: column;
@@ -83,7 +93,7 @@ export default {
 
 .image {
   padding: 10px;
-  height: 100%;
+  max-height: 100%;
   max-width: 100%;
   object-fit: contain;
 }
@@ -93,4 +103,10 @@ export default {
   transform: rotate(90deg);
 }
 
+a {
+  font-size: 1rem;
+  letter-spacing: 0px;
+  text-decoration: none !important;
+  color:white;
+}
 </style>
