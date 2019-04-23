@@ -7,7 +7,7 @@
     <li v-for="menu in menus" v-bind:key="menu.id" class="hideOnSmall">
       <a href="#" class="menu-item" v-bind:class="menu.color" v-on:click.stop="$emit('filter-theme', menu.id)">{{menu.title}}</a>
     </li>
-    <li>
+    <li v-if="isRoot">
       <form v-on:submit.prevent>
         <input id="search" v-model="textsearch" v-on:keyup="$emit('search', textsearch)">
       </form>
