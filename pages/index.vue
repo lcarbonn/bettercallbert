@@ -8,7 +8,7 @@
         v-on:filter-theme="filterTheme"
         />
       <form class="finderform" v-on:submit.prevent>
-        <input id="search" v-model="textsearch" placeholder="search for card" v-on:keyup="search">
+        <input id="search" v-model="textsearch" v-on:keyup="search">
       </form>
     </div>
     <ul class="cards">
@@ -155,13 +155,16 @@ export default {
 .finder input {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background-color: black;
   border: 1px solid grey;
   font-size: 1rem;
-  color: white;
-  text-decoration: none !important;
-  vertical-align: bottom;
+  color: grey;
   margin-left: 5px;
+  outline: none;
+  vertical-align: middle !important;
+  background: black url("/search.png") no-repeat;
+  background-size: 1.2rem;
+  padding : 0 1.5rem 0 1.5rem;
+  border-radius: 1.5rem;
 }
 
 .cards {
