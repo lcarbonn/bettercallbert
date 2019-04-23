@@ -71,6 +71,7 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
+  justify-content: flex-start;
   text-align: center;
   color:white;
   width: 80%;
@@ -116,8 +117,6 @@ a {
   .card {
     /* When on medium sized screens, reduced size */
   font-size: 0.8rem;
-  width: 8rem;
-  height: 8rem;
   }
 }
 
