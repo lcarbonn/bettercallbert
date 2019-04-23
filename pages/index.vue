@@ -1,8 +1,16 @@
 <template>
   <section class="wrapper">
     <AppHeader v-bind:isAll="true"/>
-    <!-- <Menu v-bind:menus="themes"/> -->
-    <Menu/>
+
+    <div class="finder">
+      <Menu v-bind:menus="themes" 
+        v-bind:isRoot="true"
+        v-on:filter-theme="filterTheme"
+        />
+      <form class="finderform" v-on:submit.prevent>
+        <input id="search" v-model="textsearch" placeholder="search for card" v-on:keyup="search">
+      </form>
+    </div>
     <ul class="cards">
       <li v-for="card in cards" v-bind:key="card.id">
         <Card v-bind:card="card"/>
@@ -30,16 +38,51 @@ export default {
 
   data() {return {
     cards: [],
+    fullCards : [],
     themes:[],
+    textsearch:''
   }},
 
   methods: {
 
+    filterTheme(idTheme) {
+      console.log("filterTheme:"+idTheme);
+      if(idTheme==null) {
+        this.textsearch = this.textsearch.trim();
+        this.cards = this.fullCards;
+        return;
+      }
+      let cards = [];
+      this.fullCards.forEach((card) => {
+        if(card.idTheme == idTheme) {
+          cards.push(card);
+        }
+      })
+      this.cards = cards;
+    },
+
+    search() {
+      console.log("search");
+      if(this.textsearch.trim()=='') {
+        this.textsearch = this.textsearch.trim();
+        this.cards = this.fullCards;
+        return;
+      }
+      let cards = [];
+      this.fullCards.forEach((card) => {
+        if(card.title.toLowerCase().includes(this.textsearch.toLowerCase())) {
+          cards.push(card);
+        }
+      })
+      this.cards = cards;
+    },
+
     async getCards() {
       let cards = [];
+      // var querySnapshot = await DB.collection("cards").orderBy('idTheme').get();
       let querySnapshot = await DB.collection("cards").get();
       querySnapshot.forEach((doc) => {
-        console.log(`card:${doc.id} => ${doc.data().title}`);
+        console.log(`get card:${doc.id} => ${doc.data().title}`);
         cards.push({
           id: doc.id,
           title: doc.data().title,
@@ -55,7 +98,7 @@ export default {
       let themes = [];
       let querySnapshot = await DB.collection("themes").get();
       querySnapshot.forEach((doc) => {
-        console.log(`theme:${doc.id} => ${doc.data().title}`);
+        console.log(`get theme:${doc.id} => ${doc.data().title}`);
         themes.push({
           id: doc.id,
           title: doc.data().title,
@@ -66,26 +109,24 @@ export default {
     },
 
     associateColors(cards, themes) {
-      console.log("associate");
       cards.forEach((card) => {
-        console.log(`card:${card.id} => idTheme: ${card.idTheme}`);
+        console.log(`associate card:${card.id} => idTheme: ${card.idTheme}`);
         if(card.idTheme!=null) {
           let theme = themes.find(theme => theme.id == card.idTheme)
-          console.log(`card:${card.id} => color: ${theme.color}`);
+          console.log(`associate card:${card.id} => color: ${theme.color}`);
           if(theme.color!=null) card.color = theme.color;
         }
       })
       return cards;
     },
-
-
   },
 
   created: async function() {
     let cards = await this.getCards();
     this.themes = await this.getThemes();
     this.cards = this.associateColors(cards, this.themes);
-  },
+    this.fullCards = this.cards;
+  }
 }
 </script>
 
@@ -93,7 +134,7 @@ export default {
 
 .wrapper {
   display: flex;  
-  flex-flow: row wrap;
+  flex-flow: column;
   font-weight: bold;
   text-align: center;
   min-height: 100vh;
@@ -102,7 +143,25 @@ export default {
 
 .wrapper > * {
   padding: 5px;
-  flex: 1 100%;
+  /* flex: 1 100%; */
+}
+
+.finder {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.finder input {
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: black;
+  border: 1px solid grey;
+  font-size: 1rem;
+  color: white;
+  text-decoration: none !important;
+  vertical-align: bottom;
+  margin-left: 5px;
 }
 
 .cards {

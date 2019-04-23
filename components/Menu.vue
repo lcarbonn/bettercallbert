@@ -1,8 +1,11 @@
 <template>
   <ul class="menu">
-    <li><nuxt-link :to="'/'" class="menu-item">Home</nuxt-link></li>
+    <li v-if="!isRoot"><nuxt-link :to="'/'" class="menu-item">Home</nuxt-link></li>
+    <li v-if="isRoot">
+      <a href="#" class="menu-item" v-on:click.stop="$emit('filter-theme')">All</a>
+    </li>
     <li v-for="menu in menus" v-bind:key="menu.id">
-      <nuxt-link :to="'/'" class="menu-item" v-bind:class="menu.color">{{menu.title}}</nuxt-link>
+      <a href="#" class="menu-item" v-bind:class="menu.color" v-on:click.stop="$emit('filter-theme', menu.id)">{{menu.title}}</a>
     </li>
   </ul>
 </template>
@@ -14,8 +17,9 @@
         menus: {
             type: Array,
             default: null
-        }
-    }
+        },
+      isRoot:false
+    },
   }
 
 </script>
