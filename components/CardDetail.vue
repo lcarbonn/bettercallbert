@@ -67,13 +67,14 @@ export default {
   font-weight: 500;
   font-size: 1.5rem;
   letter-spacing: 1px;
-  background-color: rgb(245, 150, 126);
+  /* background-color: rgb(245, 150, 126); */
   display: flex;
   flex-flow: column;
   align-items: center;
   text-align: center;
   color:white;
-  width:20rem;
+  width: 80%;
+  max-height: 80%;
 }
 
 .themeone {
@@ -93,7 +94,7 @@ export default {
 
 .image {
   padding: 10px;
-  max-height: 100%;
+  max-height: 80%;
   max-width: 100%;
   object-fit: contain;
 }

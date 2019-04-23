@@ -1,10 +1,10 @@
 <template>
   <ul class="menu">
     <li v-if="!isRoot"><nuxt-link :to="'/'" class="menu-item">Home</nuxt-link></li>
-    <li v-if="isRoot">
+    <li v-if="isRoot" class="hideOnSmall">
       <a href="#" class="menu-item" v-on:click.stop="$emit('filter-theme')">All</a>
     </li>
-    <li v-for="menu in menus" v-bind:key="menu.id">
+    <li v-for="menu in menus" v-bind:key="menu.id" class="hideOnSmall">
       <a href="#" class="menu-item" v-bind:class="menu.color" v-on:click.stop="$emit('filter-theme', menu.id)">{{menu.title}}</a>
     </li>
   </ul>
@@ -61,4 +61,12 @@
   color:white;
 }
 
+/* Medium screens */
+@media all and (max-width: 800px) {
+  .hideOnSmall {
+    /* When on medium sized screens, reduced size */
+    /* visibility: hidden; */
+    display: none;
+  }
+}
 </style>
