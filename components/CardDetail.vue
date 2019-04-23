@@ -110,4 +110,15 @@ a {
   text-decoration: none !important;
   color:white;
 }
+
+/* Medium screens */
+@media all and (max-width: 800px) {
+  .card {
+    /* When on medium sized screens, reduced size */
+  font-size: 0.8rem;
+  width: 8rem;
+  height: 8rem;
+  }
+}
+
 </style>
