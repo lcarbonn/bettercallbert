@@ -2,15 +2,11 @@
   <section class="wrapper">
     <AppHeader v-bind:isAll="true"/>
 
-    <div class="finder">
-      <Menu v-bind:menus="themes" 
-        v-bind:isRoot="true"
-        v-on:filter-theme="filterTheme"
-        />
-      <form class="finderform" v-on:submit.prevent>
-        <input id="search" v-model="textsearch" v-on:keyup="search">
-      </form>
-    </div>
+    <Menu v-bind:menus="themes" 
+      v-bind:isRoot="true"
+      v-on:filter-theme="filterTheme"
+      v-on:search="search"
+      />
     <ul class="cards">
       <li v-for="card in cards" v-bind:key="card.id">
         <Card v-bind:card="card"/>
@@ -39,8 +35,7 @@ export default {
   data() {return {
     cards: [],
     fullCards : [],
-    themes:[],
-    textsearch:''
+    themes:[]
   }},
 
   methods: {
@@ -61,16 +56,16 @@ export default {
       this.cards = cards;
     },
 
-    search() {
+    search(textsearch) {
       console.log("search");
-      if(this.textsearch.trim()=='') {
-        this.textsearch = this.textsearch.trim();
+      if(textsearch.trim()=='') {
+        textsearch = textsearch.trim();
         this.cards = this.fullCards;
         return;
       }
       let cards = [];
       this.fullCards.forEach((card) => {
-        if(card.title.toLowerCase().includes(this.textsearch.toLowerCase())) {
+        if(card.title.toLowerCase().includes(textsearch.toLowerCase())) {
           cards.push(card);
         }
       })
@@ -144,27 +139,6 @@ export default {
 .wrapper > * {
   padding: 5px;
   /* flex: 1 100%; */
-}
-
-.finder {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.finder input {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  border: 1px solid grey;
-  font-size: 1rem;
-  color: grey;
-  margin-left: 5px;
-  outline: none;
-  vertical-align: middle !important;
-  background: black url("/search.png") no-repeat;
-  background-size: 1.2rem;
-  padding : 0 1.5rem 0 1.5rem;
-  border-radius: 1.5rem;
 }
 
 .cards {
