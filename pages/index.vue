@@ -47,8 +47,8 @@ export default {
 
     filterTheme(idTheme) {
       console.log("filterTheme:"+idTheme);
+      this.textsearch = '';
       if(idTheme==null) {
-        this.textsearch = this.textsearch.trim();
         this.cards = this.fullCards;
         return;
       }
