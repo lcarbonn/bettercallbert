@@ -1,7 +1,7 @@
 import pkg from './package'
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
 
   /*
   ** Headers of the page
@@ -23,7 +23,7 @@ export default {
   */
   manifest: {
     name: 'Better Call Bert',
-    short_name: 'Bert',
+    short_name: 'BetterCallBert',
     theme_color: '#3986c4',
     background_color: '#3986c4',
     display: 'standalone'
