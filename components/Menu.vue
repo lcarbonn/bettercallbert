@@ -2,7 +2,7 @@
   <ul class="menu">
     <li v-if="!isRoot"><nuxt-link :to="'/'" class="menu-item menu-link">Home</nuxt-link></li>
     <li v-if="isRoot" class="hideOnSmall">
-      <a href="#" class="menu-item menu-link" v-bind:class="{activelink:isActive('all')}" v-on:click="setActive('all')" v-on:click.stop="$emit('filter-theme')">All</a>
+      <a href="#" class="menu-item menu-link" v-bind:class="{activelink:isActive('')}" v-on:click="setActive('')" v-on:click.stop="$emit('filter-theme')">All</a>
     </li>
     <li v-for="menu in menus" v-bind:key="menu.id" v-bind:class="menu.color" class="menu-item hideOnSmall">
       <a href="#" class="menu-link" v-bind:class="{activelink:isActive(menu.id)}" v-on:click="setActive(menu.id)" v-on:click.stop="$emit('filter-theme', menu.id)">{{menu.title}}</a>
@@ -40,9 +40,7 @@
       setActive : function (menu) {
         console.log('menu selected:'+menu);
         this.activeMenu ='';
-        if(menu!='') {
-          this.activeMenu = menu;
-        }
+        this.activeMenu = menu;
       }
     }
   }
