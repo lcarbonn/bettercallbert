@@ -43,7 +43,7 @@ export default {
     filterTheme(idTheme) {
       console.log("filterTheme:"+idTheme);
       this.textsearch = '';
-      if(idTheme==null) {
+      if(idTheme=='') {
         this.cards = this.fullCards;
         return;
       }
