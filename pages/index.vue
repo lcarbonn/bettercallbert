@@ -3,7 +3,6 @@
     <AppHeader v-bind:isAll="true"/>
 
     <Menu v-bind:menus="themes" 
-      v-bind:isRoot="true"
       v-on:filter-theme="filterTheme"
       v-on:search="search"
       />

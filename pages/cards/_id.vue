@@ -1,7 +1,9 @@
 <template>
   <section class="wrapper">
     <AppHeader/>
-    <Menu/>
+    <div>
+      <nuxt-link :to="'/'" class="menu-item">Home</nuxt-link>
+    </div>
     <div class="main">
         <CardDetail v-bind:id="id"/>
     </div>
@@ -58,4 +60,15 @@ export default {
   justify-content: space-around;
   align-items: stretch;
 }
+
+.menu-item {
+  text-decoration: none !important;
+  color:grey;
+  border-top: 1px #e94f2b solid;
+}
+
+.menu-item:hover {
+  color:white;
+}
+
 </style>

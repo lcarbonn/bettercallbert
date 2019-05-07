@@ -74,8 +74,8 @@ export default {
   justify-content: flex-start;
   text-align: center;
   color:white;
-  width: 80%;
-  max-height: 80%;
+  width: fit-content;
+  max-height: 100%;
 }
 
 .themeone {
@@ -101,7 +101,7 @@ export default {
 }
 
 .rotate {
-  height: 80%;
+  width:70%;
   transform: rotate(90deg);
 }
 

@@ -3,8 +3,7 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav align="left">
-        <b-nav-item v-if="!isRoot"><nuxt-link :to="'/'" class="menu-item">Home</nuxt-link></b-nav-item>
-        <b-nav-item v-if="isRoot">
+        <b-nav-item>
           <a href="#" class="menu-item" v-bind:class="{activelink:isActive('')}" 
           v-on:click="setActive('')">All</a>
         </b-nav-item>
@@ -15,7 +14,7 @@
       </b-navbar-nav>
     </b-collapse>
     <b-navbar-nav align="left">
-      <b-nav-item v-if="isRoot">
+      <b-nav-item>
         <b-nav-form v-on:submit.prevent>
           <b-form-input v-model="textsearch" v-on:keyup="search()"></b-form-input>
         </b-nav-form>
@@ -31,8 +30,7 @@
         menus: {
             type: Array,
             default: null
-        },
-      isRoot:false
+        }
     },
 
     data() {return {
@@ -62,6 +60,10 @@
 </script>
 
 <style scoped>
+
+.bg-dark {
+    background-color: black !important;
+}
 
 .menu-item {
   text-decoration: none !important;

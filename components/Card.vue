@@ -68,7 +68,8 @@
   .card {
     /* When on medium sized screens, reduced size */
   font-size: 0.8rem;
-  width: 8rem;
+  padding: 5px;
+  width: max-content;
   height: 8rem;
   }
 }

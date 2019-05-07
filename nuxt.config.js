@@ -55,6 +55,10 @@ export default {
     'bootstrap-vue/nuxt'
   ],
 
+  bootstrapVue: {
+    componentPlugins: ['Navbar', 'Form', 'FormInput']
+  },
+
   /*
   ** Build configuration
   */
