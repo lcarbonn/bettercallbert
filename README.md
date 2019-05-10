@@ -1,7 +1,6 @@
 # Better Call Bert
 
 > Agile cards for coach memory failure
-Remember the coach
 
 ## Build Setup
 
@@ -18,6 +17,9 @@ $ npm start
 
 # generate static project
 $ npm run generate
+
+# deploy on firebase
+$ firebase deploy (this will call npm run build before deployement)
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
