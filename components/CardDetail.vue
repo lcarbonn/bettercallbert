@@ -67,7 +67,6 @@ export default {
   font-weight: 500;
   font-size: 1.5rem;
   letter-spacing: 1px;
-  /* background-color: rgb(245, 150, 126); */
   display: flex;
   flex-flow: column;
   align-items: center;

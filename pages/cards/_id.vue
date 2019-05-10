@@ -1,5 +1,5 @@
 <template>
-  <section class="wrapper">
+  <section class="wrapper bg-dark">
     <AppHeader/>
     <div>
       <nuxt-link :to="'/'" class="menu-item">Home</nuxt-link>
@@ -46,7 +46,6 @@ export default {
   font-weight: bold;
   text-align: center;
   min-height: 100vh;
-  background-color: black;
 }
 
 .wrapper > * {

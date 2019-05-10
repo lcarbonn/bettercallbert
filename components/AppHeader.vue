@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header bg-dark">
     <h1>Better Call Bert</h1>
     <h2 v-if="isAll">Agile Cards for coach memory failure</h2>
   </div>
@@ -22,7 +22,6 @@
     Roboto, 'Helvetica Neue', Arial, sans-serif;
   letter-spacing: 1px;
   text-align: center;
-  background-color: black;
   color: white;
 }
 

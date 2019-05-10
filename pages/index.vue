@@ -1,5 +1,5 @@
 <template>
-  <section class="wrapper">
+  <section class="wrapper bg-dark">
     <AppHeader v-bind:isAll="true"/>
 
     <Menu v-bind:menus="themes" 
@@ -74,7 +74,6 @@ export default {
     async getCards() {
       let cards = [];
       let querySnapshot = await DB.collection("cards").orderBy('idTheme').get();
-      // let querySnapshot = await DB.collection("cards").get();
       querySnapshot.forEach((doc) => {
         console.log(`get card:${doc.id} => ${doc.data().title}`);
         cards.push({
@@ -132,12 +131,10 @@ export default {
   font-weight: bold;
   text-align: center;
   min-height: 100vh;
-  background-color: black;
 }
 
 .wrapper > * {
   padding: 5px;
-  /* flex: 1 100%; */
 }
 
 .cards {

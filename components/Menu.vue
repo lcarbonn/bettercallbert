@@ -61,10 +61,6 @@
 
 <style scoped>
 
-.bg-dark {
-    background-color: black !important;
-}
-
 .menu-item {
   text-decoration: none !important;
   color:grey;
