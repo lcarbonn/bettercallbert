@@ -7,15 +7,20 @@
 </template>
 
 <script>
+import * as functions from '~/utils/functions.js';
 
-  export default {
-    props: {
-        card: {
-            type: Object,
-            default: null
-        }
-    }
+export default {
+  props: {
+      card: {
+          type: Object,
+          default: null
+      },
+  },
+
+  created: async function() {
+    this.card.src = await functions.getUrl(this.card.src);
   }
+}
 
 </script>
 

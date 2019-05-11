@@ -27,8 +27,7 @@ export default {
     AppFooter,
     AppHeader,
     Menu,
-    Card,
-    DB
+    Card
   },
 
   data() {return {
@@ -69,7 +68,7 @@ export default {
         }
       })
       this.cards = cards;
-    },
+    }, 
 
     async getCards() {
       let cards = [];
@@ -110,14 +109,14 @@ export default {
           if(theme.color!=null) card.color = theme.color;
         }
       })
-      return cards;
-    },
+    }
   },
 
   created: async function() {
     let cards = await this.getCards();
     this.themes = await this.getThemes();
-    this.cards = this.associateColors(cards, this.themes);
+    await this.associateColors(cards, this.themes);
+    this.cards = cards;
     this.fullCards = this.cards;
   }
 }

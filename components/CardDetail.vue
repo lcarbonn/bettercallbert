@@ -9,11 +9,9 @@
 
 <script>
 import { DB } from '@/plugins/firebase.js';
+import * as functions from '~/utils/functions.js';
 
 export default {
-  components: {
-    DB
-  },
 
   props: ['id'],
 
@@ -46,7 +44,7 @@ export default {
         } else {
           console.log(`card:${doc.id} => ${doc.data().title}`);
           this.title=doc.data().title;
-          this.src=doc.data().src;
+          this.src= await functions.getUrl(doc.data().src);
           this.isRotate=doc.data().isRotate;
           this.link=doc.data().link;
           if(doc.data().idTheme!=null) {
