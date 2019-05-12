@@ -1,5 +1,5 @@
 <template>
-    <nuxt-link :to="'cards/'+card.id" class="card" v-bind:class="card.color">
+    <nuxt-link :to="'/cards/'+card.id" class="card" v-bind:class="card.color">
       <span>{{ card.title }}</span>
       <img v-if="card.src!=null" class="image" v-bind:title="card.title" v-bind:alt="card.title"
           v-bind:class="{ rotate: card.isRotate }" v-bind:src="card.src"/>
