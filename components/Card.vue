@@ -1,8 +1,8 @@
 <template>
     <nuxt-link :to="'/cards/'+card.id" class="card" v-bind:class="card.color">
       <span>{{ card.title }}</span>
-      <img v-if="card.src!=null" class="image" v-bind:title="card.title" v-bind:alt="card.title"
-          v-bind:class="{ rotate: card.isRotate }" v-bind:src="card.src"/>
+      <img v-if="src!=null" class="image" v-bind:title="card.title" v-bind:alt="card.title"
+          v-bind:class="{ rotate: card.isRotate }" v-bind:src="src"/>
     </nuxt-link>
 </template>
 
@@ -17,8 +17,12 @@ export default {
       },
   },
 
+  data() { return {
+    src:null
+  }},
+
   created: async function() {
-    this.card.src = await functions.getUrl(this.card.src);
+    this.src = await functions.getUrl(this.card.src);
   }
 }
 
