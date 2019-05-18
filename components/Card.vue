@@ -62,7 +62,7 @@ export default {
 }
 
 .image {
-  padding: 10px;
+  padding: 5px;
   max-height: 80%;
   max-width: 100%;
   object-fit: contain;
@@ -78,8 +78,8 @@ export default {
     /* When on medium sized screens, reduced size */
   font-size: 0.8rem;
   padding: 5px;
-  width: max-content;
-  height: 8rem;
+  width: 45vw;
+  height: 45vw;
   }
 }
 

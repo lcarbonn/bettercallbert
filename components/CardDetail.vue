@@ -134,9 +134,7 @@ export default {
   justify-content: flex-start;
   text-align: center;
   color:white;
-  width: fit-content;
-  max-height: 80%;
-  max-width: 80%;
+  width: 100%;
 }
 
 .themeone {
@@ -156,13 +154,11 @@ export default {
 
 .image {
   padding: 10px;
-  max-height: 55vh;
   max-width: 100%;
   object-fit: contain;
 }
 
 .rotate {
-  width:70%;
   transform: rotate(90deg);
 }
 
@@ -180,4 +176,13 @@ a {
 a:hover {
   color:white;
 }
+
+/* Medium screens */
+@media all and (max-width: 800px) {
+  .rotate {
+    width:70%;
+    transform: rotate(90deg);
+  }
+}
+
 </style>
