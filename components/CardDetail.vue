@@ -6,7 +6,7 @@
         <span v-if="nextId!=null" class="paginate"><nuxt-link :to="'/cards/'+nextId">Next</nuxt-link></span>
         <span v-if="nextId==null" class="paginate">&nbsp;&nbsp;</span>
       </div>
-      <div class="card" v-bind:class="color">
+      <div class="cardItem" v-bind:class="color">
         <span>{{title}}</span>
         <img v-if="src!=null" class="image" v-bind:alt="title" v-bind:title="title" 
           v-bind:class="{ rotate: isRotate }" v-bind:src="src"/>
@@ -122,7 +122,7 @@ export default {
   width: 100%;
 }
 
-.card {
+.cardItem {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-weight: 500;

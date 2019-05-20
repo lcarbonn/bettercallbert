@@ -1,5 +1,5 @@
 <template>
-    <nuxt-link :to="'/cards/'+card.id" class="card" v-bind:class="card.color">
+    <nuxt-link :to="'/cards/'+card.id" class="cardItem" v-bind:class="card.color">
       <span>{{ card.title }}</span>
       <img v-if="src!=null" class="image" v-bind:title="card.title" v-bind:alt="card.title"
           v-bind:class="{ rotate: card.isRotate }" v-bind:src="src"/>
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style scoped>
-.card {
+.cardItem {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-weight: 500;
@@ -56,9 +56,9 @@ export default {
   background-color: rgb(178, 209, 127);
 }
 
-.card:hover {
+.cardItem:hover {
   background-color: white;
-  color:black;
+  color:grey;
 }
 
 .image {
@@ -74,7 +74,7 @@ export default {
 
 /* Medium screens */
 @media all and (max-width: 800px) {
-  .card {
+  .cardItem {
     /* When on medium sized screens, reduced size */
   font-size: 0.8rem;
   padding: 5px;

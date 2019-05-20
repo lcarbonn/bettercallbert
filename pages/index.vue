@@ -93,7 +93,7 @@ export default {
         console.log(`get theme:${doc.id} => ${doc.data().title}`);
         themes.push({
           id: doc.id,
-          title: doc.data().title,
+          title: doc.data().title.toUpperCase(),
           color: doc.data().color
         })
       });

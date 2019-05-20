@@ -67,6 +67,10 @@
   border-top: 1px #e94f2b solid;
 }
 
+.menu-item:hover {
+  color:white;
+}
+
 .activelink {
   color: white;
 }
