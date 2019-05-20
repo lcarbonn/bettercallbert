@@ -33,7 +33,7 @@ export default {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1rem;
   letter-spacing: 1px;
   display: flex;
   flex-direction: column;

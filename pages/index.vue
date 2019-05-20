@@ -77,7 +77,7 @@ export default {
         console.log(`get card:${doc.id} => ${doc.data().title}`);
         cards.push({
           id: doc.id,
-          title: doc.data().title,
+          title: doc.data().title.toUpperCase(),
           idTheme: doc.data().idTheme,
           src: doc.data().src,
           isRotate: doc.data().isRotate,

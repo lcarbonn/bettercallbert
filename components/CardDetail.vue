@@ -42,7 +42,7 @@ export default {
           this.title="No yet such card!";
         } else {
           console.log(`card:${doc.id} => ${doc.data().title}`);
-          this.title=doc.data().title;
+          this.title=doc.data().title.toUpperCase();
           functions.getUrl(doc.data().src).then((src) => {
             this.src= src;
           });
@@ -126,7 +126,7 @@ export default {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1rem;
   letter-spacing: 1px;
   display: flex;
   flex-flow: column;
