@@ -7,7 +7,7 @@
       <p>Take care of people you help!</p>
       <p>Warning : At this time it uses © materials</p>
     </div>
-    <span><br/>Copyright © 2019 - Agilized in Toulouse, France</span>
+    <span><br/>Copyright © 2020 - Agilized in Toulouse, France</span>
   </div>
 </template>
 
