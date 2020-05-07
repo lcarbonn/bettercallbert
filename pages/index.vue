@@ -2,13 +2,13 @@
     <section class="wrapper bg-dark">
         <AppHeader v-bind:isAll="true" />
 
-        <Menu v-bind:menus="themes"
-              v-on:filter-theme="filterTheme"
-              v-on:search="search" />
+        <Menu :menus="themes"
+              @filter-theme="filterTheme"
+              @search="search" />
         <ul class="cards">
             <li v-for="card in cards"
-                v-bind:key="card.id">
-                <Card v-bind:card="card" />
+                :key="card.id">
+                <Card :card="card" />
             </li>
         </ul>
         <AppFooter v-bind:isAll="true" />
@@ -16,11 +16,10 @@
 </template>
 
 <script>
-import AppHeader from '~/components/AppHeader.vue';
-import AppFooter from '~/components/AppFooter.vue';
-import Menu from '~/components/Menu.vue';
-import Card from '~/components/Card.vue';
-import { DB } from '@/plugins/firebase.js';
+import AppHeader from '~/components/base/AppHeader';
+import AppFooter from '~/components/base/AppFooter';
+import Menu from '~/components/menu/menu';
+import Card from '~/components/domain/card';
 
 export default {
     components: {

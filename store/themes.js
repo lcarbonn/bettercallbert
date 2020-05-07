@@ -17,20 +17,20 @@ export const mutations = {
     setThemes(state, payload) {
         state.themes = payload;
     },
-    setSnackbarMessage(state, payload) {
-        state.snackbarMessage = payload.message
-    },
-    setIsLoading(state, payload) {
-        state.isLoading = payload.isLoading
-    }
+    // setSnackbarMessage(state, payload) {
+    //     state.snackbarMessage = payload.message
+    // },
+    // setIsLoading(state, payload) {
+    //     state.isLoading = payload.isLoading
+    // }
 };
 
 export const actions = {
     getThemes({ commit, dispatch }) {
-        dispatch("application/setIsLoading", { isLoading: true }, { root: true });
+        // dispatch("application/setIsLoading", { isLoading: true }, { root: true });
         const callback = themes => {
             commit("setThemes", themes);
-            dispatch("application/setIsLoading", { isLoading: false }, { root: true });
+            // dispatch("application/setIsLoading", { isLoading: false }, { root: true });
         };
         getThemes(callback, this);
     },

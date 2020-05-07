@@ -54,7 +54,7 @@ export default {
             else return false;
         },
         setActive: function (menu) {
-            console.log('menu selected:' + menu);
+            // console.log('menu selected:' + menu);
             this.textsearch = '';
             this.activeMenu = menu;
             this.$emit('filter-theme', menu);

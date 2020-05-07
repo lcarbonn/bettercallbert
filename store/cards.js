@@ -24,12 +24,12 @@ export const mutations = {
     setFullCards(state, payload) {
         state.fullCards = payload;
     },
-    setSnackbarMessage(state, payload) {
-        state.snackbarMessage = payload.message
-    },
-    setIsLoading(state, payload) {
-        state.isLoading = payload.isLoading
-    }
+    // setSnackbarMessage(state, payload) {
+    //     state.snackbarMessage = payload.message
+    // },
+    // setIsLoading(state, payload) {
+    //     state.isLoading = payload.isLoading
+    // }
 };
 
 export const associateColors = (cards, themes) => {
@@ -45,20 +45,20 @@ export const associateColors = (cards, themes) => {
 
 export const actions = {
     getCards({ commit, dispatch }) {
-        dispatch("application/setIsLoading", { isLoading: true }, { root: true });
+        // dispatch("application/setIsLoading", { isLoading: true }, { root: true });
         const callback = cards => {
             const callbacktheme = themes => {
                 associateColors(cards, themes)
                 commit("setCards", cards);
                 commit("setFullCards", cards);
-                dispatch("application/setIsLoading", { isLoading: false }, { root: true });
+                // dispatch("application/setIsLoading", { isLoading: false }, { root: true });
             }
             getThemes(callbacktheme)
         };
         getCards(callback);
     },
     filterTheme({ commit, dispatch, state }, idTheme) {
-        dispatch("application/setIsLoading", { isLoading: true }, { root: true });
+        // dispatch("application/setIsLoading", { isLoading: true }, { root: true });
         // console.debug("filterTheme:" + idTheme);
         this.textsearch = '';
         let cards = [];
@@ -72,10 +72,10 @@ export const actions = {
             })
         }
         commit("setCards", cards);
-        dispatch("application/setIsLoading", { isLoading: false }, { root: true });
+        // dispatch("application/setIsLoading", { isLoading: false }, { root: true });
     },
     search({ commit, dispatch, state }, textsearch) {
-        dispatch("application/setIsLoading", { isLoading: true }, { root: true });
+        // dispatch("application/setIsLoading", { isLoading: true }, { root: true });
         let cards = [];
         if (textsearch.trim() == '') {
             textsearch = textsearch.trim();
@@ -89,7 +89,7 @@ export const actions = {
             })
         }
         commit("setCards", cards);
-        dispatch("application/setIsLoading", { isLoading: false }, { root: true });
+        // dispatch("application/setIsLoading", { isLoading: false }, { root: true });
     }
 };
 
