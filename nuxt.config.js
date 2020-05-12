@@ -44,7 +44,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/firebase.js' }
+    { src: '~/plugins/firebase.js' },
+    { src: '~/plugins/themes.js' }
   ],
 
   /*

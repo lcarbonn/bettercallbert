@@ -1,11 +1,14 @@
-import { getCards } from '~/services/cardsServices'
-import { getThemes } from '~/services/themesServices'
+import { getCards, getCard, getNextId, getPreviousId } from '~/services/cardsServices'
+import { getImageSrc } from '~/services/storageServices'
 
 export const state = () => ({
     cards: [],
     fullCards: [],
-    snackbarMessage: undefined,
-    isLoading: false
+    card: null,
+    color: null,
+    nextId: null,
+    previousId: null,
+    src: null
 });
 
 export const getters = {
@@ -14,52 +17,111 @@ export const getters = {
     },
     fullCards: state => {
         return state.fullCards
+    },
+    card: state => {
+        return state.card
+    },
+    color: state => {
+        return state.color
+    },
+    nextId: state => {
+        return state.nextId
+    },
+    previousId: state => {
+        return state.previousId
+    },
+    src: state => {
+        return state.src
     }
 };
 
 export const mutations = {
     setCards(state, payload) {
-        state.cards = payload;
+        state.cards = payload
     },
     setFullCards(state, payload) {
-        state.fullCards = payload;
+        state.fullCards = payload
     },
-    // setSnackbarMessage(state, payload) {
-    //     state.snackbarMessage = payload.message
-    // },
-    // setIsLoading(state, payload) {
-    //     state.isLoading = payload.isLoading
-    // }
-};
-
-export const associateColors = (cards, themes) => {
-    cards.forEach((card) => {
-        // console.debug(`associate card:${card.id} => idTheme: ${card.idTheme}`);
-        if (card.idTheme != null) {
-            let theme = themes.find(theme => theme.id == card.idTheme)
-            // console.debug(`associate card:${card.id} => color: ${theme.color}`);
-            if (theme.color != null) card.color = theme.color;
-        }
-    })
+    setCard(state, payload) {
+        state.card = payload
+        state.color = null
+        state.src = null
+        state.nextId = null
+        state.previousId = null
+    },
+    setEachColor(state, payload) {
+        state.cards.forEach(card => {
+            if (card.id == payload.id) {
+                card.color = payload.color
+            }
+        });
+    },
+    setEachSrc(state, payload) {
+        state.cards.forEach(card => {
+            if (card.id == payload.id) {
+                card.src = payload.src
+            }
+        });
+    },
+    setColor(state, payload) {
+        state.color = payload
+    },
+    setNextId(state, payload) {
+        state.nextId = payload
+    },
+    setPreviousId(state, payload) {
+        state.previousId = payload
+    },
+    setSrc(state, payload) {
+        state.src = payload
+    }
 };
 
 export const actions = {
     getCards({ commit, dispatch }) {
-        // dispatch("application/setIsLoading", { isLoading: true }, { root: true });
         const callback = cards => {
-            const callbacktheme = themes => {
-                associateColors(cards, themes)
-                commit("setCards", cards);
-                commit("setFullCards", cards);
-                // dispatch("application/setIsLoading", { isLoading: false }, { root: true });
-            }
-            getThemes(callbacktheme)
-        };
+            commit("setCards", cards);
+            commit("setFullCards", cards);
+            //dispatch("getColors", cards);
+            cards.forEach((card) => {
+                dispatch("getEachColor", card)
+                dispatch("getEachSrc", card)
+            })
+        }
         getCards(callback);
     },
-    filterTheme({ commit, dispatch, state }, idTheme) {
-        // dispatch("application/setIsLoading", { isLoading: true }, { root: true });
-        // console.debug("filterTheme:" + idTheme);
+    getEachColor({ commit, state }, card) {
+        if (card.idTheme) {
+            const themes = this.getters['themes/themes']
+            let theme = themes.find(theme => theme.id == card.idTheme)
+            if (theme.color) {
+                let payload = {
+                    id: card.id,
+                    color: theme.color
+                }
+                commit('setEachColor', payload)
+            }
+        }
+    },
+    getEachSrc({ commit, state }, card) {
+        if (card.src.indexOf("http") == -1) {
+            const callback = newSrc => {
+                let payload = {
+                    id: card.id,
+                    src: newSrc
+                }
+                commit("setEachSrc", payload)
+            }
+            getImageSrc(callback, card.src);
+        } else {
+            let payload = {
+                id: card.id,
+                src: card.src
+            }
+            commit("setEachSrc", payload)
+        }
+    },
+    filterCards({ commit, state }, idTheme) {
         this.textsearch = '';
         let cards = [];
         if (idTheme == '') {
@@ -72,10 +134,8 @@ export const actions = {
             })
         }
         commit("setCards", cards);
-        // dispatch("application/setIsLoading", { isLoading: false }, { root: true });
     },
-    search({ commit, dispatch, state }, textsearch) {
-        // dispatch("application/setIsLoading", { isLoading: true }, { root: true });
+    search({ commit, state }, textsearch) {
         let cards = [];
         if (textsearch.trim() == '') {
             textsearch = textsearch.trim();
@@ -89,7 +149,49 @@ export const actions = {
             })
         }
         commit("setCards", cards);
-        // dispatch("application/setIsLoading", { isLoading: false }, { root: true });
+    },
+
+    getCard({ commit, dispatch }, id) {
+        const callback = card => {
+            if (card) {
+                commit("setCard", card);
+                dispatch("getColor", card.idTheme)
+                dispatch("getNextId", card.id)
+                dispatch("getPreviousId", card.id)
+                dispatch("getImageSrc", card.src)
+            }
+        }
+        getCard(callback, id);
+    },
+    getNextId({ commit }, id) {
+        const callback = nextId => {
+            commit("setNextId", nextId)
+        }
+        getNextId(callback, id);
+    },
+    getPreviousId({ commit }, id) {
+        const callback = previousId => {
+            commit("setPreviousId", previousId)
+        }
+        getPreviousId(callback, id);
+    },
+    getColor({ commit }, idTheme) {
+        if (idTheme) {
+            const themes = this.getters['themes/themes']
+            let theme = themes.find(theme => theme.id == idTheme)
+            // console.debug(`associate card:${card.id} => color: ${theme.color}`);
+            if (theme && theme.color) commit("setColor", theme.color)
+        }
+    },
+    getImageSrc({ commit }, src) {
+        if (src && src.indexOf("http") == -1) {
+            const callback = newSrc => {
+                commit("setSrc", newSrc)
+            }
+            getImageSrc(callback, src);
+        } else {
+            commit("setSrc", src)
+        }
     }
 };
 

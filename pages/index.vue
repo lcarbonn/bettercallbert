@@ -3,7 +3,7 @@
         <AppHeader v-bind:isAll="true" />
 
         <Menu :menus="themes"
-              @filter-theme="filterTheme"
+              @filter-theme="filterCards"
               @search="search" />
         <ul class="cards">
             <li v-for="card in cards"
@@ -31,8 +31,8 @@ export default {
 
     methods: {
 
-        filterTheme(idTheme) {
-            this.$store.dispatch("cards/filterTheme", idTheme);
+        filterCards(idTheme) {
+            this.$store.dispatch("cards/filterCards", idTheme);
         },
 
         search(textsearch) {
@@ -42,14 +42,10 @@ export default {
 
     mounted() {
         this.$store.dispatch("cards/getCards");
-        this.$store.dispatch("themes/getThemes");
     },
     computed: {
         cards() {
             return this.$store.getters['cards/cards']
-        },
-        fullCards() {
-            return this.$store.getters['cards/fullCards']
         },
         themes() {
             return this.$store.getters['themes/themes']
@@ -83,3 +79,4 @@ export default {
     margin: 5px;
 }
 </style>
+

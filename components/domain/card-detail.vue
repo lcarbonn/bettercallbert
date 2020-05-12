@@ -1,120 +1,62 @@
 <template>
-    <div class="detail">
+    <div class="detail"
+         v-if="card">
         <div class="navigate">
-            <span v-if="previousId!=null"
+            <span v-if="previousId"
                   class="paginate">
                 <nuxt-link :to="'/cards/'+previousId">Prev.</nuxt-link>
             </span>
-            <span v-if="previousId==null"
+            <span v-if="!previousId"
                   class="paginate">&nbsp;&nbsp;</span>
-            <span v-if="nextId!=null"
+            <span v-if="nextId"
                   class="paginate">
                 <nuxt-link :to="'/cards/'+nextId">Next</nuxt-link>
             </span>
             <span v-if="nextId==null"
                   class="paginate">&nbsp;&nbsp;</span>
         </div>
-        <div class="cardItem"
-             v-bind:class="color">
-            <span>{{title}}</span>
-            <img v-if="src!=null"
+        <div v-if="card"
+             class="cardItem"
+             :class="color">
+            <span>{{card.title}}</span>
+            <img v-if="src"
                  class="image"
-                 :alt="title"
-                 :title="title"
-                 :class="{ rotate: isRotate }"
+                 :alt="card.title"
+                 :title="card.title"
+                 :class="{ rotate: card.isRotate }"
                  :src="src" />
-            <span v-if="link!=null"><a :href="link"
+            <span v-if="card.link"><a :href="card.link"
                    target="_blank">Jump to source</a></span>
         </div>
     </div>
 </template>
 
 <script>
-import { DB } from '@/plugins/firebase.js';
-import * as functions from '~/utils/functions.js';
 
 export default {
 
-    props: ['id'],
-
-    data() {        return {
-            title: '',
-            color: '',
-            src: null,
-            isRotate: false,
-            link: null,
-            nextId: null,
-            previousId: null
-        }    },
-
-    methods: {
-
-        getDoc() {
-            DB.collection("cards").doc(this.id).get().then((doc) => {
-                if (!doc.exists) {
-                    console.log('No such card with this id:' + this.id);
-                    this.title = "No yet such card!";
-                } else {
-                    console.log(`card:${doc.id} => ${doc.data().title}`);
-                    this.title = doc.data().title.toUpperCase();
-                    functions.getUrl(doc.data().src).then((src) => {
-                        this.src = src;
-                    });
-                    this.isRotate = doc.data().isRotate;
-                    this.link = doc.data().link;
-                    if (doc.data().idTheme != null) {
-                        this.getColor(doc.data().idTheme);
-                    }
-                    this.getNextDoc(doc);
-                    this.getPreviousDoc(doc);
-                }
-            });
+    props: {
+        card: {
+            type: Object,
+            default: null
         },
-
-        getColor(idTheme) {
-            DB.collection("themes").doc(idTheme).get().then((theme) => {
-                if (!theme.exists) {
-                    console.log('No such theme with this id:' + idTheme);
-                    this.color = null;
-                } else {
-                    console.log(`theme:${idTheme} => ${theme.data().color}`);
-                    this.color = theme.data().color;
-                }
-            });
+        nextId: {
+            type: String,
+            default: null
         },
-
-        getNextDoc(doc) {
-            console.log(`this card:${doc.id} => ${doc.data().title}`);
-            let nextRef = DB.collection('cards')
-                .orderBy('idTheme')
-                .startAfter(doc)
-                .limit(1);
-            nextRef.get().then((nextDocs) => {
-                nextDocs.forEach((doc) => {
-                    console.log(`next card:${doc.id} => ${doc.data().title}`);
-                    this.nextId = doc.id;
-                });
-            });
+        previousId: {
+            type: String,
+            default: null
         },
-
-        getPreviousDoc(doc) {
-            console.log(`this card:${doc.id} => ${doc.data().title}`);
-            let nextRef = DB.collection('cards')
-                .orderBy('idTheme')
-                .endBefore(doc);
-            nextRef.get().then((nextDocs) => {
-                nextDocs.forEach((doc) => {
-                    console.log(`previous card:${doc.id} => ${doc.data().title}`);
-                    this.previousId = doc.id;
-                });
-            });
+        color: {
+            type: String,
+            default: ""
         },
+        src: {
+            type: String,
+            default: null
+        }
     },
-
-    created: function () {
-        this.getDoc();
-    }
-
 }
 
 </script>

@@ -3,36 +3,24 @@
                class="cardItem"
                :class="card.color">
         <span>{{ card.title }}</span>
-        <img v-if="src!=null"
+        <img v-if="card.src"
              class="image"
              :title="card.title"
              :alt="card.title"
              :class="{ rotate: card.isRotate }"
-             :src="src" />
+             :src="card.src" />
     </nuxt-link>
 </template>
 
 <script>
-import * as functions from '~/utils/functions.js';
-
 export default {
     props: {
         card: {
             type: Object,
             default: null
         },
-    },
-
-    data() {
-        return {
-            src: null
-        }    },
-
-    created: async function () {
-        this.src = await functions.getUrl(this.card.src);
     }
 }
-
 </script>
 
 <style scoped>

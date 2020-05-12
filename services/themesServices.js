@@ -14,3 +14,12 @@ export const getThemes = (callback) => {
         callback(list);
     });
 };
+export const getThemeColor = (callback, idTheme) => {
+    DB.collection("themes").doc(idTheme).get().then((doc) => {
+        let color = null
+        if (doc.exists) {
+            color = doc.data()
+        }
+        callback(color)
+    });
+};

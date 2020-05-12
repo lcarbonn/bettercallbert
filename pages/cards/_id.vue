@@ -6,7 +6,11 @@
                        class="menu-item">Home</nuxt-link>
         </div>
         <div>
-            <CardDetail v-bind:id="id" />
+            <CardDetail :card="card"
+                        :nextId="nextId"
+                        :previousId="previousId"
+                        :src="src"
+                        :color="color" />
         </div>
         <AppFooter />
     </section>
@@ -26,15 +30,31 @@ export default {
         CardDetail,
     },
 
-    data() {
-        return {
-            id: null
-        };
+    mounted() {
+        this.$store.dispatch("cards/getCard", this.id)
     },
 
-    created: function () {
-        this.id = this.$route.params.id;
+    computed: {
+        id() {
+            return this.$route.params.id
+        },
+        card() {
+            return this.$store.getters['cards/card']
+        },
+        nextId() {
+            return this.$store.getters['cards/nextId']
+        },
+        previousId() {
+            return this.$store.getters['cards/previousId']
+        },
+        color() {
+            return this.$store.getters['cards/color']
+        },
+        src() {
+            return this.$store.getters['cards/src']
+        }
     }
+
 }
 </script>
 
