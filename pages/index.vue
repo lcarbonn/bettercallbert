@@ -1,45 +1,19 @@
 <template>
-    <section class="wrapper bg-dark">
-        <AppHeader v-bind:isAll="true" />
 
-        <Menu :menus="themes"
-              @filter-theme="filterCards"
-              @search="search" />
-        <ul class="cards">
-            <li v-for="card in cards"
-                :key="card.id">
-                <Card :card="card" />
-            </li>
-        </ul>
-        <AppFooter v-bind:isAll="true" />
-    </section>
+    <div>
+        <Card v-for="card in cards"
+              :key="card.id"
+              :card="card" />
+    </div>
 </template>
 
 <script>
-import AppHeader from '~/components/base/AppHeader';
-import AppFooter from '~/components/base/AppFooter';
-import Menu from '~/components/menu/menu';
 import Card from '~/components/domain/card';
 
 export default {
     components: {
-        AppFooter,
-        AppHeader,
-        Menu,
         Card
     },
-
-    methods: {
-
-        filterCards(idTheme) {
-            this.$store.dispatch("cards/filterCards", idTheme);
-        },
-
-        search(textsearch) {
-            this.$store.dispatch("cards/search", textsearch);
-        }
-    },
-
     mounted() {
         this.$store.dispatch("cards/getCards");
     },

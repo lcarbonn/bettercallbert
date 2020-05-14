@@ -1,10 +1,67 @@
 <template>
-    <div>
-        <nuxt />
+    <div class="page-container">
+        <md-app>
+            <md-app-toolbar class="md-large md-primary">
+                <Titlebar :isAll=true
+                          @setVisible="setVisible" />
+                <Toolbar :menus="themes"
+                         @filterCards="filterCards"
+                         @search="search" />
+            </md-app-toolbar>
+            <md-app-content>
+                <nuxt />
+                <AppFooter v-bind:isAll="true" />
+            </md-app-content>
+        </md-app>
     </div>
 </template>
 
+<script>
+import Titlebar from '~/components/base/Titlebar'
+import Toolbar from '~/components/base/Toolbar'
+import AppFooter from '~/components/base/AppFooter'
+
+export default {
+    name: 'Overlap',
+    components: {
+        // Loader,
+        // Snackbar,
+        Titlebar,
+        Toolbar,
+        AppFooter
+        // Drawer,
+    },
+    data() {
+        return {
+            menuVisible: false
+        }
+    },
+    computed: {
+        themes() {
+            return this.$store.getters['themes/themes']
+        }
+    },
+    methods: {
+        setVisible() {
+            this.menuVisible = !this.menuVisible;
+        },
+        filterCards(idTheme) {
+            this.$store.dispatch("cards/filterCards", idTheme);
+        },
+        search(textsearch) {
+            this.$store.dispatch("cards/search", textsearch);
+        }
+    }
+}
+</script>
+
 <style>
+div#__nuxt,
+#__layout,
+#__layout > div,
+#app {
+    min-height: 100vh;
+}
 html {
     font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -16,6 +73,14 @@ html {
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
 }
+/* .md-app {
+    border: 1px solid rgba(#000, 0.12);
+} */
+
+.md-drawer {
+    width: 230px;
+    max-width: calc(100vw - 130px);
+}
 
 *,
 *:before,
@@ -24,32 +89,11 @@ html {
     margin: 0;
 }
 
-.button--green {
-    display: inline-block;
-    border-radius: 4px;
-    border: 1px solid #3b8070;
-    color: #3b8070;
-    text-decoration: none;
-    padding: 10px 30px;
+.md-toolbar + .md-toolbar {
+    margin-top: 16px;
 }
 
-.button--green:hover {
-    color: #fff;
-    background-color: #3b8070;
-}
-
-.button--grey {
-    display: inline-block;
-    border-radius: 4px;
-    border: 1px solid #35495e;
-    color: #35495e;
-    text-decoration: none;
-    padding: 10px 30px;
-    margin-left: 15px;
-}
-
-.button--grey:hover {
-    color: #fff;
-    background-color: #35495e;
+.n-link {
+    text-decoration: none !important;
 }
 </style>
