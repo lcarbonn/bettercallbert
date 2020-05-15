@@ -1,39 +1,36 @@
 <template>
-    <div class="page-container">
-        <md-app>
-            <md-app-toolbar class="md-large md-primary">
-                <Titlebar :isAll=true
-                          @setVisible="setVisible" />
-                <Toolbar :menus="themes"
-                         @filterCards="filterCards"
-                         @search="search" />
-            </md-app-toolbar>
-            <md-app-content>
-                <nuxt />
-                <AppFooter v-bind:isAll="true" />
-            </md-app-content>
-        </md-app>
-    </div>
+    <md-app md-waterfall
+            md-mode="fixed">
+        <md-app-toolbar class="md-small md-dense md-primary">
+            <Toolbar :menus="themes"
+                     @filterCards="filterCards"
+                     @search="search"
+                     @setVisible="setVisible" />
+        </md-app-toolbar>
+        <md-app-drawer :md-active.sync="menuVisible">
+            <Drawer @setVisible="setVisible" />
+        </md-app-drawer>
+        <md-app-content class="md-gutter">
+            <nuxt />
+        </md-app-content>
+    </md-app>
 </template>
 
 <script>
-import Titlebar from '~/components/base/Titlebar'
 import Toolbar from '~/components/base/Toolbar'
-import AppFooter from '~/components/base/AppFooter'
+import Drawer from '~/components/base/Drawer'
 
 export default {
     name: 'Overlap',
     components: {
         // Loader,
         // Snackbar,
-        Titlebar,
         Toolbar,
-        AppFooter
-        // Drawer,
+        Drawer,
     },
     data() {
         return {
-            menuVisible: false
+            menuVisible: false,
         }
     },
     computed: {
@@ -55,7 +52,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 div#__nuxt,
 #__layout,
 #__layout > div,
@@ -73,9 +70,11 @@ html {
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
 }
-/* .md-app {
+
+.md-app {
+    max-height: 400px;
     border: 1px solid rgba(#000, 0.12);
-} */
+}
 
 .md-drawer {
     width: 230px;

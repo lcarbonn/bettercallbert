@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="md-layout md-alignment-top-center">
         <CardDetail :card="card"
                     :nextId="nextId"
                     :previousId="previousId"
@@ -15,7 +15,6 @@ export default {
     components: {
         CardDetail
     },
-
     mounted() {
         this.$store.dispatch("cards/getCard", this.id)
     },

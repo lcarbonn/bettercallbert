@@ -1,5 +1,5 @@
 <template>
-    <div class="AppFooter">
+    <div>
         <div v-if="isAll">
             <p>You’ll wont find detail but brain access facilities</p>
             <p>Having cards doesn’t make you a coach.</p>
@@ -19,12 +19,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-.AppFooter {
-    font-size: 0.8rem;
-    font-weight: 300;
-    margin: 2px;
-    text-align: center;
-}
-</style>

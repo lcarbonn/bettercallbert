@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <Card v-for="card in cards"
               :key="card.id"

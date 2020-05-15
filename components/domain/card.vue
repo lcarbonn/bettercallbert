@@ -1,5 +1,4 @@
 <template>
-
     <nuxt-link :to="'/cards/'+card.id">
         <md-card md-with-hover>
             <md-card-media-cover>
