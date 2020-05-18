@@ -11,7 +11,7 @@
                         class="md-title n-link">Better Call Bert</n-link>
             </span>
         </div>
-        <div class="md-toolbar-section"
+        <!-- <div class="md-toolbar-section"
              v-show="!isSingleCard">
             <md-tabs class="md-primary"
                      :md-active-tab.sync="mdActiveTab"
@@ -23,7 +23,7 @@
                         @click="filterCards(menu.id)">
                 </md-tab>
             </md-tabs>
-        </div>
+        </div> -->
         <div class="md-toolbar-section-end"
              v-show="!isSingleCard">
             <md-button class="md-icon-button"

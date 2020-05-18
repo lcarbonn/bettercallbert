@@ -13,11 +13,15 @@
                        @setSearchVisible="setSearchVisible" />
         </md-app-toolbar>
         <md-app-drawer :md-active.sync="menuVisible">
-            <Drawer @setMenuVisible="setMenuVisible" />
+            <Drawer :menus="themes"
+                    @filterCards="filterCards"
+                    @setMenuVisible="setMenuVisible" />
         </md-app-drawer>
         <md-app-content @click="hideSearchVisible">
             <nuxt />
-            <span class="md-layout md-alignment-bottom-center">Copyright © 2020 - Agilized in Toulouse, France</span>
+            <div class="md-layout md-alignment-bottom-center md-body-1">
+                <span>Copyright © 2020 - Agilized in Toulouse, France</span>
+            </div>
         </md-app-content>
     </md-app>
 </template>

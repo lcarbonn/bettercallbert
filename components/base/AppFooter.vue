@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div v-if="isAll">
+        <div v-if="isAll"
+             class="md-layout md-alignment-bottom-center md-body-1">
             <p>You’ll wont find detail but brain access facilities</p>
             <p>Having cards doesn’t make you a coach.</p>
             <p>Take care of people you help!</p>

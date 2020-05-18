@@ -3,10 +3,25 @@
         <md-toolbar class="md-transparent"
                     md-elevation="0">Navigation</md-toolbar>
         <md-list>
-            <md-list-item @click="setMenuVisible()">
+            <md-list-item @click="goHome()"
+                          to="/">
                 <md-icon>home</md-icon>
-                <n-link to="/"
-                        class="md-list-item-text n-link">Home</n-link>
+                <span class="md-list-item-text">Home</span>
+            </md-list-item>
+
+            <md-list-item md-expand
+                          :md-expanded.sync="expand">
+                <md-icon>filter</md-icon>
+                <span class="md-list-item-text n-link">Filters</span>
+                <md-list slot="md-expand">
+                    <md-list-item md-inset
+                                  v-for="menu in menus"
+                                  :key="menu.id"
+                                  :id="menu.id"
+                                  @click="filterCards(menu.id)">
+                        <span class="md-list-item-text">{{menu.title}}</span>
+                    </md-list-item>
+                </md-list>
             </md-list-item>
 
             <md-list-item @click="setMenuVisible()">
@@ -21,9 +36,28 @@
 export default {
     name: "Drawer",
 
+    props: {
+        menus: {
+            type: Array,
+            default: null
+        },
+    },
+    data() {
+        return {
+            expand: false
+        }
+    },
     methods: {
         setMenuVisible() {
             this.$emit('setMenuVisible')
+        },
+        goHome(idTheme) {
+            this.$emit('setMenuVisible')
+            this.$emit('filterCards', '')
+        },
+        filterCards(idTheme) {
+            this.$emit('setMenuVisible')
+            this.$emit('filterCards', idTheme)
         }
     },
 }

@@ -3,7 +3,8 @@
         <div class="md-toolbar-section-end">
             <md-field md-inline>
                 <label>Search</label>
-                <md-input v-model="textsearch"
+                <md-input autofocus
+                          v-model="textsearch"
                           class="md-primary"
                           @keyup="search()"></md-input>
             </md-field>
