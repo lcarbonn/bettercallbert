@@ -2,15 +2,21 @@
     <md-app md-waterfall
             md-mode="fixed">
         <md-app-toolbar class="md-small md-dense md-primary">
-            <Toolbar :menus="themes"
-                     @filterCards="filterCards"
-                     @search="search"
-                     @setVisible="setVisible" />
+            <div v-if="!searchVisible">
+                <Toolbar :menus="themes"
+                         @filterCards="filterCards"
+                         @setMenuVisible="setMenuVisible"
+                         @setSearchVisible="setSearchVisible" />
+            </div>
+            <div v-if="searchVisible">
+                <Searchbar @search="search"
+                           @setSearchVisible="setSearchVisible" />
+            </div>
         </md-app-toolbar>
         <md-app-drawer :md-active.sync="menuVisible">
-            <Drawer @setVisible="setVisible" />
+            <Drawer @setMenuVisible="setMenuVisible" />
         </md-app-drawer>
-        <md-app-content class="md-gutter">
+        <md-app-content @click="hideSearchVisible">
             <nuxt />
         </md-app-content>
     </md-app>
@@ -18,19 +24,20 @@
 
 <script>
 import Toolbar from '~/components/base/Toolbar'
+import Searchbar from '~/components/base/Searchbar'
 import Drawer from '~/components/base/Drawer'
 
 export default {
     name: 'Overlap',
     components: {
-        // Loader,
-        // Snackbar,
         Toolbar,
+        Searchbar,
         Drawer,
     },
     data() {
         return {
             menuVisible: false,
+            searchVisible: false,
         }
     },
     computed: {
@@ -39,8 +46,14 @@ export default {
         }
     },
     methods: {
-        setVisible() {
+        setMenuVisible() {
             this.menuVisible = !this.menuVisible;
+        },
+        setSearchVisible() {
+            this.searchVisible = !this.searchVisible;
+        },
+        hideSearchVisible() {
+            this.searchVisible = false;
         },
         filterCards(idTheme) {
             this.$store.dispatch("cards/filterCards", idTheme);
