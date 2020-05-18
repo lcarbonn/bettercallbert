@@ -1,14 +1,12 @@
 <template>
     <div class="md-toolbar-row">
-        <div class="md-toolbar-section">
+        <div class="md-toolbar-section-end">
             <md-field md-inline>
                 <label>Search</label>
                 <md-input v-model="textsearch"
                           class="md-primary"
                           @keyup="search()"></md-input>
             </md-field>
-        </div>
-        <div class="md-toolbar-section-end">
             <md-button class="md-icon-button"
                        @click="setSearchVisible()">
                 <md-icon>close</md-icon>

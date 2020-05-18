@@ -15,6 +15,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch("cards/getCards");
+        this.$store.dispatch("layout/setSingleCard", false);
     },
     computed: {
         cards() {

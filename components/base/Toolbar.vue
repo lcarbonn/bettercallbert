@@ -5,17 +5,17 @@
                        @click="setMenuVisible()">
                 <md-icon>menu</md-icon>
             </md-button>
-            <span class="md-title">
+            <span class="md-title"
+                  @click="resetTabs()">
                 <n-link to="/"
                         class="md-title n-link">Better Call Bert</n-link>
             </span>
         </div>
-        <div class="md-xsmall-hide">
-            <md-tabs class="md-primary">
-                <md-tab id="
-                     all"
-                        md-label="All"
-                        @click="filterCards('')" />
+        <div class="md-toolbar-section"
+             v-if="!isSingleCard">
+            <md-tabs class="md-primary"
+                     :md-active-tab.sync="mdActiveTab"
+                     @md-changed="setActiveTab">
                 <md-tab v-for="menu in menus"
                         :key="menu.id"
                         :id="menu.id"
@@ -24,7 +24,8 @@
                 </md-tab>
             </md-tabs>
         </div>
-        <div class="md-toolbar-section-end">
+        <div class="md-toolbar-section-end"
+             v-if="!isSingleCard">
             <md-button class="md-icon-button"
                        @click="setSearchVisible()">
                 <md-icon>search</md-icon>
@@ -41,9 +42,25 @@ export default {
         menus: {
             type: Array,
             default: null
+        },
+        isSingleCard: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data() {
+        return {
+            mdActiveTab: ''
         }
     },
     methods: {
+        resetTabs() {
+            this.mdActiveTab = ''
+        },
+        setActiveTab(activeTab) {
+            this.mdActiveTab = activeTab
+            this.filterCards(activeTab)
+        },
         setSearchVisible() {
             this.$emit('setSearchVisible')
         },

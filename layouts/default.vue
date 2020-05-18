@@ -2,22 +2,24 @@
     <md-app md-waterfall
             md-mode="fixed">
         <md-app-toolbar class="md-small md-dense md-primary">
-            <div v-if="!searchVisible">
-                <Toolbar :menus="themes"
-                         @filterCards="filterCards"
-                         @setMenuVisible="setMenuVisible"
-                         @setSearchVisible="setSearchVisible" />
-            </div>
-            <div v-if="searchVisible">
-                <Searchbar @search="search"
-                           @setSearchVisible="setSearchVisible" />
-            </div>
+            <Toolbar v-show="!searchVisible"
+                     :menus="themes"
+                     :isSingleCard="isSingleCard"
+                     @filterCards="filterCards"
+                     @setMenuVisible="setMenuVisible"
+                     @setSearchVisible="setSearchVisible" />
+            <Searchbar v-show="searchVisible"
+                       @search="search"
+                       @setSearchVisible="setSearchVisible" />
         </md-app-toolbar>
         <md-app-drawer :md-active.sync="menuVisible">
             <Drawer @setMenuVisible="setMenuVisible" />
         </md-app-drawer>
         <md-app-content @click="hideSearchVisible">
             <nuxt />
+            <md-bottom-bar>
+                <span>Copyright © 2020 - Agilized in Toulouse, France</span>
+            </md-bottom-bar>
         </md-app-content>
     </md-app>
 </template>
@@ -43,6 +45,9 @@ export default {
     computed: {
         themes() {
             return this.$store.getters['themes/themes']
+        },
+        isSingleCard() {
+            return this.$store.getters['layout/isSingleCard']
         }
     },
     methods: {
