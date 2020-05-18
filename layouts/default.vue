@@ -17,11 +17,7 @@
         </md-app-drawer>
         <md-app-content @click="hideSearchVisible">
             <nuxt />
-        </md-app-content>
-        <md-app-content @click="hideSearchVisible">
-            <md-bottom-bar class="md-layout md-alignment-bottom-center">
-                <span>Copyright © 2020 - Agilized in Toulouse, France</span>
-            </md-bottom-bar>
+            <span class="md-layout md-alignment-bottom-center">Copyright © 2020 - Agilized in Toulouse, France</span>
         </md-app-content>
     </md-app>
 </template>
