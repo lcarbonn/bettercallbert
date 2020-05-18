@@ -33,6 +33,7 @@ export default {
     },
     methods: {
         setSearchVisible() {
+            this.textsearch = ''
             this.$emit('setSearchVisible')
         },
         search() {

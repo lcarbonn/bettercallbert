@@ -12,7 +12,7 @@
             </span>
         </div>
         <div class="md-toolbar-section"
-             v-if="!isSingleCard">
+             v-show="!isSingleCard">
             <md-tabs class="md-primary"
                      :md-active-tab.sync="mdActiveTab"
                      @md-changed="setActiveTab">
@@ -25,7 +25,7 @@
             </md-tabs>
         </div>
         <div class="md-toolbar-section-end"
-             v-if="!isSingleCard">
+             v-show="!isSingleCard">
             <md-button class="md-icon-button"
                        @click="setSearchVisible()">
                 <md-icon>search</md-icon>
@@ -56,6 +56,7 @@ export default {
     methods: {
         resetTabs() {
             this.mdActiveTab = ''
+            this.filterCards('')
         },
         setActiveTab(activeTab) {
             this.mdActiveTab = activeTab

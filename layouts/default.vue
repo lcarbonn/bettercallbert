@@ -17,7 +17,9 @@
         </md-app-drawer>
         <md-app-content @click="hideSearchVisible">
             <nuxt />
-            <md-bottom-bar>
+        </md-app-content>
+        <md-app-content @click="hideSearchVisible">
+            <md-bottom-bar class="md-layout md-alignment-bottom-center">
                 <span>Copyright © 2020 - Agilized in Toulouse, France</span>
             </md-bottom-bar>
         </md-app-content>
@@ -94,7 +96,7 @@ html {
     border: 1px solid rgba(#000, 0.12);
 }
 
-.md-drawer {
+.md-app-drawer {
     width: 230px;
     max-width: calc(100vw - 130px);
 }
