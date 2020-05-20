@@ -5,22 +5,20 @@
             <span class="md-title">{{card.title}}</span>
         </md-card-header>
         <md-card-actions md-alignment="space-between">
-            <md-button class="md-icon-button">
-                <nuxt-link v-if="previousId"
-                           :to="'/cards/'+previousId">
-                    <md-icon>navigate_before</md-icon>
-                </nuxt-link>
+            <md-button class="md-icon-button"
+                       v-if="previousId"
+                       :to="'/cards/'+previousId">
+                <md-icon>navigate_before</md-icon>
             </md-button>
             <md-button>
                 <a v-if="card.link"
                    :href="card.link"
                    target="_blank">Jump to source</a>
             </md-button>
-            <md-button class="md-icon-button">
-                <nuxt-link v-if="nextId"
-                           :to="'/cards/'+nextId">
-                    <md-icon>navigate_next</md-icon>
-                </nuxt-link>
+            <md-button class="md-icon-button"
+                       v-if="nextId"
+                       :to="'/cards/'+nextId">
+                <md-icon>navigate_next</md-icon>
             </md-button>
         </md-card-actions>
         <md-card-media>
@@ -55,6 +53,21 @@ export default {
         src: {
             type: String,
             default: null
+        }
+    },
+    mounted() {
+        this.setupListeners()
+    },
+    destroyed() {
+        document.removeEventListener("keyup", this.eventHandler)
+    },
+    methods: {
+        setupListeners() {
+            document.addEventListener("keyup", this.eventHandler)
+        },
+        eventHandler(e) {
+            if (e.keyCode == "39" && this.nextId) this.$router.push('/cards/' + this.nextId)
+            if (e.keyCode == "37" && this.previousId) this.$router.push('/cards/' + this.previousId)
         }
     }
 }
