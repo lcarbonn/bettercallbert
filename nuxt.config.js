@@ -1,5 +1,3 @@
-import pkg from './package'
-
 export default {
   mode: 'spa',
 
@@ -7,14 +5,16 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    titleTemplate: "Better Call Bert",
+    title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons' }
     ]
   },
 
@@ -24,8 +24,6 @@ export default {
   manifest: {
     name: 'Better Call Bert',
     short_name: 'BetterCallBert',
-    theme_color: '#3986c4',
-    background_color: '#3986c4',
     display: 'standalone'
   },
 
@@ -38,6 +36,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/css/custom-theme.scss',
   ],
 
   /*
@@ -53,21 +52,20 @@ export default {
   */
   modules: [
     '@nuxtjs/pwa',
-    'bootstrap-vue/nuxt'
-  ],
+    ['nuxt-vue-material', {
+      theme: 'default',
+      components: ['MdDrawer', 'MdRadio', 'MdMenu', 'MdContent', 'MdList', 'MdButton',
+        'MdToolbar', 'MdIcon', 'MdApp', 'MdCard', 'MdTable', 'MdField', 'MdRipple',
+        'MdEmptyState', 'MdCheckbox', 'MdProgress', 'MdSnackbar', 'MdSwitch', 'MdTooltip',
+        "MdTabs"
+      ]
+    }],
 
-  bootstrapVue: {
-    componentPlugins: ['Navbar', 'Form', 'FormInput']
-  },
+  ],
 
   /*
   ** Build configuration
   */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
-    extend(config, ctx) {
-    }
   }
 }

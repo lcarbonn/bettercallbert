@@ -1,10 +1,84 @@
 <template>
-    <div>
-        <nuxt />
-    </div>
+    <md-app md-waterfall
+            md-mode="fixed">
+        <md-app-toolbar class="md-small md-dense md-primary">
+            <Toolbar v-show="!searchVisible"
+                     :menus="themes"
+                     :isSingleCard="isSingleCard"
+                     @filterCards="filterCards"
+                     @setMenuVisible="setMenuVisible"
+                     @setSearchVisible="setSearchVisible" />
+            <Searchbar v-show="searchVisible"
+                       @search="search"
+                       @setSearchVisible="setSearchVisible" />
+        </md-app-toolbar>
+        <md-app-drawer :md-active.sync="menuVisible">
+            <Drawer :menus="themes"
+                    @filterCards="filterCards"
+                    @setMenuVisible="setMenuVisible" />
+        </md-app-drawer>
+        <md-app-content @click="hideSearchVisible">
+            <nuxt />
+            <div class="md-layout md-alignment-bottom-center md-body-1">
+                <span>Copyright © 2020 - Agilized in Toulouse, France</span>
+            </div>
+        </md-app-content>
+    </md-app>
 </template>
 
-<style>
+<script>
+import Toolbar from '~/components/base/Toolbar'
+import Searchbar from '~/components/base/Searchbar'
+import Drawer from '~/components/base/Drawer'
+
+export default {
+    name: 'Overlap',
+    components: {
+        Toolbar,
+        Searchbar,
+        Drawer,
+    },
+    data() {
+        return {
+            menuVisible: false,
+            searchVisible: false,
+        }
+    },
+    computed: {
+        themes() {
+            return this.$store.getters['themes/themes']
+        },
+        isSingleCard() {
+            return this.$store.getters['layout/isSingleCard']
+        }
+    },
+    methods: {
+        setMenuVisible() {
+            this.menuVisible = !this.menuVisible;
+        },
+        setSearchVisible() {
+            this.searchVisible = !this.searchVisible;
+        },
+        hideSearchVisible() {
+            this.searchVisible = false;
+        },
+        filterCards(idTheme) {
+            this.$store.dispatch("cards/filterCards", idTheme);
+        },
+        search(textsearch) {
+            this.$store.dispatch("cards/search", textsearch);
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+div#__nuxt,
+#__layout,
+#__layout > div,
+#app {
+    min-height: 100vh;
+}
 html {
     font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -17,6 +91,16 @@ html {
     box-sizing: border-box;
 }
 
+.md-app {
+    max-height: 400px;
+    border: 1px solid rgba(#000, 0.12);
+}
+
+.md-app-drawer {
+    width: 230px;
+    max-width: calc(100vw - 130px);
+}
+
 *,
 *:before,
 *:after {
@@ -24,32 +108,11 @@ html {
     margin: 0;
 }
 
-.button--green {
-    display: inline-block;
-    border-radius: 4px;
-    border: 1px solid #3b8070;
-    color: #3b8070;
-    text-decoration: none;
-    padding: 10px 30px;
+.md-toolbar + .md-toolbar {
+    margin-top: 16px;
 }
 
-.button--green:hover {
-    color: #fff;
-    background-color: #3b8070;
-}
-
-.button--grey {
-    display: inline-block;
-    border-radius: 4px;
-    border: 1px solid #35495e;
-    color: #35495e;
-    text-decoration: none;
-    padding: 10px 30px;
-    margin-left: 15px;
-}
-
-.button--grey:hover {
-    color: #fff;
-    background-color: #35495e;
+.n-link {
+    text-decoration: none !important;
 }
 </style>

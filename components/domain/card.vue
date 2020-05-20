@@ -1,14 +1,19 @@
 <template>
-    <nuxt-link :to="'/cards/'+card.id"
-               class="cardItem"
-               :class="card.color">
-        <span>{{ card.title }}</span>
-        <img v-if="card.src"
-             class="image"
-             :title="card.title"
-             :alt="card.title"
-             :class="{ rotate: card.isRotate }"
-             :src="card.src" />
+    <nuxt-link :to="'/cards/'+card.id">
+        <md-card md-with-hover>
+            <md-card-media-cover>
+                <md-card-media md-ratio="1:1">
+                    <img :title="card.title"
+                         :alt="card.title"
+                         :src="card.src">
+                </md-card-media>
+                <md-card-area class="my-solid">
+                    <md-card-header>
+                        <span class="md-title">{{card.title}}</span>
+                    </md-card-header>
+                </md-card-area>
+            </md-card-media-cover>
+        </md-card>
     </nuxt-link>
 </template>
 
@@ -23,58 +28,15 @@ export default {
 }
 </script>
 
-<style scoped>
-.cardItem {
-    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-weight: 500;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgb(245, 150, 126);
-    text-align: center;
-    height: 20rem;
-    width: 20rem;
-    text-decoration: none !important;
-    color: white;
+<style lang="scss" scoped>
+.md-card {
+    width: 320px;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
 }
 
-.themeone {
-    background-color: rgb(245, 150, 126);
-}
-.themetwo {
-    background-color: rgb(103, 200, 198);
-}
-.themethree {
-    background-color: rgb(178, 209, 127);
-}
-
-.cardItem:hover {
-    background-color: white;
-    color: grey;
-}
-
-.image {
-    padding: 5px;
-    max-height: 80%;
-    max-width: 100%;
-    object-fit: contain;
-}
-
-.rotate {
-    transform: rotate(90deg);
-}
-
-/* Medium screens */
-@media all and (max-width: 800px) {
-    .cardItem {
-        /* When on medium sized screens, reduced size */
-        font-size: 0.8rem;
-        padding: 5px;
-        width: 45vw;
-        height: 45vw;
-    }
+.my-solid {
+    background-color: rgba(0, 0, 0, 0.54);
 }
 </style>
