@@ -25,7 +25,7 @@ export const mutations = {
 export const actions = {
     setActiveUser({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            commit('setUser', { user: payload.user });
+            commit('setUser', { user: { uid: payload.uid, email: payload.email } });
             resolve();
         });
     },
