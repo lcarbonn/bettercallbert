@@ -11,24 +11,18 @@
                         class="md-title n-link">Better Call Bert</n-link>
             </span>
         </div>
-        <!-- <div class="md-toolbar-section"
-             v-show="!isSingleCard">
-            <md-tabs class="md-primary"
-                     :md-active-tab.sync="mdActiveTab"
-                     @md-changed="setActiveTab">
-                <md-tab v-for="menu in menus"
-                        :key="menu.id"
-                        :id="menu.id"
-                        :md-label="menu.title"
-                        @click="filterCards(menu.id)">
-                </md-tab>
-            </md-tabs>
-        </div> -->
         <div class="md-toolbar-section-end"
              v-show="!isSingleCard">
             <md-button class="md-icon-button"
                        @click="setSearchVisible()">
                 <md-icon>search</md-icon>
+            </md-button>
+        </div>
+        <div class="md-toolbar-section-end"
+             v-show="isConnected">
+            <md-button class="md-icon-button"
+                       @click="logout()">
+                <md-icon>logout</md-icon>
             </md-button>
         </div>
     </div>
@@ -53,6 +47,11 @@ export default {
             mdActiveTab: ''
         }
     },
+    computed: {
+        isConnected() {
+            return this.$store.getters['auth/isConnected'];
+        }
+    },
     methods: {
         resetTabs() {
             this.mdActiveTab = ''
@@ -70,6 +69,11 @@ export default {
         },
         filterCards(idTheme) {
             this.$emit('filterCards', idTheme)
+        },
+        logout() {
+            this.$store.dispatch('auth/signOut').then(() => {
+                this.$router.go('/');
+            });
         }
     }
 }

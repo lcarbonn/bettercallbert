@@ -24,7 +24,8 @@
                 </md-list>
             </md-list-item>
 
-            <md-list-item @click="setMenuVisible()">
+            <md-list-item @click="setMenuVisible()"
+                          to="/admin">
                 <md-icon>settings</md-icon>
                 <span class="md-list-item-text">Settings</span>
             </md-list-item>
@@ -34,7 +35,7 @@
 
 <script>
 export default {
-    name: "Drawer",
+    name: "Menu",
 
     props: {
         menus: {
@@ -51,7 +52,7 @@ export default {
         setMenuVisible() {
             this.$emit('setMenuVisible')
         },
-        goHome(idTheme) {
+        goHome() {
             this.$emit('setMenuVisible')
             this.$emit('filterCards', '')
         },
