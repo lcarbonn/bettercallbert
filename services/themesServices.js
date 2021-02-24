@@ -1,7 +1,7 @@
-import { DB } from '@/plugins/firebase.js';
+import { firestore } from '@/plugins/firebase.js';
 
 export const getThemes = (callback) => {
-    DB.collection(`themes`).onSnapshot(querySnapshot => {
+    firestore.collection(`themes`).onSnapshot(querySnapshot => {
         const list = [];
         let theme = {}
         querySnapshot.forEach(doc => {
@@ -15,7 +15,7 @@ export const getThemes = (callback) => {
     });
 };
 export const getThemeColor = (callback, idTheme) => {
-    DB.collection("themes").doc(idTheme).get().then((doc) => {
+    firestore.collection("themes").doc(idTheme).get().then((doc) => {
         let color = null
         if (doc.exists) {
             color = doc.data()

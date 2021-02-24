@@ -1,7 +1,7 @@
-import { DB } from '@/plugins/firebase.js';
+import { firestore } from '@/plugins/firebase.js';
 
 export const getCards = (callback) => {
-    DB.collection(`cards`).orderBy('idTheme').onSnapshot(querySnapshot => {
+    firestore.collection(`cards`).orderBy('idTheme').onSnapshot(querySnapshot => {
         const list = [];
         let card = {}
         querySnapshot.forEach(doc => {
@@ -16,7 +16,7 @@ export const getCards = (callback) => {
 };
 
 export const getCard = (callback, id) => {
-    DB.collection("cards").doc(id).get().then((doc) => {
+    firestore.collection("cards").doc(id).get().then((doc) => {
         let card = null
         if (doc.exists) {
             card = doc.data()
@@ -29,8 +29,8 @@ export const getCard = (callback, id) => {
 
 export const getNextId = (callback, id) => {
     let nextId = null
-    DB.collection("cards").doc(id).get().then((doc) => {
-        let nextRef = DB.collection('cards')
+    firestore.collection("cards").doc(id).get().then((doc) => {
+        let nextRef = firestore.collection('cards')
             .orderBy('idTheme')
             .startAfter(doc)
             .limit(1);
@@ -45,8 +45,8 @@ export const getNextId = (callback, id) => {
 
 export const getPreviousId = (callback, id) => {
     let previousId = null
-    DB.collection("cards").doc(id).get().then((doc) => {
-        let nextRef = DB.collection('cards')
+    firestore.collection("cards").doc(id).get().then((doc) => {
+        let nextRef = firestore.collection('cards')
             .orderBy('idTheme')
             .endBefore(doc);
         nextRef.get().then((nextDocs) => {
