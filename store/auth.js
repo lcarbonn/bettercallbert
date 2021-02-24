@@ -1,22 +1,23 @@
 import { auth, firestore } from '~/plugins/firebase.js';
 
 export const state = () => ({
-    authUser: null,
+    authUser: {
+        uid: null,
+        email: null,
+    },
     loading: true
 });
 
 export const getters = {
     isConnected: state => {
         return !!state.authUser?.uid
-        // return state.user.id && state.user.uid && state.user.hasPermission;
     }
 };
 
 export const mutations = {
     setUser(state, payload) {
-        state.user = payload.user;
+        Object.assign(state.authUser, payload.user);
         console.log('user assigned:' + payload.user);
-        if (payload.user) console.log('user assigned:' + payload.user.uid);
         state.loading = false;
     }
 };
@@ -32,7 +33,7 @@ export const actions = {
         return new Promise((resolve, reject) => {
             auth.signInWithEmailAndPassword(payload.email, payload.password)
                 .then(res => {
-                    commit('setUser', { user: res.user });
+                    commit('setUser', { user: { uid: res.user.uid, email: res.user.email } });
                     resolve();
                 })
                 .catch(e => {

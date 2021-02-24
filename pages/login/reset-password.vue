@@ -1,8 +1,7 @@
 <template>
-    <!-- <form-layout> -->
     <div slot="form">
 
-        <div>
+        <form>
             <p>C'est parti pour réinitialiser mon mot de passe !</p>
 
             <p v-if="error"
@@ -20,17 +19,14 @@
                 <nuxt-link to="/login">Je me souviens de mon mot de passe ! :D</nuxt-link>
             </p>
 
-            <!-- <p>Vous n'avez pas de compte ? Vous pouvez <nuxt-link to="/signup">en créer un</nuxt-link>.</p> -->
-        </div>
+        </form>
 
         <snackbar label="Email envoyé !"
                   ref="resetPasswordSnackbar"></snackbar>
     </div>
-    <!-- </form-layout> -->
 </template>
 
 <script>
-// import FormLayout from '~/components/layout/FormLayout';
 import Snackbar from '~/components/base/Snackbar';
 import { auth } from '~/plugins/firebase.js';
 import notAuthenticated from '~/mixins/notAuthenticated.js';
@@ -38,7 +34,6 @@ import notAuthenticated from '~/mixins/notAuthenticated.js';
 export default {
     mixins: [notAuthenticated],
     components: {
-        // FormLayout,
         Snackbar
     },
     head: {

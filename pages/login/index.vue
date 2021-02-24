@@ -1,8 +1,7 @@
 <template>
-    <!-- <form-layout> -->
     <div slot="form">
 
-        <div>
+        <form>
             <p>C'est parti pour me connecter !</p>
 
             <p v-if="error"
@@ -25,21 +24,16 @@
                 <nuxt-link to="/login/reset-password">J'ai oublié mon mot de passe :'(</nuxt-link>
             </p>
 
-            <!-- <p>Vous n'avez pas de compte ? Vous pouvez <nuxt-link to="/signup">en créer un</nuxt-link>.</p> -->
-        </div>
+        </form>
     </div>
-    <!-- </form-layout> -->
 </template>
 
 <script>
-// import FormLayout from '~/components/layout/FormLayout';
+
 import notAuthenticated from '~/mixins/notAuthenticated.js';
 
 export default {
     mixins: [notAuthenticated],
-    components: {
-        // FormLayout
-    },
     head: {
         title: 'Connexion'
     },
