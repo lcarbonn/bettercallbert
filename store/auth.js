@@ -1,4 +1,4 @@
-import { auth, firestore } from '~/plugins/firebase.js';
+import { auth } from '~/plugins/firebase.js';
 
 export const state = () => ({
     authUser: {
@@ -31,12 +31,15 @@ export const actions = {
     },
     signInWithEmailAndPassword({ commit }, payload) {
         return new Promise((resolve, reject) => {
+            console.log("auth:" + auth);
             auth.signInWithEmailAndPassword(payload.email, payload.password)
                 .then(res => {
+                    console.log('user assigned:' + res.user.uid);
                     commit('setUser', { user: { uid: res.user.uid, email: res.user.email } });
                     resolve();
                 })
                 .catch(e => {
+                    console.log("e:" + e);
                     reject(e);
                 });
         });

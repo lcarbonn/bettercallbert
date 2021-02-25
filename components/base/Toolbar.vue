@@ -17,12 +17,15 @@
                        @click="setSearchVisible()">
                 <md-icon>search</md-icon>
             </md-button>
-        </div>
-        <div class="md-toolbar-section-end"
-             v-show="isConnected">
             <md-button class="md-icon-button"
                        @click="logout()">
                 <md-icon>logout</md-icon>
+            </md-button>
+            <md-button class="md-icon-button"
+                       @click="logout()"
+                       v-show="!isConnected"
+                       to="/login">
+                <md-icon>login</md-icon>
             </md-button>
         </div>
     </div>
