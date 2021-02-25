@@ -17,7 +17,6 @@ export const getters = {
 export const mutations = {
     setUser(state, payload) {
         Object.assign(state.authUser, payload.user);
-        console.log('user assigned:' + payload.user);
         state.loading = false;
     }
 };
@@ -31,10 +30,8 @@ export const actions = {
     },
     signInWithEmailAndPassword({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            console.log("auth:" + auth);
             auth.signInWithEmailAndPassword(payload.email, payload.password)
                 .then(res => {
-                    console.log('user assigned:' + res.user.uid);
                     commit('setUser', { user: { uid: res.user.uid, email: res.user.email } });
                     resolve();
                 })

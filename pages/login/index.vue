@@ -1,7 +1,7 @@
 <template>
     <div slot="form">
 
-        <form>
+        <form @submit.stop.prevent>
             <p>C'est parti pour me connecter !</p>
 
             <p v-if="error"

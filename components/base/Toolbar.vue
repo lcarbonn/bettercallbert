@@ -18,13 +18,16 @@
                 <md-icon>search</md-icon>
             </md-button>
             <md-button class="md-icon-button"
-                       @click="logout()">
+                       @click="logout()"
+                       v-show="isConnected">
                 <md-icon>logout</md-icon>
             </md-button>
-            <md-button class="md-icon-button"
+            <md-button class="
+                       md-icon-button"
                        @click="logout()"
                        v-show="!isConnected"
-                       to="/login">
+                       to="/login"
+                       alt="Login">
                 <md-icon>login</md-icon>
             </md-button>
         </div>
