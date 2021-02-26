@@ -16,11 +16,13 @@
             <md-button class="md-icon-button"
                        @click="setSearchVisible()">
                 <md-icon>search</md-icon>
+                <md-tooltip md-direction="top">Search</md-tooltip>
             </md-button>
             <md-button class="md-icon-button"
                        @click="logout()"
                        v-show="isConnected">
                 <md-icon>logout</md-icon>
+                <md-tooltip md-direction="top">Logout</md-tooltip>
             </md-button>
             <md-button class="
                        md-icon-button"
@@ -29,6 +31,7 @@
                        to="/login"
                        alt="Login">
                 <md-icon>login</md-icon>
+                <md-tooltip md-direction="top">Login</md-tooltip>
             </md-button>
         </div>
     </div>
