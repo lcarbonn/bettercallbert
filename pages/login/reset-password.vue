@@ -1,19 +1,21 @@
 <template>
-    <div slot="form">
+    <div id="login">
 
-        <form>
+        <form @submit.stop.prevent
+              id="form">
             <p>C'est parti pour réinitialiser mon mot de passe !</p>
 
             <p v-if="error"
                class="message error">{{ error }}</p>
 
-            <input v-model="email"
-                   @keyup.enter="sendPasswordResetEmail()"
-                   type="text"
-                   placeholder="Email" />
+            <md-field md-clearable>
+                <label>Email</label>
+                <md-input v-model="email"
+                          @keyup.enter="sendPasswordResetEmail()"></md-input>
+            </md-field>
 
-            <button @click="sendPasswordResetEmail()"
-                    class="button primary">Envoyer un mail</button>
+            <md-button class="md-raised md-primary"
+                       @click="sendPasswordResetEmail()">Envoyer un mail</md-button>
 
             <p class="message__password">
                 <nuxt-link to="/login">Je me souviens de mon mot de passe ! :D</nuxt-link>
@@ -65,7 +67,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.message__password {
-    margin-bottom: 3rem !important;
+#login {
+    display: flex;
+    justify-content: space-around;
+}
+#form {
+    width: 30vw;
+    max-width: calc(100vw - 130px);
 }
 </style>

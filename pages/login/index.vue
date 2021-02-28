@@ -1,27 +1,29 @@
 <template>
-    <div slot="form">
+    <div id="login">
 
-        <form @submit.stop.prevent>
+        <form @submit.stop.prevent
+              id="form">
             <p>C'est parti pour me connecter !</p>
 
             <p v-if="error"
                class="message error">{{ error }}</p>
 
-            <input v-model="email"
-                   @keyup.enter="emailLogin()"
-                   type="text"
-                   placeholder="Email" />
+            <md-field md-clearable>
+                <label>Email</label>
+                <md-input v-model="email"
+                          @keyup.enter="emailLogin()"></md-input>
+            </md-field>
+            <md-field>
+                <label>Password</label>
+                <md-input v-model="password"
+                          @keyup.enter="emailLogin()"
+                          type="password"></md-input>
+            </md-field>
+            <md-button class="md-raised md-primary"
+                       @click="emailLogin()">Connexion</md-button>
 
-            <input v-model="password"
-                   @keyup.enter="emailLogin()"
-                   type="password"
-                   placeholder="Mot de passe" />
-
-            <button @click="emailLogin()"
-                    class="button primary">Connexion</button>
-
-            <p class="message__password">
-                <nuxt-link to="/login/reset-password">J'ai oublié mon mot de passe :'(</nuxt-link>
+            <p class="n-link">
+                <n-link to="/login/reset-password">J'ai oublié mon mot de passe :'(</n-link>
             </p>
 
         </form>
@@ -70,7 +72,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.message__password {
-    margin-bottom: 3rem !important;
+#login {
+    display: flex;
+    justify-content: space-around;
+}
+#form {
+    width: 30vw;
+    max-width: calc(100vw - 130px);
 }
 </style>
