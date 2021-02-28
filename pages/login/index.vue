@@ -1,13 +1,10 @@
 <template>
     <div id="login">
 
-        <form @submit.stop.prevent
+        <form class="md-layout"
+              @submit.stop.prevent
               id="form">
             <p>C'est parti pour me connecter !</p>
-
-            <p v-if="error"
-               class="message error">{{ error }}</p>
-
             <md-field md-clearable>
                 <label>Email</label>
                 <md-input v-model="email"
@@ -25,6 +22,9 @@
             <p class="n-link">
                 <n-link to="/login/reset-password">J'ai oublié mon mot de passe :'(</n-link>
             </p>
+            <md-snackbar :md-active.sync="showSnackbar">
+                <span>{{ error }}</span>
+            </md-snackbar>
 
         </form>
     </div>
@@ -45,15 +45,18 @@ export default {
         return {
             email: '',
             password: '',
-            error: ''
+            error: '',
+            showSnackbar: false
         };
     },
     methods: {
         emailLogin() {
             if (!this.email) {
                 this.error = "L'email est obligatoire";
+                this.showSnackbar = true;
             } else if (!this.password) {
                 this.error = 'Le mot de passe est obligatoire';
+                this.showSnackbar = true;
             } else {
                 this.error = '';
                 this.$store

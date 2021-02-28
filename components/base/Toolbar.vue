@@ -28,8 +28,7 @@
                        md-icon-button"
                        @click="logout()"
                        v-show="!isConnected"
-                       to="/login"
-                       alt="Login">
+                       to="/login">
                 <md-icon>login</md-icon>
                 <md-tooltip md-direction="top">Login</md-tooltip>
             </md-button>
