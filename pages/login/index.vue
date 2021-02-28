@@ -1,44 +1,43 @@
 <template>
-    <div id="login">
+    <form novalidate
+          class="md-layout md-alignment-top-center"
+          @submit.stop.prevent>
+        <md-card class="md-layout-item md-size-30 md-small-size-100">
+            <md-card-header>
+                <div>C'est parti pour me connecter !</div>
+            </md-card-header>
 
-        <form novalidate
-              class="md-layout md-alignment-top-center"
-              @submit.stop.prevent
-              id="form">
-            <md-card class="md-layout-item md-size-30 md-small-size-100">
-                <md-card-header>
-                    <div>C'est parti pour me connecter !</div>
-                </md-card-header>
+            <md-card-content>
+                <div class="md-layout md-gutter">
+                    <div class="md-layout-item md-small-size-100">
+                        <md-field md-clearable>
+                            <label>Email</label>
+                            <md-input v-model="email"
+                                      @keyup.enter="emailLogin()"></md-input>
+                        </md-field>
+                        <md-field>
+                            <label>Password</label>
+                            <md-input v-model="password"
+                                      @keyup.enter="emailLogin()"
+                                      type="password"></md-input>
+                        </md-field>
+                        <md-button class="md-raised md-primary"
+                                   @click="emailLogin()">Connexion</md-button>
 
-                <md-card-content>
-                    <div class="md-layout md-gutter">
-                        <div class="md-layout-item md-small-size-100">
-                            <md-field md-clearable>
-                                <label>Email</label>
-                                <md-input v-model="email"
-                                          @keyup.enter="emailLogin()"></md-input>
-                            </md-field>
-                            <md-field>
-                                <label>Password</label>
-                                <md-input v-model="password"
-                                          @keyup.enter="emailLogin()"
-                                          type="password"></md-input>
-                            </md-field>
-                            <md-button class="md-raised md-primary"
-                                       @click="emailLogin()">Connexion</md-button>
-
-                            <p class="n-link">
-                                <n-link to="/login/reset-password">J'ai oublié mon mot de passe :'(</n-link>
-                            </p>
-                        </div>
                     </div>
-                </md-card-content>
-            </md-card>
-            <md-snackbar :md-active.sync="showSnackbar">
-                <span>{{ error }}</span>
-            </md-snackbar>
-        </form>
-    </div>
+                </div>
+                <div class="md-layout md-gutter">
+                    <div class="md-layout-item md-small-size-100">
+                        <n-link class="n-link"
+                                to="/login/reset-password">J'ai oublié mon mot de passe :'(</n-link>
+                    </div>
+                </div>
+            </md-card-content>
+        </md-card>
+        <md-snackbar :md-active.sync="showSnackbar">
+            <span>{{ error }}</span>
+        </md-snackbar>
+    </form>
 </template>
 
 <script>
@@ -80,6 +79,7 @@ export default {
                     })
                     .catch(e => {
                         this.error = e.message;
+                        this.showSnackbar = true;
                     });
             }
         }
