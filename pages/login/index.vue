@@ -33,9 +33,11 @@
 <script>
 
 import notAuthenticated from '~/mixins/notAuthenticated.js';
+import { route } from '~/mixins/authenticated.js';
 
 export default {
     mixins: [notAuthenticated],
+
     head: {
         title: 'Connexion'
     },
@@ -60,7 +62,11 @@ export default {
                         password: this.password
                     })
                     .then(res => {
-                        this.$router.push('/');
+                        if (route.nextRoute) {
+                            this.$router.push(route.nextRoute.path);
+                        } else {
+                            this.$router.push('/');
+                        }
                     })
                     .catch(e => {
                         this.error = e.message;
