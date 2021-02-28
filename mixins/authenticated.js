@@ -1,6 +1,11 @@
 export const route = () => ({
     nextRoute: null
 });
+
+export const getNextPath = () => {
+    return route.nextRoute ? route.nextRoute.path : "/"
+};
+
 export default {
     mounted() {
         // Redirect to login if user not connected trying to access authenticated pages
