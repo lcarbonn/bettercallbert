@@ -1,31 +1,42 @@
 <template>
     <div id="login">
 
-        <form class="md-layout"
+        <form novalidate
+              class="md-layout md-alignment-top-center"
               @submit.stop.prevent
               id="form">
-            <p>C'est parti pour me connecter !</p>
-            <md-field md-clearable>
-                <label>Email</label>
-                <md-input v-model="email"
-                          @keyup.enter="emailLogin()"></md-input>
-            </md-field>
-            <md-field>
-                <label>Password</label>
-                <md-input v-model="password"
-                          @keyup.enter="emailLogin()"
-                          type="password"></md-input>
-            </md-field>
-            <md-button class="md-raised md-primary"
-                       @click="emailLogin()">Connexion</md-button>
+            <md-card class="md-layout-item md-size-30 md-small-size-100">
+                <md-card-header>
+                    <div>C'est parti pour me connecter !</div>
+                </md-card-header>
 
-            <p class="n-link">
-                <n-link to="/login/reset-password">J'ai oublié mon mot de passe :'(</n-link>
-            </p>
+                <md-card-content>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-small-size-100">
+                            <md-field md-clearable>
+                                <label>Email</label>
+                                <md-input v-model="email"
+                                          @keyup.enter="emailLogin()"></md-input>
+                            </md-field>
+                            <md-field>
+                                <label>Password</label>
+                                <md-input v-model="password"
+                                          @keyup.enter="emailLogin()"
+                                          type="password"></md-input>
+                            </md-field>
+                            <md-button class="md-raised md-primary"
+                                       @click="emailLogin()">Connexion</md-button>
+
+                            <p class="n-link">
+                                <n-link to="/login/reset-password">J'ai oublié mon mot de passe :'(</n-link>
+                            </p>
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
             <md-snackbar :md-active.sync="showSnackbar">
                 <span>{{ error }}</span>
             </md-snackbar>
-
         </form>
     </div>
 </template>
@@ -75,14 +86,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss" scoped>
-#login {
-    display: flex;
-    justify-content: space-around;
-}
-#form {
-    width: 30vw;
-    max-width: calc(100vw - 130px);
-}
-</style>
