@@ -1,7 +1,7 @@
 <template>
     <form novalidate
           class="md-layout md-alignment-top-center"
-          @submit.stop.prevent>
+          @submit.prevent="validateLogin">
         <md-card class="md-layout-item md-size-30 md-small-size-100">
             <md-card-header>
                 <div>Let's go !</div>
@@ -10,19 +10,29 @@
             <md-card-content>
                 <div class="md-layout md-gutter">
                     <div class="md-layout-item md-small-size-100">
-                        <md-field md-clearable>
-                            <label>Email</label>
-                            <md-input v-model="email"
-                                      @keyup.enter="emailLogin()"></md-input>
+                        <md-field md-clearable
+                                  :class="getValidationClass('email')">
+                            <label for="email">Email</label>
+                            <md-input name="email"
+                                      id="email"
+                                      v-model="form.email"></md-input>
+                            <span class="md-error"
+                                  v-if="!$v.form.email.required">The email is required</span>
+                            <span class="md-error"
+                                  v-else-if="!$v.form.email.email">Invalid email</span>
                         </md-field>
-                        <md-field>
-                            <label>Password</label>
-                            <md-input v-model="password"
-                                      @keyup.enter="emailLogin()"
+                        <md-field :class="getValidationClass('password')">
+                            <label for="password">Password</label>
+                            <md-input name="password"
+                                      id="
+                                      password"
+                                      v-model="form.password"
                                       type="password"></md-input>
+                            <span class="md-error"
+                                  v-if="!$v.form.password.required">The password is required</span>
                         </md-field>
                         <md-button class="md-raised md-primary"
-                                   @click="emailLogin()">Connexion</md-button>
+                                   type="submit">Connexion</md-button>
 
                     </div>
                 </div>
@@ -45,42 +55,70 @@
 import notAuthenticated from '~/mixins/notAuthenticated.js';
 import { getNextPath } from '~/mixins/authenticated.js';
 
-export default {
-    mixins: [notAuthenticated],
+import { validationMixin } from 'vuelidate'
+import {
+    required,
+    email
+} from 'vuelidate/lib/validators'
 
-    head: {
-        title: 'Login'
-    },
-    data() {
-        return {
-            email: '',
-            password: '',
-            error: '',
-            showSnackbar: false
-        };
+export default {
+    name: "Login",
+    mixins: [notAuthenticated, validationMixin],
+    data: () => ({
+        form: {
+            email: null,
+            password: null,
+        },
+        error: '',
+        showSnackbar: false
+    }),
+    validations: {
+        form: {
+            email: {
+                required,
+                email
+            },
+            password: {
+                required
+            }
+        }
     },
     methods: {
+        getValidationClass(fieldName) {
+            const field = this.$v.form[fieldName]
+
+            if (field) {
+                return {
+                    'md-invalid': field.$invalid && field.$dirty
+                }
+            }
+        },
+        clearForm() {
+            this.$v.$reset()
+            this.form.email = null
+            this.form.password = null
+        },
         emailLogin() {
-            if (!this.email) {
-                this.error = "The email is required";
-                this.showSnackbar = true;
-            } else if (!this.password) {
-                this.error = 'The password is required';
-                this.showSnackbar = true;
-            } else {
-                this.error = '';
-                this.$store
-                    .dispatch('auth/signInWithEmailAndPassword', {
-                        email: this.email,
-                        password: this.password
-                    })
-                    .then(res => {
-                        this.$router.push(getNextPath());
-                    })
-                    .catch(e => {
-                        this.error = e.message;
-                        this.showSnackbar = true;
-                    });
+
+            this.$store
+                .dispatch('auth/signInWithEmailAndPassword', {
+                    email: this.form.email,
+                    password: this.form.password
+                })
+                .then(res => {
+                    this.$router.push(getNextPath());
+                })
+                .catch(e => {
+                    this.error = e.message;
+                    this.showSnackbar = true;
+                });
+
+        },
+        validateLogin() {
+            this.$v.$touch()
+
+            if (!this.$v.$invalid) {
+                this.emailLogin()
             }
         }
     }
