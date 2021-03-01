@@ -11,10 +11,10 @@
                         class="md-title n-link">Better Call Bert</n-link>
             </span>
         </div>
-        <div class="md-toolbar-section-end"
-             v-show="!isSingleCard">
+        <div class="md-toolbar-section-end">
             <md-button class="md-icon-button"
-                       @click="setSearchVisible()">
+                       @click="setSearchVisible()"
+                       v-show="!isSingleCard">
                 <md-icon>search</md-icon>
                 <md-tooltip md-direction="top">Search</md-tooltip>
             </md-button>

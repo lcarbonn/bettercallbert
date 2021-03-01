@@ -4,7 +4,7 @@
           @submit.stop.prevent>
         <md-card class="md-layout-item md-size-30 md-small-size-100">
             <md-card-header>
-                <div>C'est parti pour réinitialiser mon mot de passe !</div>
+                <div>Let's go for password reset !</div>
             </md-card-header>
 
             <md-card-content>
@@ -17,14 +17,14 @@
                         </md-field>
 
                         <md-button class="md-raised md-primary"
-                                   @click="sendPasswordResetEmail()">Envoyer un mail</md-button>
+                                   @click="sendPasswordResetEmail()">Send me an email</md-button>
 
                     </div>
                 </div>
                 <div class="md-layout md-gutter">
                     <div class="md-layout-item md-small-size-100">
                         <n-link class="n-link"
-                                to="/login">Je me souviens de mon mot de passe ! :D</n-link>
+                                to="/login">I remember my password ! :D</n-link>
                     </div>
                 </div>
             </md-card-content>
@@ -43,7 +43,7 @@ import notAuthenticated from '~/mixins/notAuthenticated.js';
 export default {
     mixins: [notAuthenticated],
     head: {
-        title: 'Mot de passe oublié'
+        title: 'Forgoten password'
     },
     data() {
         return {
@@ -55,12 +55,12 @@ export default {
     methods: {
         sendPasswordResetEmail() {
             if (!this.email) {
-                this.error = "L'email est obligatoire";
+                this.error = "This email is required";
                 this.showSnackbar = true;
             } else {
                 auth.sendPasswordResetEmail(this.email)
                     .then(() => {
-                        this.error = "Email envoyé !"
+                        this.error = "Email sent !"
                         this.showSnackbar = true;
                     })
                     .catch(e => {

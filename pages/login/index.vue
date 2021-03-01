@@ -4,7 +4,7 @@
           @submit.stop.prevent>
         <md-card class="md-layout-item md-size-30 md-small-size-100">
             <md-card-header>
-                <div>C'est parti pour me connecter !</div>
+                <div>Let's go !</div>
             </md-card-header>
 
             <md-card-content>
@@ -29,7 +29,7 @@
                 <div class="md-layout md-gutter">
                     <div class="md-layout-item md-small-size-100">
                         <n-link class="n-link"
-                                to="/login/reset-password">J'ai oublié mon mot de passe :'(</n-link>
+                                to="/login/reset-password">I think I've forgot my password :'(</n-link>
                     </div>
                 </div>
             </md-card-content>
@@ -49,7 +49,7 @@ export default {
     mixins: [notAuthenticated],
 
     head: {
-        title: 'Connexion'
+        title: 'Login'
     },
     data() {
         return {
@@ -62,10 +62,10 @@ export default {
     methods: {
         emailLogin() {
             if (!this.email) {
-                this.error = "L'email est obligatoire";
+                this.error = "The email is required";
                 this.showSnackbar = true;
             } else if (!this.password) {
-                this.error = 'Le mot de passe est obligatoire';
+                this.error = 'The password is required';
                 this.showSnackbar = true;
             } else {
                 this.error = '';
