@@ -74,6 +74,9 @@ export const mutations = {
     },
     setSrc(state, payload) {
         state.src = payload
+    },
+    setTitle(state, payload) {
+        state.card.title = payload
     }
 };
 
@@ -192,6 +195,12 @@ export const actions = {
         } else {
             commit("setSrc", src)
         }
+    },
+    setCard({ commit }, card) {
+        commit("setCard", card);
+    },
+    setSrc({ commit }, src) {
+        commit("setSrc", src);
     }
 };
 

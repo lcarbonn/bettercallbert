@@ -24,8 +24,7 @@
                         <md-field :class="getValidationClass('password')">
                             <label for="password">Password</label>
                             <md-input name="password"
-                                      id="
-                                      password"
+                                      id="password"
                                       v-model="form.password"
                                       type="password"></md-input>
                             <span class="md-error"
