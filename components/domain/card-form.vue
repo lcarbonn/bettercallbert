@@ -3,9 +3,6 @@
           @submit.prevent>
 
         <md-card v-if="card">
-            <md-card-header>
-                <span class="md-title">{{mdTitle}}</span>
-            </md-card-header>
             <md-card-content>
                 <div class="md-layout md-gutter">
                     <div class="md-layout-item md-small-size-100">
@@ -13,7 +10,7 @@
                             <label for="title">Title</label>
                             <md-input name="title"
                                       id="title"
-                                      v-model.trim="mdTitle"></md-input>
+                                      v-model.trim="form.title"></md-input>
                             <span class="md-error"
                                   v-if="!$v.form.title.required">The title is required</span>
                             <span class="md-error"
@@ -23,7 +20,7 @@
                             <label for="src">Source</label>
                             <md-input name="src"
                                       id="src"
-                                      v-model.trim="mdSrc"
+                                      v-model.trim="form.src"
                                       type="text"></md-input>
                             <span class="md-error"
                                   v-if="!$v.form.src.required">The src is required</span>
@@ -32,17 +29,28 @@
                             <label for="link">Link</label>
                             <md-input name="link"
                                       id="link"
-                                      v-model.trim="mdLink"></md-input>
+                                      v-model.trim="form.link"></md-input>
                         </md-field>
                         <md-button class="md-raised md-primary"
                                    type="submit"
                                    @click="saveCard">Save</md-button>
                         <md-button class="md-raised md-primary"
                                    type="submit"
-                                   @click="cancelCard">Cancel</md-button>
+                                   @click="reloadCard">Cancel</md-button>
                     </div>
                 </div>
             </md-card-content>
+            <md-divider></md-divider>
+            <md-card-header>
+                <span class="md-title">{{form.title}}</span>
+            </md-card-header>
+            <md-card-actions md-alignment="space-between">
+                <md-button>
+                    <a v-if="form.link"
+                       :href="form.link"
+                       target="_blank">Jump to source</a>
+                </md-button>
+            </md-card-actions>
             <md-card-media>
                 <img :title="card.title"
                      :alt="card.title"
@@ -85,9 +93,9 @@ export default {
             link: null,
             // isRotate: null,
         },
+        firstLoad: true,
         error: '',
         showSnackbar: false,
-        lastCard: null
     }),
     validations: {
         form: {
@@ -103,41 +111,10 @@ export default {
             }
         }
     },
-    updated() {
-        this.lastCard = this.card
-    },
-    computed: {
-        // due to unmutable props, new v-model for validation
-        mdTitle: {
-            get() {
-                this.$v.form.title.$model = this.card.title
-                return this.card.title
-            },
-            set(value) {
-                this.card.title = value
-                this.form.title = value
-                this.$v.form.title.$touch()
-            }
-        },
-        mdLink: {
-            get() {
-                this.$v.form.link.$model = this.card.link
-                return this.card.link
-            },
-            set(value) {
-                this.form.link = value
-                this.$v.form.link.$touch()
-            }
-        },
-        mdSrc: {
-            get() {
-                this.$v.form.src.$model = this.src
-                return this.src
-            },
-            set(value) {
-                this.form.src = value
-                this.$v.form.src.$touch()
-            }
+    beforeUpdate() {
+        if (this.firstLoad) {
+            this.reloadCard()
+            this.firstLoad = false
         }
     },
     methods: {
@@ -161,12 +138,10 @@ export default {
                 })
             }
         },
-        cancelCard() {
-            this.mdTitle = this.lastCard.title;
-            this.mdLink = this.lastCard.link;
-            this.mdSrc = this.src;
-            // this.$store.dispatch("cards/setCard", this.card);
-            // this.$store.dispatch("cards/setSrc", this.src);
+        reloadCard() {
+            this.form.title = this.card.title;
+            this.form.link = this.card.link;
+            this.form.src = this.card.src;
         }
     }
 }
