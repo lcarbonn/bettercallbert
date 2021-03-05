@@ -46,10 +46,6 @@ export default {
             type: String,
             default: null
         },
-        color: {
-            type: String,
-            default: ""
-        },
         src: {
             type: String,
             default: null

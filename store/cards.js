@@ -5,7 +5,6 @@ export const state = () => ({
     cards: [],
     fullCards: [],
     card: null,
-    color: null,
     nextId: null,
     previousId: null,
     src: null
@@ -20,9 +19,6 @@ export const getters = {
     },
     card: state => {
         return state.card
-    },
-    color: state => {
-        return state.color
     },
     nextId: state => {
         return state.nextId
@@ -44,17 +40,9 @@ export const mutations = {
     },
     setCard(state, payload) {
         state.card = payload
-        state.color = null
         state.src = null
         state.nextId = null
         state.previousId = null
-    },
-    setEachColor(state, payload) {
-        state.cards.forEach(card => {
-            if (card.id == payload.id) {
-                card.color = payload.color
-            }
-        });
     },
     setEachSrc(state, payload) {
         state.cards.forEach(card => {
@@ -62,9 +50,6 @@ export const mutations = {
                 card.src = payload.src
             }
         });
-    },
-    setColor(state, payload) {
-        state.color = payload
     },
     setNextId(state, payload) {
         state.nextId = payload
@@ -85,26 +70,11 @@ export const actions = {
         const callback = cards => {
             commit("setCards", cards);
             commit("setFullCards", cards);
-            //dispatch("getColors", cards);
             cards.forEach((card) => {
-                dispatch("getEachColor", card)
                 dispatch("getEachSrc", card)
             })
         }
         getCards(callback);
-    },
-    getEachColor({ commit, state }, card) {
-        if (card.idTheme) {
-            const themes = this.getters['themes/themes']
-            let theme = themes.find(theme => theme.id == card.idTheme)
-            if (theme.color) {
-                let payload = {
-                    id: card.id,
-                    color: theme.color
-                }
-                commit('setEachColor', payload)
-            }
-        }
     },
     getEachSrc({ commit, state }, card) {
         if (card.src.indexOf("http") == -1) {
@@ -158,7 +128,6 @@ export const actions = {
         const callback = card => {
             if (card) {
                 commit("setCard", card);
-                dispatch("getColor", card.idTheme)
                 dispatch("getNextId", card.id)
                 dispatch("getPreviousId", card.id)
                 dispatch("getImageSrc", card.src)
@@ -177,14 +146,6 @@ export const actions = {
             commit("setPreviousId", previousId)
         }
         getPreviousId(callback, id);
-    },
-    getColor({ commit }, idTheme) {
-        if (idTheme) {
-            const themes = this.getters['themes/themes']
-            let theme = themes.find(theme => theme.id == idTheme)
-            // console.debug(`associate card:${card.id} => color: ${theme.color}`);
-            if (theme && theme.color) commit("setColor", theme.color)
-        }
     },
     getImageSrc({ commit }, src) {
         if (src && src.indexOf("http") == -1) {

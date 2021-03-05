@@ -54,10 +54,10 @@ export default {
     '@nuxtjs/pwa',
     ['nuxt-vue-material', {
       theme: 'default',
-      components: ['MdDrawer', 'MdRadio', 'MdMenu', 'MdContent', 'MdButton',
-        'MdToolbar', 'MdIcon', 'MdApp', 'MdCard', 'MdField',
-        'MdCheckbox', 'MdSnackbar', 'MdTooltip',
-        "MdDivider"
+      components: ['MdDrawer', 'MdRadio', 'MdMenu', 'MdContent', 'MdList', 'MdButton',
+        'MdToolbar', 'MdIcon', 'MdApp', 'MdCard', 'MdTable', 'MdField', 'MdRipple',
+        'MdEmptyState', 'MdCheckbox', 'MdProgress', 'MdSnackbar', 'MdSwitch', 'MdTooltip',
+        "MdTabs", "MdDivider"
       ]
     }],
 
