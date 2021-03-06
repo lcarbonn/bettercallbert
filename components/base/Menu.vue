@@ -10,7 +10,7 @@
             </md-list-item>
 
             <md-list-item md-expand
-                          :md-expanded.sync="expand">
+                          :md-expanded.sync="expandFilters">
                 <md-icon>filter</md-icon>
                 <span class="md-list-item-text n-link">Filters</span>
                 <md-list slot="md-expand">
@@ -24,10 +24,18 @@
                 </md-list>
             </md-list-item>
 
-            <md-list-item @click="setMenuVisible()"
-                          to="/admin">
+            <md-list-item md-expand
+                          :md-expanded.sync="expandSettings">
                 <md-icon>settings</md-icon>
-                <span class="md-list-item-text">Settings</span>
+                <span class="md-list-item-text n-link">Settings</span>
+                <md-list slot="md-expand">
+                    <md-list-item md-inset
+                                  @click="setMenuVisible()"
+                                  to="/admin">
+                        <md-icon>add</md-icon>
+                        <span class="md-list-item-text">Add Card</span>
+                    </md-list-item>
+                </md-list>
             </md-list-item>
         </md-list>
     </div>
@@ -45,7 +53,8 @@ export default {
     },
     data() {
         return {
-            expand: false
+            expandFilters: false,
+            expandSetttings: false
         }
     },
     methods: {

@@ -1,4 +1,4 @@
-import { getCards, getCard, getNextId, getPreviousId } from '~/services/cardsServices'
+import { getCards, getCard, getNextId, getPreviousId, saveCard } from '~/services/cardsServices'
 import { getImageSrc } from '~/services/storageServices'
 
 export const state = () => ({
@@ -162,8 +162,17 @@ export const actions = {
     },
     setSrc({ commit }, src) {
         commit("setSrc", src);
-    }
+    },
+    saveCard({ commit, dispatch }, card) {
+        dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
+        dispatch("snackbar/setSnackbarMessage", { message: null }, { root: true });
+        try {
+            saveCard(card);
+            dispatch("snackbar/setSnackbarMessage", { message: "Card saved" }, { root: true });
+            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
+        } catch (error) {
+            dispatch("snackbar/setSnackbarMessage", { message: "Error occured while saving card" }, { root: true });
+            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
+        }
+    },
 };
-
-
-

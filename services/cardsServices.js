@@ -21,7 +21,6 @@ export const getCard = (callback, id) => {
         if (doc.exists) {
             card = doc.data()
             card.id = doc.id
-            card.title = card.title.toUpperCase()
         }
         callback(card)
     })
@@ -56,5 +55,14 @@ export const getPreviousId = (callback, id) => {
             });
             callback(previousId)
         });
+    })
+};
+
+export const saveCard = (card) => {
+    console.log("saveCard id=" + card.id)
+    firestore.collection('cards').doc(card.id).update({
+        title: card.title,
+        link: card.link,
+        src: card.src
     })
 };

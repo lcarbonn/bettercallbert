@@ -22,6 +22,7 @@
             <div class="md-layout md-alignment-bottom-center md-body-1">
                 <span>Copyright © 2021 - Agilized in Toulouse, France</span>
             </div>
+            <Snackbar />
         </md-app-content>
     </md-app>
 </template>
@@ -30,13 +31,15 @@
 import Toolbar from '~/components/base/Toolbar'
 import Searchbar from '~/components/base/Searchbar'
 import Menu from '~/components/base/Menu'
+import Snackbar from '~/components/base/Snackbar'
 
 export default {
     name: 'Overlap',
     components: {
         Toolbar,
         Searchbar,
-        Menu
+        Menu,
+        Snackbar
     },
     data() {
         return {

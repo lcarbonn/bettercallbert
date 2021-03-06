@@ -57,9 +57,6 @@
                      :src="src">
             </md-card-media>
         </md-card>
-        <md-snackbar :md-active.sync="showSnackbar">
-            <span>{{ error }}</span>
-        </md-snackbar>
     </form>
 </template>
 
@@ -93,9 +90,7 @@ export default {
             link: null,
             // isRotate: null,
         },
-        firstLoad: true,
-        error: '',
-        showSnackbar: false,
+        firstLoad: true
     }),
     validations: {
         form: {

@@ -1,7 +1,7 @@
 <template>
     <div class="md-layout md-alignment-top-center">
         <md-button class="md-icon-button"
-                   :to='"/admin/"+id'
+                   :to="'/admin/'+id"
                    v-show="isConnected">
             <md-icon>build</md-icon>
             <md-tooltip md-direction="top">Update</md-tooltip>
