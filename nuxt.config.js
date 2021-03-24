@@ -1,5 +1,5 @@
 export default {
-  mode: 'spa',
+  ssr: false,
 
   /*
   ** Headers of the page
@@ -57,7 +57,7 @@ export default {
       components: ['MdDrawer', 'MdRadio', 'MdMenu', 'MdContent', 'MdList', 'MdButton',
         'MdToolbar', 'MdIcon', 'MdApp', 'MdCard', 'MdTable', 'MdField', 'MdRipple',
         'MdEmptyState', 'MdCheckbox', 'MdProgress', 'MdSnackbar', 'MdSwitch', 'MdTooltip',
-        "MdTabs"
+        "MdTabs", "MdDivider"
       ]
     }],
 
