@@ -97,7 +97,7 @@ export const actions = {
     filterCards({ commit, state }, idTheme) {
         this.textsearch = '';
         let cards = [];
-        if (idTheme == '') {
+        if (idTheme == null) {
             cards = state.fullCards
         } else {
             state.fullCards.forEach((card) => {

@@ -67,7 +67,7 @@ export default {
         },
         goHome() {
             this.$emit('setMenuVisible')
-            this.$emit('filterCards', '')
+            this.$emit('filterCards', null)
         },
         filterCards(idTheme) {
             this.$emit('setMenuVisible')
