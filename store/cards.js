@@ -1,4 +1,4 @@
-import { getCards, getCard, getNextId, getPreviousId, saveCard, createCard } from '~/services/cardsServices'
+import { getCards, getCard, getNextId, getPreviousId, saveCard, createCard, getThemes } from '~/services/cardsServices'
 import { getImageSrc } from '~/services/storageServices'
 
 export const state = () => ({
@@ -173,6 +173,7 @@ export const actions = {
             dispatch("snackbar/setSnackbarMessage", { message: "Card saved" }, { root: true });
             dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         } catch (error) {
+            console.log(error)
             dispatch("snackbar/setSnackbarMessage", { message: "Error occured while saving card" }, { root: true });
             dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         }
@@ -187,9 +188,9 @@ export const actions = {
             dispatch("snackbar/setSnackbarMessage", { message: "Card created" }, { root: true });
             dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         } catch (error) {
+            console.log(error)
             dispatch("snackbar/setSnackbarMessage", { message: "Error occured while creating card" }, { root: true });
             dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         }
-    },
-
+    }
 };

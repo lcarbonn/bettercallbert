@@ -31,12 +31,24 @@
                                       id="link"
                                       v-model.trim="form.link"></md-input>
                         </md-field>
+                        <md-field :class="getValidationClass('idTheme')">
+                            <label for="idTheme">Theme</label>
+                            <md-select v-model="form.idTheme"
+                                       name="idTheme"
+                                       id="idTheme">
+                                <md-option v-for="item in themes"
+                                           :key="item.id"
+                                           :value="item.id">{{ item.title }}</md-option>
+                            </md-select>
+                            <span class="md-error"
+                                  v-if="!$v.form.idTheme.required">The Theme is required</span>
+                        </md-field>
                         <md-button class="md-raised md-primary"
                                    type="submit"
                                    @click="saveCard">Save</md-button>
                         <md-button class="md-raised md-primary"
                                    type="submit"
-                                   @click="reloadCard">Cancel</md-button>
+                                   @click="resetCard">Cancel</md-button>
                     </div>
                 </div>
             </md-card-content>
@@ -45,14 +57,13 @@
                 <span class="md-title">{{form.title}}</span>
             </md-card-header>
             <md-card-actions md-alignment="space-between">
-                <md-button>
-                    <a v-if="form.link"
-                       :href="form.link"
-                       target="_blank">Jump to source</a>
-                </md-button>
+                <md-button v-if="form.link"
+                           :to="form.link"
+                           class="md-primary">Jump to source</md-button>
             </md-card-actions>
             <md-card-media>
-                <img :title="card.title"
+                <img v-if="src"
+                     :title="card.title"
                      :alt="card.title"
                      :src="src">
             </md-card-media>
@@ -86,7 +97,7 @@ export default {
         form: {
             title: null,
             src: null,
-            // idTheme: null,
+            idTheme: null,
             link: null,
             // isRotate: null,
         },
@@ -102,14 +113,25 @@ export default {
                 required,
                 minLength: minLength(3)
             },
+            idTheme: {
+                required
+            },
             link: {
-            }
+            },
         }
+    },
+    mounted() {
+        this.$store.dispatch("themes/getThemes")
     },
     beforeUpdate() {
         if (this.firstLoad) {
-            this.reloadCard()
+            this.resetCard()
             this.firstLoad = false
+        }
+    },
+    computed: {
+        themes() {
+            return this.$store.getters['themes/themes']
         }
     },
     methods: {
@@ -129,14 +151,16 @@ export default {
                 this.$emit('saveCard', {
                     "title": this.form.title,
                     "src": this.form.src,
-                    "link": this.form.link
+                    "link": this.form.link,
+                    "idTheme": this.form.idTheme
                 })
             }
         },
-        reloadCard() {
+        resetCard() {
             this.form.title = this.card.title;
             this.form.link = this.card.link;
             this.form.src = this.card.src;
+            this.form.idTheme = this.card.idTheme;
         }
     }
 }

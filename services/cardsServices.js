@@ -63,13 +63,15 @@ export const saveCard = (card) => {
     firestore.collection('cards').doc(card.id).update({
         title: card.title,
         link: card.link,
-        src: card.src
+        src: card.src,
+        idTheme: card.idTheme
     })
 };
 
 export const createCard = async () => {
     const newCard = {
         "title": "New Card",
+        "idTheme": "DEFAULT",
         "link": "",
         "src": "",
     }
