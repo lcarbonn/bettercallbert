@@ -23,15 +23,14 @@
                     </md-list-item>
                 </md-list>
             </md-list-item>
-
             <md-list-item md-expand
-                          :md-expanded.sync="expandSettings">
+                          :md-expanded.sync="expandSettings"
+                          v-show="isConnected">
                 <md-icon>settings</md-icon>
                 <span class="md-list-item-text n-link">Settings</span>
                 <md-list slot="md-expand">
                     <md-list-item md-inset
-                                  @click="setMenuVisible()"
-                                  to="/admin">
+                                  @click="createCard()">
                         <md-icon>add</md-icon>
                         <span class="md-list-item-text">Add Card</span>
                     </md-list-item>
@@ -54,7 +53,12 @@ export default {
     data() {
         return {
             expandFilters: false,
-            expandSetttings: false
+            expandSettings: false,
+        }
+    },
+    computed: {
+        isConnected() {
+            return this.$store.getters['auth/isConnected'];
         }
     },
     methods: {
@@ -68,6 +72,13 @@ export default {
         filterCards(idTheme) {
             this.$emit('setMenuVisible')
             this.$emit('filterCards', idTheme)
+        },
+        createCard() {
+            this.$emit('setMenuVisible')
+            this.$store.dispatch("cards/createCard").then(() => {
+                const card = this.$store.getters['cards/card']
+                this.$router.push('/admin/' + card.id);
+            });
         }
     },
 }

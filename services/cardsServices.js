@@ -66,3 +66,15 @@ export const saveCard = (card) => {
         src: card.src
     })
 };
+
+export const createCard = async () => {
+    const newCard = {
+        "titre": "New Card",
+        "link": "",
+        "src": "",
+    }
+    const ref = await firestore.collection('newcards').add(newCard)
+    newCard.id = ref.id
+    console.log("createCard id=" + card.id)
+    return newCard
+};

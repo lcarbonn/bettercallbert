@@ -6,7 +6,7 @@
                 <md-icon>menu</md-icon>
             </md-button>
             <span class="md-title"
-                  @click="resetTabs()">
+                  @click="resetFilter()">
                 <n-link to="/"
                         class="md-title n-link">Better Call Bert</n-link>
             </span>
@@ -50,24 +50,14 @@ export default {
             default: false
         }
     },
-    data() {
-        return {
-            mdActiveTab: ''
-        }
-    },
     computed: {
         isConnected() {
             return this.$store.getters['auth/isConnected'];
         }
     },
     methods: {
-        resetTabs() {
-            this.mdActiveTab = ''
+        resetFilter() {
             this.filterCards('')
-        },
-        setActiveTab(activeTab) {
-            this.mdActiveTab = activeTab
-            this.filterCards(activeTab)
         },
         setSearchVisible() {
             this.$emit('setSearchVisible')
