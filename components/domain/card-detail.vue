@@ -11,7 +11,8 @@
                 <md-icon>navigate_before</md-icon>
             </md-button>
             <md-button v-if="card.link"
-                       :to="card.link"
+                       :href="card.link"
+                       target="_blank"
                        class="md-primary">Jump to source</md-button>
             <md-button class="md-icon-button"
                        v-if="nextId"

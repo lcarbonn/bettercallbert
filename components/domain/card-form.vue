@@ -33,7 +33,8 @@
                         </md-field>
                         <md-field :class="getValidationClass('idTheme')">
                             <label for="idTheme">Theme</label>
-                            <md-select v-model="form.idTheme"
+                            <md-select disabled
+                                       v-model="form.idTheme"
                                        name="idTheme"
                                        id="idTheme">
                                 <md-option v-for="item in themes"
@@ -58,7 +59,8 @@
             </md-card-header>
             <md-card-actions md-alignment="space-between">
                 <md-button v-if="form.link"
-                           :to="form.link"
+                           :href="form.link"
+                           target="_blank"
                            class="md-primary">Jump to source</md-button>
             </md-card-actions>
             <md-card-media>
