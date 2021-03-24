@@ -1,4 +1,4 @@
-import { getCards, getCard, getNextId, getPreviousId, saveCard, createCard, getThemes } from '~/services/cardsServices'
+import { getCards, getCard, getNextId, getPreviousId, saveCard, createCard } from '~/services/cardsServices'
 import { getImageSrc } from '~/services/storageServices'
 
 export const state = () => ({
