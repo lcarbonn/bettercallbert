@@ -1,7 +1,7 @@
-import { DB } from '@/plugins/firebase.js';
+import { firestore } from '@/plugins/firebase.js';
 
 export const getCards = (callback) => {
-    DB.collection(`cards`).orderBy('idTheme').onSnapshot(querySnapshot => {
+    firestore.collection(`cards`).orderBy('idTheme').onSnapshot(querySnapshot => {
         const list = [];
         let card = {}
         querySnapshot.forEach(doc => {
@@ -16,12 +16,11 @@ export const getCards = (callback) => {
 };
 
 export const getCard = (callback, id) => {
-    DB.collection("cards").doc(id).get().then((doc) => {
+    firestore.collection("cards").doc(id).get().then((doc) => {
         let card = null
         if (doc.exists) {
             card = doc.data()
             card.id = doc.id
-            card.title = card.title.toUpperCase()
         }
         callback(card)
     })
@@ -29,8 +28,8 @@ export const getCard = (callback, id) => {
 
 export const getNextId = (callback, id) => {
     let nextId = null
-    DB.collection("cards").doc(id).get().then((doc) => {
-        let nextRef = DB.collection('cards')
+    firestore.collection("cards").doc(id).get().then((doc) => {
+        let nextRef = firestore.collection('cards')
             .orderBy('idTheme')
             .startAfter(doc)
             .limit(1);
@@ -45,8 +44,8 @@ export const getNextId = (callback, id) => {
 
 export const getPreviousId = (callback, id) => {
     let previousId = null
-    DB.collection("cards").doc(id).get().then((doc) => {
-        let nextRef = DB.collection('cards')
+    firestore.collection("cards").doc(id).get().then((doc) => {
+        let nextRef = firestore.collection('cards')
             .orderBy('idTheme')
             .endBefore(doc);
         nextRef.get().then((nextDocs) => {
@@ -57,4 +56,26 @@ export const getPreviousId = (callback, id) => {
             callback(previousId)
         });
     })
+};
+
+export const saveCard = (card) => {
+    console.log("saveCard id=" + card.id)
+    firestore.collection('cards').doc(card.id).update({
+        title: card.title,
+        link: card.link,
+        src: card.src,
+        idTheme: card.idTheme
+    })
+};
+
+export const createCard = async () => {
+    const newCard = {
+        "title": "New Card",
+        "idTheme": "DEFAULT",
+        "link": "",
+        "src": "",
+    }
+    const ref = await firestore.collection('cards').add(newCard)
+    newCard.id = ref.id
+    return newCard
 };

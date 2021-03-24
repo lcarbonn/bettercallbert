@@ -6,29 +6,31 @@
                 <md-icon>menu</md-icon>
             </md-button>
             <span class="md-title"
-                  @click="resetTabs()">
+                  @click="resetFilter()">
                 <n-link to="/"
                         class="md-title n-link">Better Call Bert</n-link>
             </span>
         </div>
-        <!-- <div class="md-toolbar-section"
-             v-show="!isSingleCard">
-            <md-tabs class="md-primary"
-                     :md-active-tab.sync="mdActiveTab"
-                     @md-changed="setActiveTab">
-                <md-tab v-for="menu in menus"
-                        :key="menu.id"
-                        :id="menu.id"
-                        :md-label="menu.title"
-                        @click="filterCards(menu.id)">
-                </md-tab>
-            </md-tabs>
-        </div> -->
-        <div class="md-toolbar-section-end"
-             v-show="!isSingleCard">
+        <div class="md-toolbar-section-end">
             <md-button class="md-icon-button"
-                       @click="setSearchVisible()">
+                       @click="setSearchVisible()"
+                       v-show="!isSingleCard">
                 <md-icon>search</md-icon>
+                <md-tooltip md-direction="top">Search</md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button"
+                       @click="logout()"
+                       v-show="isConnected">
+                <md-icon>logout</md-icon>
+                <md-tooltip md-direction="top">Logout</md-tooltip>
+            </md-button>
+            <md-button class="
+                       md-icon-button"
+                       @click="logout()"
+                       v-show="!isConnected"
+                       to="/login">
+                <md-icon>login</md-icon>
+                <md-tooltip md-direction="top">Login</md-tooltip>
             </md-button>
         </div>
     </div>
@@ -48,19 +50,14 @@ export default {
             default: false
         }
     },
-    data() {
-        return {
-            mdActiveTab: ''
+    computed: {
+        isConnected() {
+            return this.$store.getters['auth/isConnected'];
         }
     },
     methods: {
-        resetTabs() {
-            this.mdActiveTab = ''
+        resetFilter() {
             this.filterCards('')
-        },
-        setActiveTab(activeTab) {
-            this.mdActiveTab = activeTab
-            this.filterCards(activeTab)
         },
         setSearchVisible() {
             this.$emit('setSearchVisible')
@@ -70,6 +67,11 @@ export default {
         },
         filterCards(idTheme) {
             this.$emit('filterCards', idTheme)
+        },
+        logout() {
+            this.$store.dispatch('auth/signOut').then(() => {
+                this.$router.go('/');
+            });
         }
     }
 }

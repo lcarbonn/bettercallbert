@@ -13,15 +13,16 @@
                        @setSearchVisible="setSearchVisible" />
         </md-app-toolbar>
         <md-app-drawer :md-active.sync="menuVisible">
-            <Drawer :menus="themes"
-                    @filterCards="filterCards"
-                    @setMenuVisible="setMenuVisible" />
+            <Menu :menus="themes"
+                  @filterCards="filterCards"
+                  @setMenuVisible="setMenuVisible" />
         </md-app-drawer>
         <md-app-content @click="hideSearchVisible">
             <nuxt />
             <div class="md-layout md-alignment-bottom-center md-body-1">
-                <span>Copyright © 2020 - Agilized in Toulouse, France</span>
+                <span>Copyright © 2021 - Agilized in Toulouse, France</span>
             </div>
+            <Snackbar />
         </md-app-content>
     </md-app>
 </template>
@@ -29,14 +30,16 @@
 <script>
 import Toolbar from '~/components/base/Toolbar'
 import Searchbar from '~/components/base/Searchbar'
-import Drawer from '~/components/base/Drawer'
+import Menu from '~/components/base/Menu'
+import Snackbar from '~/components/base/Snackbar'
 
 export default {
     name: 'Overlap',
     components: {
         Toolbar,
         Searchbar,
-        Drawer,
+        Menu,
+        Snackbar
     },
     data() {
         return {

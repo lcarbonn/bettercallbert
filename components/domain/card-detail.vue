@@ -10,18 +10,17 @@
                        :to="'/cards/'+previousId">
                 <md-icon>navigate_before</md-icon>
             </md-button>
-            <md-button>
-                <a v-if="card.link"
-                   :href="card.link"
-                   target="_blank">Jump to source</a>
-            </md-button>
+            <md-button v-if="card.link"
+                       :href="card.link"
+                       target="_blank"
+                       class="md-primary">Jump to source</md-button>
             <md-button class="md-icon-button"
                        v-if="nextId"
                        :to="'/cards/'+nextId">
                 <md-icon>navigate_next</md-icon>
             </md-button>
         </md-card-actions>
-        <md-card-media>
+        <md-card-media v-if="src">
             <img :title="card.title"
                  :alt="card.title"
                  :src="src">
@@ -45,10 +44,6 @@ export default {
         previousId: {
             type: String,
             default: null
-        },
-        color: {
-            type: String,
-            default: ""
         },
         src: {
             type: String,

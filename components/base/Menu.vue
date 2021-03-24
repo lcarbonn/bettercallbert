@@ -10,7 +10,7 @@
             </md-list-item>
 
             <md-list-item md-expand
-                          :md-expanded.sync="expand">
+                          :md-expanded.sync="expandFilters">
                 <md-icon>filter</md-icon>
                 <span class="md-list-item-text n-link">Filters</span>
                 <md-list slot="md-expand">
@@ -23,10 +23,18 @@
                     </md-list-item>
                 </md-list>
             </md-list-item>
-
-            <md-list-item @click="setMenuVisible()">
+            <md-list-item md-expand
+                          :md-expanded.sync="expandSettings"
+                          v-show="isConnected">
                 <md-icon>settings</md-icon>
-                <span class="md-list-item-text">Settings</span>
+                <span class="md-list-item-text n-link">Settings</span>
+                <md-list slot="md-expand">
+                    <md-list-item md-inset
+                                  @click="createCard()">
+                        <md-icon>add</md-icon>
+                        <span class="md-list-item-text">Add Card</span>
+                    </md-list-item>
+                </md-list>
             </md-list-item>
         </md-list>
     </div>
@@ -34,7 +42,7 @@
 
 <script>
 export default {
-    name: "Drawer",
+    name: "Menu",
 
     props: {
         menus: {
@@ -44,20 +52,33 @@ export default {
     },
     data() {
         return {
-            expand: false
+            expandFilters: false,
+            expandSettings: false,
+        }
+    },
+    computed: {
+        isConnected() {
+            return this.$store.getters['auth/isConnected'];
         }
     },
     methods: {
         setMenuVisible() {
             this.$emit('setMenuVisible')
         },
-        goHome(idTheme) {
+        goHome() {
             this.$emit('setMenuVisible')
             this.$emit('filterCards', '')
         },
         filterCards(idTheme) {
             this.$emit('setMenuVisible')
             this.$emit('filterCards', idTheme)
+        },
+        createCard() {
+            this.$emit('setMenuVisible')
+            this.$store.dispatch("cards/createCard").then(() => {
+                const card = this.$store.getters['cards/card']
+                this.$router.push('/admin/' + card.id);
+            });
         }
     },
 }

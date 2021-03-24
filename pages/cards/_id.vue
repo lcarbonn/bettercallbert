@@ -1,10 +1,15 @@
 <template>
     <div class="md-layout md-alignment-top-center">
+        <md-button class="md-icon-button"
+                   :to="'/admin/'+id"
+                   v-show="isConnected">
+            <md-icon>build</md-icon>
+            <md-tooltip md-direction="top">Update</md-tooltip>
+        </md-button>
         <CardDetail :card="card"
                     :nextId="nextId"
                     :previousId="previousId"
-                    :src="src"
-                    :color="color" />
+                    :src="src" />
     </div>
 </template>
 
@@ -33,11 +38,11 @@ export default {
         previousId() {
             return this.$store.getters['cards/previousId']
         },
-        color() {
-            return this.$store.getters['cards/color']
-        },
         src() {
             return this.$store.getters['cards/src']
+        },
+        isConnected() {
+            return this.$store.getters['auth/isConnected'];
         }
     }
 
