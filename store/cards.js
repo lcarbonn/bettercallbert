@@ -179,7 +179,7 @@ export const actions = {
     },
     async createCard({ commit, dispatch }) {
         dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
-        dispatch("snackbar/setSnackbarMessage", { message: "Creating card" }, { root: true });
+        dispatch("snackbar/setSnackbarMessage", { message: "" }, { root: true });
         try {
             console.log("creating card");
             const card = await createCard(this);

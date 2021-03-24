@@ -69,12 +69,11 @@ export const saveCard = (card) => {
 
 export const createCard = async () => {
     const newCard = {
-        "titre": "New Card",
+        "title": "New Card",
         "link": "",
         "src": "",
     }
-    const ref = await firestore.collection('newcards').add(newCard)
+    const ref = await firestore.collection('cards').add(newCard)
     newCard.id = ref.id
-    console.log("createCard id=" + card.id)
     return newCard
 };
