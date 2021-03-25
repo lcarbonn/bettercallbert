@@ -29,8 +29,13 @@ export default {
         cards() {
             return this.$store.getters['cards/cards']
         },
-        currentTheme() {
-            return this.$store.getters['themes/currentTheme']
+        currentTheme: {
+            get() {
+                return this.$store.getters['themes/currentTheme']
+            },
+            set(newValue) {
+                // noting to do, just add a setter to avoid warning
+            }
         }
     }
 }
