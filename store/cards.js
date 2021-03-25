@@ -1,4 +1,4 @@
-import { getCards, getCard, getNextId, getPreviousId, saveCard, createCard } from '~/services/cardsServices'
+import { getCards, getCard, getNextId, getPreviousId, saveCard, createCard, deleteCard } from '~/services/cardsServices'
 import { getImageSrc } from '~/services/storageServices'
 
 export const state = () => ({
@@ -165,16 +165,29 @@ export const actions = {
     getCurrentCard({ commit }) {
         return state.card;
     },
-    saveCard({ commit, dispatch }, card) {
+    async saveCard({ commit, dispatch }, card) {
         dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
         dispatch("snackbar/setSnackbarMessage", { message: null }, { root: true });
         try {
-            saveCard(card);
+            await saveCard(card);
             dispatch("snackbar/setSnackbarMessage", { message: "Card saved" }, { root: true });
             dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         } catch (error) {
             console.log(error)
             dispatch("snackbar/setSnackbarMessage", { message: "Error occured while saving card" }, { root: true });
+            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
+        }
+    },
+    async deleteCard({ commit, dispatch }, id) {
+        dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
+        dispatch("snackbar/setSnackbarMessage", { message: null }, { root: true });
+        try {
+            await deleteCard(id);
+            dispatch("snackbar/setSnackbarMessage", { message: "Card deleted" }, { root: true });
+            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
+        } catch (error) {
+            console.log(error)
+            dispatch("snackbar/setSnackbarMessage", { message: "Error occured while deleting card" }, { root: true });
             dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         }
     },

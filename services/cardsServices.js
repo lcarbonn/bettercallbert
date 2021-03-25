@@ -58,14 +58,19 @@ export const getPreviousId = (callback, id) => {
     })
 };
 
-export const saveCard = (card) => {
+export const saveCard = async (card) => {
     console.log("saveCard id=" + card.id)
-    firestore.collection('cards').doc(card.id).update({
+    await firestore.collection('cards').doc(card.id).update({
         title: card.title,
         link: card.link,
         src: card.src,
         idTheme: card.idTheme
     })
+};
+
+export const deleteCard = async (id) => {
+    console.log("deleteCard id=" + id)
+    await firestore.collection('cards').doc(id).delete()
 };
 
 export const createCard = async () => {

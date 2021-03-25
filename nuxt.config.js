@@ -55,9 +55,9 @@ export default {
     ['nuxt-vue-material', {
       theme: 'default',
       components: ['MdDrawer', 'MdRadio', 'MdMenu', 'MdContent', 'MdList', 'MdButton',
-        'MdToolbar', 'MdIcon', 'MdApp', 'MdCard', 'MdTable', 'MdField', 'MdRipple',
-        'MdEmptyState', 'MdCheckbox', 'MdProgress', 'MdSnackbar', 'MdSwitch', 'MdTooltip',
-        "MdTabs", "MdDivider"
+        'MdToolbar', 'MdIcon', 'MdApp', 'MdCard', 'MdField',
+        'MdCheckbox', 'MdSnackbar', 'MdSwitch', 'MdTooltip',
+        "MdDivider", "MdDialog", "MdDialogConfirm"
       ]
     }],
 
