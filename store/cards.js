@@ -89,7 +89,6 @@ export const actions = {
         getImageSrc(callback, card.src);
     },
     filterCards({ commit, state }, theme) {
-        // this.textsearch = '';
         let cards = [];
         if (theme?.id == null) {
             cards = state.fullCards

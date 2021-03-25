@@ -69,6 +69,7 @@ export default {
             this.$store.dispatch("themes/setCurrentTheme", idTheme);
         },
         search(textsearch) {
+            this.$store.dispatch("themes/setCurrentTheme", null);
             this.$store.dispatch("cards/search", textsearch);
         }
     }
