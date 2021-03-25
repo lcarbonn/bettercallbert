@@ -44,7 +44,7 @@ export const mutations = {
         state.nextId = null
         state.previousId = null
     },
-    setEachSrc(state, payload) {
+    setCardSrc(state, payload) {
         state.cards.forEach(card => {
             if (card.id == payload.id) {
                 card.src = payload.src
@@ -71,28 +71,22 @@ export const actions = {
             commit("setCards", cards);
             commit("setFullCards", cards);
             cards.forEach((card) => {
-                dispatch("getEachSrc", card)
+                if (card.src.indexOf("http") == -1) {
+                    dispatch("getCardSrc", card)
+                }
             })
         }
         getCards(callback);
     },
-    getEachSrc({ commit, state }, card) {
-        if (card.src.indexOf("http") == -1) {
-            const callback = newSrc => {
-                let payload = {
-                    id: card.id,
-                    src: newSrc
-                }
-                commit("setEachSrc", payload)
-            }
-            getImageSrc(callback, card.src);
-        } else {
+    getCardSrc({ commit, state }, card) {
+        const callback = newSrc => {
             let payload = {
                 id: card.id,
-                src: card.src
+                src: newSrc
             }
-            commit("setEachSrc", payload)
+            commit("setCardSrc", payload)
         }
+        getImageSrc(callback, card.src);
     },
     filterCards({ commit, state }, theme) {
         // this.textsearch = '';
