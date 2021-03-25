@@ -13,3 +13,15 @@ export const getThemes = (callback) => {
         callback(list);
     });
 };
+
+export const getTheme = (callback, id) => {
+    firestore.collection("themes").doc(id).get().then((doc) => {
+        let theme = null
+        if (doc.exists) {
+            theme = doc.data()
+            theme.id = doc.id
+        }
+        callback(theme)
+    })
+};
+

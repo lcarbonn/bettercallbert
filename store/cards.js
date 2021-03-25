@@ -94,14 +94,14 @@ export const actions = {
             commit("setEachSrc", payload)
         }
     },
-    filterCards({ commit, state }, idTheme) {
-        this.textsearch = '';
+    filterCards({ commit, state }, theme) {
+        // this.textsearch = '';
         let cards = [];
-        if (idTheme == null) {
+        if (theme?.id == null) {
             cards = state.fullCards
         } else {
             state.fullCards.forEach((card) => {
-                if (card.idTheme == idTheme) {
+                if (card.idTheme == theme.id) {
                     cards.push(card);
                 }
             })

@@ -1,4 +1,4 @@
-import { getThemes } from '~/services/themesServices'
+import { getThemes, getTheme } from '~/services/themesServices'
 
 export const state = () => ({
     themes: [],
@@ -31,6 +31,13 @@ export const actions = {
         getThemes(callback, this);
     },
     setCurrentTheme({ commit, dispatch }, idTheme) {
-        commit("setCurrentTheme", idTheme);
+        if (idTheme == null) {
+            commit("setCurrentTheme", null);
+        } else {
+            const callback = theme => {
+                commit("setCurrentTheme", theme);
+            };
+            getTheme(callback, idTheme);
+        }
     },
 };
