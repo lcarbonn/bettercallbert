@@ -7,7 +7,8 @@
         </md-button>
         <CardForm :card="card"
                   :src="src"
-                  @saveCard="saveCard" />
+                  @saveCard="saveCard"
+                  @deleteCard="deleteCard" />
     </div>
 </template>
 
@@ -40,6 +41,9 @@ export default {
         saveCard(card) {
             card.id = this.id;
             this.$store.dispatch("cards/saveCard", card);
+        },
+        deleteCard() {
+            this.$store.dispatch("cards/deleteCard", this.id);
         }
     }
 }

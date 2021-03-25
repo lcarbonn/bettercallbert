@@ -57,7 +57,7 @@ export default {
     },
     methods: {
         resetFilter() {
-            this.filterCards('')
+            this.filterCards(null)
         },
         setSearchVisible() {
             this.$emit('setSearchVisible')

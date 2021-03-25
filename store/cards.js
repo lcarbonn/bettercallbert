@@ -1,4 +1,4 @@
-import { getCards, getCard, getNextId, getPreviousId, saveCard, createCard, getThemes } from '~/services/cardsServices'
+import { getCards, getCard, getNextId, getPreviousId, saveCard, createCard, deleteCard } from '~/services/cardsServices'
 import { getImageSrc } from '~/services/storageServices'
 
 export const state = () => ({
@@ -44,7 +44,7 @@ export const mutations = {
         state.nextId = null
         state.previousId = null
     },
-    setEachSrc(state, payload) {
+    setCardSrc(state, payload) {
         state.cards.forEach(card => {
             if (card.id == payload.id) {
                 card.src = payload.src
@@ -71,37 +71,31 @@ export const actions = {
             commit("setCards", cards);
             commit("setFullCards", cards);
             cards.forEach((card) => {
-                dispatch("getEachSrc", card)
+                if (card.src.indexOf("http") == -1) {
+                    dispatch("getCardSrc", card)
+                }
             })
         }
         getCards(callback);
     },
-    getEachSrc({ commit, state }, card) {
-        if (card.src.indexOf("http") == -1) {
-            const callback = newSrc => {
-                let payload = {
-                    id: card.id,
-                    src: newSrc
-                }
-                commit("setEachSrc", payload)
-            }
-            getImageSrc(callback, card.src);
-        } else {
+    getCardSrc({ commit, state }, card) {
+        const callback = newSrc => {
             let payload = {
                 id: card.id,
-                src: card.src
+                src: newSrc
             }
-            commit("setEachSrc", payload)
+            commit("setCardSrc", payload)
         }
+        getImageSrc(callback, card.src);
     },
-    filterCards({ commit, state }, idTheme) {
-        this.textsearch = '';
+    filterCards({ commit, state }, theme) {
+        // this.textsearch = '';
         let cards = [];
-        if (idTheme == '') {
+        if (theme?.id == null) {
             cards = state.fullCards
         } else {
             state.fullCards.forEach((card) => {
-                if (card.idTheme == idTheme) {
+                if (card.idTheme == theme.id) {
                     cards.push(card);
                 }
             })
@@ -165,16 +159,29 @@ export const actions = {
     getCurrentCard({ commit }) {
         return state.card;
     },
-    saveCard({ commit, dispatch }, card) {
+    async saveCard({ commit, dispatch }, card) {
         dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
         dispatch("snackbar/setSnackbarMessage", { message: null }, { root: true });
         try {
-            saveCard(card);
+            await saveCard(card);
             dispatch("snackbar/setSnackbarMessage", { message: "Card saved" }, { root: true });
             dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         } catch (error) {
             console.log(error)
             dispatch("snackbar/setSnackbarMessage", { message: "Error occured while saving card" }, { root: true });
+            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
+        }
+    },
+    async deleteCard({ commit, dispatch }, id) {
+        dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
+        dispatch("snackbar/setSnackbarMessage", { message: null }, { root: true });
+        try {
+            await deleteCard(id);
+            dispatch("snackbar/setSnackbarMessage", { message: "Card deleted" }, { root: true });
+            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
+        } catch (error) {
+            console.log(error)
+            dispatch("snackbar/setSnackbarMessage", { message: "Error occured while deleting card" }, { root: true });
             dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         }
     },

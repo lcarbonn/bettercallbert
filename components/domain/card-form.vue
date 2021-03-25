@@ -44,12 +44,24 @@
                             <span class="md-error"
                                   v-if="!$v.form.idTheme.required">The Theme is required</span>
                         </md-field>
-                        <md-button class="md-raised md-primary"
+                        <md-button :disabled.sync="disableButton"
+                                   class="md-raised md-primary"
                                    type="submit"
                                    @click="saveCard">Save</md-button>
-                        <md-button class="md-raised md-primary"
+                        <md-button :disabled.sync="disableButton"
+                                   class="md-raised md-primary"
                                    type="submit"
                                    @click="resetCard">Cancel</md-button>
+                        <md-dialog-confirm :md-active.sync="showConfirm"
+                                           md-title="Confirm card deletion?"
+                                           md-content="This is your last chance!!!"
+                                           md-confirm-text="Yes"
+                                           md-cancel-text="No"
+                                           @md-cancel="onCancel"
+                                           @md-confirm="onConfirm" />
+                        <md-button :disabled.sync="disableButton"
+                                   class="md-raised md-primary"
+                                   @click="showConfirm = true">Delete</md-button>
                     </div>
                 </div>
             </md-card-content>
@@ -103,7 +115,9 @@ export default {
             link: null,
             // isRotate: null,
         },
-        firstLoad: true
+        firstLoad: true,
+        showConfirm: false,
+        disableButton: false
     }),
     validations: {
         form: {
@@ -159,10 +173,18 @@ export default {
             }
         },
         resetCard() {
-            this.form.title = this.card.title;
-            this.form.link = this.card.link;
-            this.form.src = this.card.src;
-            this.form.idTheme = this.card.idTheme;
+            this.form.title = this.card.title
+            this.form.link = this.card.link
+            this.form.src = this.card.src
+            this.form.idTheme = this.card.idTheme
+        },
+        onCancel() {
+            this.showConfirm = false
+        },
+        onConfirm() {
+            this.showConfirm = false
+            this.disableButton = true
+            this.$emit('deleteCard')
         }
     }
 }
