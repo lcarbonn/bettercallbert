@@ -2,7 +2,8 @@
     <div>
         <Card v-for="card in cards"
               :key="card.id"
-              :card="card" />
+              :card="card"
+              :currentTheme="currentTheme" />
     </div>
 </template>
 
@@ -17,12 +18,16 @@ export default {
         this.$store.dispatch("cards/getCards");
         this.$store.dispatch("layout/setSingleCard", false);
     },
+    beforeUpdate() {
+        this.currentTheme = this.$store.getters["themes/currentTheme"];
+        this.$store.dispatch("cards/filterCards", this.currentTheme);
+    },
     computed: {
         cards() {
             return this.$store.getters['cards/cards']
         },
-        themes() {
-            return this.$store.getters['themes/themes']
+        currentTheme() {
+            return this.$store.getters['themes/currentTheme']
         }
     }
 }

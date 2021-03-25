@@ -18,7 +18,8 @@
                                   v-for="menu in menus"
                                   :key="menu.id"
                                   :id="menu.id"
-                                  @click="filterCards(menu.id)">
+                                  @click="filterCards(menu.id)"
+                                  to="/">
                         <span class="md-list-item-text">{{menu.title}}</span>
                     </md-list-item>
                 </md-list>
