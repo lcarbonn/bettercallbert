@@ -112,8 +112,7 @@ export default {
             title: null,
             src: null,
             idTheme: null,
-            link: null,
-            // isRotate: null,
+            link: null
         },
         firstLoad: true,
         showConfirm: false,
