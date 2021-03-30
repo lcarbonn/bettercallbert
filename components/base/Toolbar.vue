@@ -57,16 +57,13 @@ export default {
     },
     methods: {
         resetFilter() {
-            this.filterCards(null)
+            this.$emit('filterCards', null)
         },
         setSearchVisible() {
             this.$emit('setSearchVisible')
         },
         setMenuVisible() {
             this.$emit('setMenuVisible')
-        },
-        filterCards(idTheme) {
-            this.$emit('filterCards', idTheme)
         },
         logout() {
             this.$store.dispatch('auth/signOut').then(() => {
