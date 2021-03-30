@@ -9,6 +9,11 @@ export const getCards = (callback) => {
             card = {}
             card = doc.data()
             card.id = doc.id
+            if (card.src.indexOf("http") == -1) {
+                card.img = null
+            } else {
+                card.img = card.src
+            }
             list.push(card);
         });
         callback(list);

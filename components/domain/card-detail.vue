@@ -7,7 +7,7 @@
         <md-card-actions md-alignment="space-between">
             <md-button class="md-icon-button"
                        v-if="previousId"
-                       :to="'/cards/'+previousId">
+                       :href="'/cards/'+previousId">
                 <md-icon>navigate_before</md-icon>
             </md-button>
             <md-button v-if="card.link"
@@ -16,14 +16,14 @@
                        class="md-primary">Jump to source</md-button>
             <md-button class="md-icon-button"
                        v-if="nextId"
-                       :to="'/cards/'+nextId">
+                       :href="'/cards/'+nextId">
                 <md-icon>navigate_next</md-icon>
             </md-button>
         </md-card-actions>
-        <md-card-media v-if="src">
+        <md-card-media v-if="img">
             <img :title="card.title"
                  :alt="card.title"
-                 :src="src">
+                 :src="img">
         </md-card-media>
     </md-card>
 </template>
@@ -45,7 +45,7 @@ export default {
             type: String,
             default: null
         },
-        src: {
+        img: {
             type: String,
             default: null
         }

@@ -7,7 +7,8 @@ export const state = () => ({
     card: null,
     nextId: null,
     previousId: null,
-    src: null
+    src: null,
+    img: null
 });
 
 export const getters = {
@@ -28,6 +29,9 @@ export const getters = {
     },
     src: state => {
         return state.src
+    },
+    img: state => {
+        return state.img
     }
 };
 
@@ -43,11 +47,12 @@ export const mutations = {
         state.src = null
         state.nextId = null
         state.previousId = null
+        state.img = null
     },
-    setCardSrc(state, payload) {
+    setCardImg(state, payload) {
         state.cards.forEach(card => {
             if (card.id == payload.id) {
-                card.src = payload.src
+                card.img = payload.img
             }
         });
     },
@@ -59,6 +64,9 @@ export const mutations = {
     },
     setSrc(state, payload) {
         state.src = payload
+    },
+    setImg(state, payload) {
+        state.img = payload
     },
     setTitle(state, payload) {
         state.card.title = payload
@@ -72,19 +80,19 @@ export const actions = {
             commit("setFullCards", cards);
             cards.forEach((card) => {
                 if (card.src.indexOf("http") == -1) {
-                    dispatch("getCardSrc", card)
+                    dispatch("getCardImg", card)
                 }
             })
         }
         getCards(callback);
     },
-    getCardSrc({ commit, state }, card) {
+    getCardImg({ commit, state }, card) {
         const callback = newSrc => {
             let payload = {
                 id: card.id,
-                src: newSrc
+                img: newSrc
             }
-            commit("setCardSrc", payload)
+            commit("setCardImg", payload)
         }
         getImageSrc(callback, card.src);
     },
@@ -142,18 +150,15 @@ export const actions = {
     getImageSrc({ commit }, src) {
         if (src && src.indexOf("http") == -1) {
             const callback = newSrc => {
-                commit("setSrc", newSrc)
+                commit("setImg", newSrc)
             }
             getImageSrc(callback, src);
         } else {
-            commit("setSrc", src)
+            commit("setImg", src)
         }
     },
     setCard({ commit }, card) {
         commit("setCard", card);
-    },
-    setSrc({ commit }, src) {
-        commit("setSrc", src);
     },
     getCurrentCard({ commit }) {
         return state.card;

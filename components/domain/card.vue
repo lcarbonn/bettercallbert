@@ -3,9 +3,10 @@
         <md-card md-with-hover>
             <md-card-media-cover>
                 <md-card-media md-ratio="1:1">
-                    <img :title="card.title"
+                    <img v-if="card.img"
+                         :title="card.title"
                          :alt="card.title"
-                         :src="card.src">
+                         :src="card.img">
                 </md-card-media>
                 <md-card-area class="my-solid">
                     <md-card-header>

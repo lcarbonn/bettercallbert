@@ -6,7 +6,7 @@
             <md-tooltip md-direction="top">Back</md-tooltip>
         </md-button>
         <CardForm :card="card"
-                  :src="src"
+                  :img="img"
                   @saveCard="saveCard"
                   @deleteCard="deleteCard" />
     </div>
@@ -33,8 +33,8 @@ export default {
         card() {
             return this.$store.getters['cards/card']
         },
-        src() {
-            return this.$store.getters['cards/src']
+        img() {
+            return this.$store.getters['cards/img']
         }
     },
     methods: {

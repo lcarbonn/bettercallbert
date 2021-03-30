@@ -76,10 +76,10 @@
                            class="md-primary">Jump to source</md-button>
             </md-card-actions>
             <md-card-media>
-                <img v-if="src"
+                <img v-if="img"
                      :title="card.title"
                      :alt="card.title"
-                     :src="src">
+                     :src="img">
             </md-card-media>
         </md-card>
     </form>
@@ -102,7 +102,7 @@ export default {
             type: Object,
             default: null
         },
-        src: {
+        img: {
             type: String,
             default: null
         }
