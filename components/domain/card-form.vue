@@ -25,6 +25,21 @@
                             <span class="md-error"
                                   v-if="!$v.form.src.required">The src is required</span>
                         </md-field>
+                        <md-field :class="getValidationClass('imageFile')">
+                            <label for="imageFile">Upload Image</label>
+                            <md-input type="file"
+                                      accept="image/png, image/jpeg"
+                                      name="imageFile"
+                                      id="imageFile"
+                                      v-model.trim="form.imageFile"
+                                      placeholder="Or upload an image"
+                                      @change.prevent="selectImageFile($event.target.files)" />
+                            <md-button :disabled="file==null"
+                                       @click="uploadImageFile()"
+                                       type="button">Load</md-button>
+                            <span class="md-error"
+                                  v-if="!$v.form.src.required">The src is required</span>
+                        </md-field>
                         <md-field :class="getValidationClass('link')">
                             <label for="link">Link</label>
                             <md-input name="link"
@@ -44,22 +59,22 @@
                             <span class="md-error"
                                   v-if="!$v.form.idTheme.required">The Theme is required</span>
                         </md-field>
-                        <md-button :disabled.sync="disableButton"
+                        <md-button :disabled="disableButton"
                                    class="md-raised md-primary"
                                    type="submit"
                                    @click="saveCard">Save</md-button>
-                        <md-button :disabled.sync="disableButton"
+                        <md-button :disabled="disableButton"
                                    class="md-raised md-primary"
                                    type="submit"
                                    @click="resetCard">Cancel</md-button>
-                        <md-dialog-confirm :md-active.sync="showConfirm"
+                        <md-dialog-confirm :md-active="showConfirm"
                                            md-title="Confirm card deletion?"
                                            md-content="This is your last chance!!!"
                                            md-confirm-text="Yes"
                                            md-cancel-text="No"
                                            @md-cancel="onCancel"
                                            @md-confirm="onConfirm" />
-                        <md-button :disabled.sync="disableButton"
+                        <md-button :disabled="disableButton"
                                    class="md-raised md-primary"
                                    @click="showConfirm = true">Delete</md-button>
                     </div>
@@ -112,11 +127,13 @@ export default {
             title: null,
             src: null,
             idTheme: null,
-            link: null
+            link: null,
+            imageFile: null
         },
-        firstLoad: true,
+        isFirstLoad: true,
         showConfirm: false,
-        disableButton: false
+        disableButton: false,
+        file: null
     }),
     validations: {
         form: {
@@ -139,9 +156,9 @@ export default {
         this.$store.dispatch("themes/getThemes")
     },
     beforeUpdate() {
-        if (this.firstLoad) {
+        if (this.isFirstLoad) {
             this.resetCard()
-            this.firstLoad = false
+            this.isFirstLoad = false
         }
     },
     computed: {
@@ -176,6 +193,7 @@ export default {
             this.form.link = this.card.link
             this.form.src = this.card.src
             this.form.idTheme = this.card.idTheme
+            this.form.imageFile = this.card.imageFile
         },
         onCancel() {
             this.showConfirm = false
@@ -184,7 +202,41 @@ export default {
             this.showConfirm = false
             this.disableButton = true
             this.$emit('deleteCard')
-        }
+        },
+        uploadImageFile() {
+            if (!this.file) {
+                this.$store.dispatch("snackbar/setSnackbarMessage", { message: "Select a file to upload" }, { root: true });
+                return
+            }
+
+            this.disableButton = true
+            console.debug(this.file.name)
+
+            this.$store.dispatch("storage/uploadImageFile", this.file).then(() => {
+                const imageUrl = this.$store.getters['storage/imageUrl']
+                // todo
+            });
+            this.disableButton = false
+
+        },
+        selectImageFile(files) {
+            if (!files.length) {
+                this.file = null
+                this.$store.dispatch("snackbar/setSnackbarMessage", { message: "Select a file to upload" }, { root: true });
+                return
+            }
+            this.file = files[0]
+
+            if (!this.file.type.match('image.*')) {
+                this.form.imageFile = null
+                this.$store.dispatch("snackbar/setSnackbarMessage", { message: "Select only image file to upload" }, { root: true });
+                return
+            }
+
+            const metadata = {
+                contentType: this.file.type
+            }
+        },
     }
 }
 </script>

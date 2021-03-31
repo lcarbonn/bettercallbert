@@ -12,3 +12,17 @@ export const getImageSrc = (callback, src) => {
     })
 };
 
+// upload an image file
+export const uploadImageFile = async (callback, file) => {
+    // Create a reference to the destination where we're uploading
+    // the file.
+    const imageRef = storage.ref(`images/${file.name}`)
+
+    const uploadTask = imageRef.put(file, metadata).then((snapshot) => {
+        // Once the image is uploaded, obtain the download URL, which
+        // is the publicly accessible URL of the image.
+        return snapshot.ref.getDownloadURL().then((url) => {
+            callback(url)
+        })
+    })
+};
