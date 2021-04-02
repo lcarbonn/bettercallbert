@@ -7,8 +7,12 @@
         </md-button>
         <CardForm :card="card"
                   :img="img"
+                  :themes="themes"
+                  :imagePath="imagePath"
                   @saveCard="saveCard"
-                  @deleteCard="deleteCard" />
+                  @deleteCard="deleteCard"
+                  @uploadImageFile="uploadImageFile"
+                  @resetImagePath="resetImagePath" />
     </div>
 </template>
 
@@ -24,8 +28,9 @@ export default {
     mounted() {
         this.$store.dispatch("cards/getCard", this.id)
         this.$store.dispatch("layout/setSingleCard", true);
+        this.$store.dispatch("themes/getThemes")
+        this.$store.dispatch("storage/resetImagePath")
     },
-
     computed: {
         id() {
             return this.$route.params.id
@@ -34,7 +39,18 @@ export default {
             return this.$store.getters['cards/card']
         },
         img() {
+            const im = this.$store.getters['storage/imageUrl']
+            if (im) return im
             return this.$store.getters['cards/img']
+        },
+        themes() {
+            return this.$store.getters['themes/themes']
+        },
+        imagePath() {
+            return this.$store.getters['storage/imagePath']
+        },
+        imageUrl() {
+            return this.$store.getters['storage/imageUrl']
         }
     },
     methods: {
@@ -44,6 +60,12 @@ export default {
         },
         deleteCard() {
             this.$store.dispatch("cards/deleteCard", this.id);
+        },
+        uploadImageFile(file) {
+            this.$store.dispatch("storage/uploadImageFile", file)
+        },
+        resetImagePath() {
+            this.$store.dispatch("storage/resetImagePath")
         }
     }
 }
