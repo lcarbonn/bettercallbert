@@ -31,14 +31,14 @@
                                       accept="image/png, image/jpeg"
                                       name="imageFile"
                                       id="imageFile"
-                                      v-model.trim="form.imageFile"
+                                      v-model="form.imageFile"
                                       placeholder="Or upload an image"
                                       @change.prevent="selectImageFile($event.target.files)" />
                             <md-button :disabled="file==null"
                                        @click="uploadImageFile()"
                                        type="button">Load</md-button>
-                            <span class="md-error"
-                                  v-if="!$v.form.src.required">The src is required</span>
+                            <md-input type="hidden"
+                                      v-model="imagePath"></md-input>
                         </md-field>
                         <md-field :class="getValidationClass('link')">
                             <label for="link">Link</label>
@@ -120,6 +120,14 @@ export default {
         img: {
             type: String,
             default: null
+        },
+        themes: {
+            type: Array,
+            default: null
+        },
+        imagePath: {
+            type: String,
+            default: null
         }
     },
     data: () => ({
@@ -152,18 +160,13 @@ export default {
             },
         }
     },
-    mounted() {
-        this.$store.dispatch("themes/getThemes")
-    },
     beforeUpdate() {
         if (this.isFirstLoad) {
             this.resetCard()
             this.isFirstLoad = false
         }
-    },
-    computed: {
-        themes() {
-            return this.$store.getters['themes/themes']
+        if (this.imagePath != null) {
+            this.form.src = this.imagePath
         }
     },
     methods: {
@@ -203,22 +206,6 @@ export default {
             this.disableButton = true
             this.$emit('deleteCard')
         },
-        uploadImageFile() {
-            if (!this.file) {
-                this.$store.dispatch("snackbar/setSnackbarMessage", { message: "Select a file to upload" }, { root: true });
-                return
-            }
-
-            this.disableButton = true
-            console.debug(this.file.name)
-
-            this.$store.dispatch("storage/uploadImageFile", this.file).then(() => {
-                const imageUrl = this.$store.getters['storage/imageUrl']
-                // todo
-            });
-            this.disableButton = false
-
-        },
         selectImageFile(files) {
             if (!files.length) {
                 this.file = null
@@ -230,13 +217,14 @@ export default {
             if (!this.file.type.match('image.*')) {
                 this.form.imageFile = null
                 this.$store.dispatch("snackbar/setSnackbarMessage", { message: "Select only image file to upload" }, { root: true });
-                return
-            }
-
-            const metadata = {
-                contentType: this.file.type
             }
         },
+        uploadImageFile() {
+            this.disableButton = true
+            console.debug(this.file.name)
+            this.$emit("uploadImageFile", this.file)
+            this.disableButton = false
+        }
     }
 }
 </script>

@@ -1,38 +1,46 @@
 import { uploadImageFile } from '~/services/storageServices'
 
 export const state = () => ({
-    imageUrl: false
+    imagePath: null
 });
 
 export const getters = {
-    imageUrl: state => {
-        return state.imageUrl;
+    imagePath: state => {
+        return state.imagePath;
     }
 };
 
 export const mutations = {
-    setImageUrl(state, payload) {
-        state.imageUrl = payload
+    setImagePath(state, payload) {
+        state.imagePath = payload
+    },
+    resetImagePath(state) {
+        state.imagePath = null
     }
 };
 
 export const actions = {
-    async uploadImageFile({ commit, dispatch }, imageFile) {
+    uploadImageFile({ commit, dispatch }, imageFile) {
         dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
-        dispatch("snackbar/setSnackbarMessage", { message: "" }, { root: true });
+        dispatch("snackbar/setSnackbarMessage", { message: "Uploading image" }, { root: true });
         try {
-            console.log("uploading image");
-            const imageUrl = await uploadImageFile(imageFile);
-            commit("setImageUrl", imageUrl);
-            dispatch("snackbar/setSnackbarMessage", { message: "Image uploaded" }, { root: true });
-            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
+            console.debug("uploading image");
+            const callback = imagePath => {
+                console.debug("uploaded image:" + imagePath);
+                commit("setImagePath", imagePath);
+                dispatch("snackbar/setSnackbarMessage", { message: "Image uploaded" }, { root: true });
+                dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
+            }
+            uploadImageFile(callback, imageFile);
         } catch (error) {
             console.log(error)
             dispatch("snackbar/setSnackbarMessage", { message: "Error occured while uploading image" }, { root: true });
             dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         }
+    },
+    resetImagePath({ commit }) {
+        commit("resetImagePath");
     }
-
 };
 
 

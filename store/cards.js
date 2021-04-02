@@ -7,7 +7,6 @@ export const state = () => ({
     card: null,
     nextId: null,
     previousId: null,
-    src: null,
     img: null
 });
 
@@ -27,9 +26,6 @@ export const getters = {
     previousId: state => {
         return state.previousId
     },
-    src: state => {
-        return state.src
-    },
     img: state => {
         return state.img
     }
@@ -44,7 +40,6 @@ export const mutations = {
     },
     setCard(state, payload) {
         state.card = payload
-        state.src = null
         state.nextId = null
         state.previousId = null
         state.img = null
@@ -61,9 +56,6 @@ export const mutations = {
     },
     setPreviousId(state, payload) {
         state.previousId = payload
-    },
-    setSrc(state, payload) {
-        state.src = payload
     },
     setImg(state, payload) {
         state.img = payload
@@ -159,9 +151,6 @@ export const actions = {
     },
     setCard({ commit }, card) {
         commit("setCard", card);
-    },
-    getCurrentCard({ commit }) {
-        return state.card;
     },
     async saveCard({ commit, dispatch }, card) {
         dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
