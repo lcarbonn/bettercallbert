@@ -22,6 +22,12 @@ export const uploadImageFile = (callback, file) => {
         contentType: file.type
     }
     const uploadTask = imageRef.put(file, metadata).then((snapshot) => {
-        callback(imageRef.fullPath)
+        snapshot.ref.getDownloadURL().then((url) => {
+            const paths = {
+                imagePath: imageRef.fullPath,
+                imageUrl: url
+            }
+            callback(paths)
+        })
     })
 };

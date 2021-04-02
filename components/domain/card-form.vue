@@ -197,6 +197,7 @@ export default {
             this.form.src = this.card.src
             this.form.idTheme = this.card.idTheme
             this.form.imageFile = this.card.imageFile
+            this.$emit('resetImagePath')
         },
         onCancel() {
             this.showConfirm = false

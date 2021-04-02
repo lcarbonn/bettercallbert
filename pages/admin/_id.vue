@@ -11,7 +11,8 @@
                   :imagePath="imagePath"
                   @saveCard="saveCard"
                   @deleteCard="deleteCard"
-                  @uploadImageFile="uploadImageFile" />
+                  @uploadImageFile="uploadImageFile"
+                  @resetImagePath="resetImagePath" />
     </div>
 </template>
 
@@ -30,7 +31,6 @@ export default {
         this.$store.dispatch("themes/getThemes")
         this.$store.dispatch("storage/resetImagePath")
     },
-
     computed: {
         id() {
             return this.$route.params.id
@@ -39,6 +39,8 @@ export default {
             return this.$store.getters['cards/card']
         },
         img() {
+            const im = this.$store.getters['storage/imageUrl']
+            if (im) return im
             return this.$store.getters['cards/img']
         },
         themes() {
@@ -46,6 +48,9 @@ export default {
         },
         imagePath() {
             return this.$store.getters['storage/imagePath']
+        },
+        imageUrl() {
+            return this.$store.getters['storage/imageUrl']
         }
     },
     methods: {
@@ -58,6 +63,9 @@ export default {
         },
         uploadImageFile(file) {
             this.$store.dispatch("storage/uploadImageFile", file)
+        },
+        resetImagePath() {
+            this.$store.dispatch("storage/resetImagePath")
         }
     }
 }
