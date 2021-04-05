@@ -16,7 +16,7 @@
     "firebase": "^8.2.4",
     "firebaseui": "^4.7.3",
     "fs": "0.0.1-security",
-    "nuxt": "^2.15.2",
+    "nuxt": "^2.15.4",
     "nuxt-vue-material": "^1.2.0",
     "vuelidate": "^0.7.6"
   },
