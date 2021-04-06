@@ -76,10 +76,7 @@ export default {
         },
         createCard() {
             this.$emit('setMenuVisible')
-            this.$store.dispatch("cards/createCard").then(() => {
-                const card = this.$store.getters['cards/card']
-                this.$router.push('/admin/' + card.id);
-            });
+            this.$emit('createCard')
         }
     },
 }

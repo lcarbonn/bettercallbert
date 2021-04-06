@@ -15,7 +15,8 @@
         <md-app-drawer :md-active.sync="menuVisible">
             <Menu :menus="themes"
                   @filterCards="filterCards"
-                  @setMenuVisible="setMenuVisible" />
+                  @setMenuVisible="setMenuVisible"
+                  @createCard="createCard" />
         </md-app-drawer>
         <md-app-content @click="hideSearchVisible">
             <nuxt />
@@ -71,6 +72,12 @@ export default {
         search(textsearch) {
             this.$store.dispatch("themes/setCurrentTheme", null);
             this.$store.dispatch("cards/search", textsearch);
+        },
+        createCard() {
+            this.$store.dispatch("cards/createCard").then(() => {
+                const card = this.$store.getters['cards/card']
+                this.$router.push('/admin/' + card.id);
+            });
         }
     }
 }
