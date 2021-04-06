@@ -27,7 +27,8 @@
                         </md-field>
                         <md-field :class="getValidationClass('imageFile')">
                             <label for="imageFile">Upload Image</label>
-                            <md-input type="file"
+                            <md-input :disabled="disableButton"
+                                      type="file"
                                       accept="image/png, image/jpeg"
                                       name="imageFile"
                                       id="imageFile"

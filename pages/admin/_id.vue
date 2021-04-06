@@ -1,6 +1,7 @@
 <template>
     <div class="md-layout md-alignment-top-center">
-        <md-button class="md-icon-button"
+        <md-button v-if="!disableButton"
+                   class="md-icon-button"
                    :to='"/cards/"+id'>
             <md-icon>preview</md-icon>
             <md-tooltip md-direction="top">Back</md-tooltip>
@@ -25,6 +26,9 @@ export default {
     components: {
         CardForm
     },
+    data: () => ({
+        disableButton: false,
+    }),
     mounted() {
         this.$store.dispatch("cards/getCard", this.id)
         this.$store.dispatch("layout/setSingleCard", true);
@@ -56,10 +60,11 @@ export default {
     methods: {
         saveCard(card) {
             card.id = this.id;
-            this.$store.dispatch("cards/saveCard", card);
+            this.$store.dispatch("cards/saveCard", card)
         },
         deleteCard() {
-            this.$store.dispatch("cards/deleteCard", this.id);
+            this.$store.dispatch("cards/deleteCard", this.id)
+            this.disableButton = true
         },
         uploadImageFile(file) {
             this.$store.dispatch("storage/uploadImageFile", file)
