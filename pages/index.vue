@@ -17,21 +17,9 @@ export default {
     components: {
         Card
     },
-    data() {
-        return {
-            oldTheme: null
-        }
-    },
     mounted() {
         this.$store.dispatch("cards/getCards");
         this.$store.dispatch("layout/setSingleCard", false);
-    },
-    beforeUpdate() {
-        this.currentTheme = this.$store.getters["themes/currentTheme"];
-        if (this.currentTheme != this.oldTheme) {
-            this.oldTheme = this.currentTheme
-            this.$store.dispatch("cards/filterCards", this.currentTheme);
-        }
     },
     computed: {
         cards() {

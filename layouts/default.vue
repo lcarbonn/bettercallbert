@@ -68,6 +68,7 @@ export default {
         },
         filterCards(idTheme) {
             this.$store.dispatch("themes/setCurrentTheme", idTheme);
+            this.$store.dispatch("cards/filterCards", idTheme);
         },
         search(textsearch) {
             this.$store.dispatch("themes/setCurrentTheme", null);

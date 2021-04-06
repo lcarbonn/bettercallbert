@@ -88,13 +88,13 @@ export const actions = {
         }
         getImageSrc(callback, card.src);
     },
-    filterCards({ commit, state }, theme) {
+    filterCards({ commit, state }, idTheme) {
         let cards = [];
-        if (theme?.id == null) {
+        if (idTheme == null) {
             cards = state.fullCards
         } else {
             state.fullCards.forEach((card) => {
-                if (card.idTheme == theme.id) {
+                if (card.idTheme == idTheme) {
                     cards.push(card);
                 }
             })
