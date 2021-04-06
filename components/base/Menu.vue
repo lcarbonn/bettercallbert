@@ -2,7 +2,7 @@
     <div>
         <md-toolbar class="md-transparent"
                     md-elevation="0">Navigation</md-toolbar>
-        <md-list>
+        <md-list md-expand-single="true">
             <md-list-item @click="goHome()"
                           to="/">
                 <md-icon>home</md-icon>
