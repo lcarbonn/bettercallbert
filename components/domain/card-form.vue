@@ -7,6 +7,7 @@
                 <div class="md-layout md-gutter">
                     <div class="md-layout-item md-small-size-100">
                         <md-field :class="getValidationClass('title')">
+                            <md-icon>title</md-icon>
                             <label for="title">Title</label>
                             <md-input name="title"
                                       id="title"
@@ -17,6 +18,7 @@
                                   v-else-if="!$v.form.title.minlength">Invalid title</span>
                         </md-field>
                         <md-field :class="getValidationClass('src')">
+                            <md-icon>image</md-icon>
                             <label for="src">Source</label>
                             <md-input name="src"
                                       id="src"
@@ -26,6 +28,7 @@
                                   v-if="!$v.form.src.required">The src is required</span>
                         </md-field>
                         <md-field :class="getValidationClass('imageFile')">
+                            <md-icon>file_upload</md-icon>
                             <label for="imageFile">Upload Image</label>
                             <md-input :disabled="disableButton"
                                       type="file"
@@ -42,12 +45,14 @@
                                       v-model="imagePath"></md-input>
                         </md-field>
                         <md-field :class="getValidationClass('link')">
+                            <md-icon>link</md-icon>
                             <label for="link">Link</label>
                             <md-input name="link"
                                       id="link"
                                       v-model.trim="form.link"></md-input>
                         </md-field>
                         <md-field :class="getValidationClass('idTheme')">
+                            <md-icon>book</md-icon>
                             <label for="idTheme">Theme</label>
                             <md-select disabled
                                        v-model="form.idTheme"
