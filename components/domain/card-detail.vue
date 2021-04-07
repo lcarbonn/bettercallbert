@@ -59,6 +59,15 @@ export default {
     methods: {
         setupListeners() {
             document.addEventListener("keyup", this.eventHandler)
+            // swiped-left
+            document.addEventListener('swiped-left', function (e) {
+                this.$router.push('/cards/' + this.nextId)
+            });
+
+            // swiped-right
+            document.addEventListener('swiped-right', function (e) {
+                this.$router.push('/cards/' + this.previousId)
+            });
         },
         eventHandler(e) {
             if (e.keyCode == "39" && this.nextId) this.$router.push('/cards/' + this.nextId)

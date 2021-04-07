@@ -44,7 +44,8 @@ export default {
   */
   plugins: [
     { src: '~/plugins/firebase.js' },
-    { src: '~/plugins/themes.js' }
+    { src: '~/plugins/themes.js' },
+    { src: '~/plugins/swiped-events.js' }
   ],
 
   /*
