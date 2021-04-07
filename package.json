@@ -18,6 +18,8 @@
     "fs": "0.0.1-security",
     "nuxt": "^2.15.4",
     "nuxt-vue-material": "^1.2.0",
+    "vue": "^2.6.12",
+    "vue-material": "^1.0.0-beta-15",
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {

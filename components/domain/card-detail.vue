@@ -55,23 +55,27 @@ export default {
     },
     destroyed() {
         document.removeEventListener("keyup", this.eventHandler)
+        document.removeEventListener('swiped-left', this.swipeLeftHandler)
+        document.removeEventListener('swiped-right', this.swipeRightHandler)
     },
     methods: {
         setupListeners() {
             document.addEventListener("keyup", this.eventHandler)
             // swiped-left
-            document.addEventListener('swiped-left', function (e) {
-                this.$router.push('/cards/' + this.nextId)
-            });
+            document.addEventListener('swiped-left', this.swipeLeftHandler)
 
             // swiped-right
-            document.addEventListener('swiped-right', function (e) {
-                this.$router.push('/cards/' + this.previousId)
-            });
+            document.addEventListener('swiped-right', this.swipeRightHandler)
         },
         eventHandler(e) {
             if (e.keyCode == "39" && this.nextId) this.$router.push('/cards/' + this.nextId)
             if (e.keyCode == "37" && this.previousId) this.$router.push('/cards/' + this.previousId)
+        },
+        swipeRightHandler(e) {
+            if (this.previousId) this.$router.push('/cards/' + this.previousId)
+        },
+        swipeLeftHandler(e) {
+            if (this.nextId) this.$router.push('/cards/' + this.nextId)
         }
     }
 }
