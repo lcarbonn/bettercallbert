@@ -45,11 +45,10 @@ export const mutations = {
         state.img = null
     },
     setCardImg(state, payload) {
-        state.cards.forEach(card => {
-            if (card.id == payload.id) {
-                card.img = payload.img
-            }
-        });
+        let i = state.cards.indexOf(payload.card)
+        if (i != -1) {
+            state.cards[i].img = payload.newSrc
+        }
     },
     setNextId(state, payload) {
         state.nextId = payload
@@ -81,8 +80,8 @@ export const actions = {
     getCardImg({ commit, state }, card) {
         const callback = newSrc => {
             let payload = {
-                id: card.id,
-                img: newSrc
+                card: card,
+                newSrc: newSrc
             }
             commit("setCardImg", payload)
         }
@@ -107,7 +106,6 @@ export const actions = {
             textsearch = textsearch.trim();
             cards = state.fullCards
         } else {
-
             state.fullCards.forEach((card) => {
                 if (card.title.toLowerCase().includes(textsearch.toLowerCase())) {
                     cards.push(card);
