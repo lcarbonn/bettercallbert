@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="my-content">
         <md-toolbar md-elevation="0"
                     v-if="currentTheme">
             <h3>{{currentTheme.title}}</h3>
@@ -36,3 +36,10 @@ export default {
     }
 }
 </script>
+<style scoped>
+.my-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+</style>
