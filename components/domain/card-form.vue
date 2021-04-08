@@ -1,34 +1,32 @@
 <template>
     <form novalidate
           @submit.prevent>
-
         <md-card v-if="card">
             <md-card-content>
                 <div class="md-layout md-gutter">
                     <div class="md-layout-item md-small-size-100">
                         <md-field :class="getValidationClass('title')">
-                            <md-icon>title</md-icon>
                             <label for="title">Title</label>
                             <md-input name="title"
                                       id="title"
                                       v-model.trim="form.title"></md-input>
+                            <md-icon>title</md-icon>
                             <span class="md-error"
                                   v-if="!$v.form.title.required">The title is required</span>
                             <span class="md-error"
                                   v-else-if="!$v.form.title.minlength">Invalid title</span>
                         </md-field>
                         <md-field :class="getValidationClass('src')">
-                            <md-icon>image</md-icon>
                             <label for="src">Source</label>
                             <md-input name="src"
                                       id="src"
                                       v-model.trim="form.src"
                                       type="text"></md-input>
+                            <md-icon>image</md-icon>
                             <span class="md-error"
                                   v-if="!$v.form.src.required">The src is required</span>
                         </md-field>
                         <md-field :class="getValidationClass('imageFile')">
-                            <md-icon>file_upload</md-icon>
                             <label for="imageFile">Upload Image</label>
                             <md-input :disabled="disableButton"
                                       type="file"
@@ -36,23 +34,23 @@
                                       name="imageFile"
                                       id="imageFile"
                                       v-model="form.imageFile"
-                                      placeholder="Or upload an image"
                                       @change.prevent="selectImageFile($event.target.files)" />
-                            <md-button :disabled="file==null"
-                                       @click="uploadImageFile()"
-                                       type="button">Load</md-button>
+                            <md-button class="md-icon-button"
+                                       :disabled="file==null"
+                                       @click="uploadImageFile()">
+                                <md-icon>file_upload</md-icon>
+                            </md-button>
                             <md-input type="hidden"
                                       v-model="imagePath"></md-input>
                         </md-field>
                         <md-field :class="getValidationClass('link')">
-                            <md-icon>link</md-icon>
                             <label for="link">Link</label>
                             <md-input name="link"
                                       id="link"
                                       v-model.trim="form.link"></md-input>
+                            <md-icon>link</md-icon>
                         </md-field>
                         <md-field :class="getValidationClass('idTheme')">
-                            <md-icon>book</md-icon>
                             <label for="idTheme">Theme</label>
                             <md-select disabled
                                        v-model="form.idTheme"
@@ -62,6 +60,7 @@
                                            :key="item.id"
                                            :value="item.id">{{ item.title }}</md-option>
                             </md-select>
+                            <md-icon>book</md-icon>
                             <span class="md-error"
                                   v-if="!$v.form.idTheme.required">The Theme is required</span>
                         </md-field>
@@ -235,3 +234,41 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.md-card {
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+.md-card-media img {
+    width: unset;
+    max-height: 60vh;
+    max-width: 100vw;
+}
+a {
+    font-size: 1rem;
+    letter-spacing: 0px;
+    text-decoration: none !important;
+    color: grey;
+}
+
+a:hover {
+    color: white;
+}
+@media (max-width: 400px) {
+    .md-card {
+        margin: 4px;
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        width: -webkit-fill-available;
+    }
+    .md-card-media img {
+        width: 100%;
+        max-height: 60vh;
+        max-width: 100vw;
+    }
+}
+</style>

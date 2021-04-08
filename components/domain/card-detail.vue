@@ -87,8 +87,13 @@ export default {
     margin: 4px;
     display: inline-block;
     vertical-align: top;
+    text-align: center;
 }
-
+.md-card-media img {
+    width: unset;
+    max-height: 60vh;
+    max-width: 100vw;
+}
 a {
     font-size: 1rem;
     letter-spacing: 0px;
@@ -98,5 +103,19 @@ a {
 
 a:hover {
     color: white;
+}
+@media (max-width: 400px) {
+    .md-card {
+        margin: 4px;
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        width: -webkit-fill-available;
+    }
+    .md-card-media img {
+        width: 100%;
+        max-height: 60vh;
+        max-width: 100vw;
+    }
 }
 </style>
