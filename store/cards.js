@@ -7,7 +7,7 @@ export const state = () => ({
     card: null,
     nextId: null,
     previousId: null,
-    src: null
+    img: null
 });
 
 export const getters = {
@@ -26,8 +26,8 @@ export const getters = {
     previousId: state => {
         return state.previousId
     },
-    src: state => {
-        return state.src
+    img: state => {
+        return state.img
     }
 };
 
@@ -40,16 +40,15 @@ export const mutations = {
     },
     setCard(state, payload) {
         state.card = payload
-        state.src = null
         state.nextId = null
         state.previousId = null
+        state.img = null
     },
-    setCardSrc(state, payload) {
-        state.cards.forEach(card => {
-            if (card.id == payload.id) {
-                card.src = payload.src
-            }
-        });
+    setCardImg(state, payload) {
+        let i = state.cards.indexOf(payload.card)
+        if (i != -1) {
+            state.cards[i].img = payload.newSrc
+        }
     },
     setNextId(state, payload) {
         state.nextId = payload
@@ -57,8 +56,8 @@ export const mutations = {
     setPreviousId(state, payload) {
         state.previousId = payload
     },
-    setSrc(state, payload) {
-        state.src = payload
+    setImg(state, payload) {
+        state.img = payload
     },
     setTitle(state, payload) {
         state.card.title = payload
@@ -71,30 +70,30 @@ export const actions = {
             commit("setCards", cards);
             commit("setFullCards", cards);
             cards.forEach((card) => {
-                if (card.src.indexOf("http") == -1) {
-                    dispatch("getCardSrc", card)
+                if (!card.img && card.src.indexOf("http") == -1) {
+                    dispatch("getCardImg", card)
                 }
             })
         }
         getCards(callback);
     },
-    getCardSrc({ commit, state }, card) {
+    getCardImg({ commit, state }, card) {
         const callback = newSrc => {
             let payload = {
-                id: card.id,
-                src: newSrc
+                card: card,
+                newSrc: newSrc
             }
-            commit("setCardSrc", payload)
+            commit("setCardImg", payload)
         }
         getImageSrc(callback, card.src);
     },
-    filterCards({ commit, state }, theme) {
+    filterCards({ commit, state }, idTheme) {
         let cards = [];
-        if (theme?.id == null) {
+        if (idTheme == null) {
             cards = state.fullCards
         } else {
             state.fullCards.forEach((card) => {
-                if (card.idTheme == theme.id) {
+                if (card.idTheme == idTheme) {
                     cards.push(card);
                 }
             })
@@ -107,7 +106,6 @@ export const actions = {
             textsearch = textsearch.trim();
             cards = state.fullCards
         } else {
-
             state.fullCards.forEach((card) => {
                 if (card.title.toLowerCase().includes(textsearch.toLowerCase())) {
                     cards.push(card);
@@ -142,21 +140,15 @@ export const actions = {
     getImageSrc({ commit }, src) {
         if (src && src.indexOf("http") == -1) {
             const callback = newSrc => {
-                commit("setSrc", newSrc)
+                commit("setImg", newSrc)
             }
             getImageSrc(callback, src);
         } else {
-            commit("setSrc", src)
+            commit("setImg", src)
         }
     },
     setCard({ commit }, card) {
         commit("setCard", card);
-    },
-    setSrc({ commit }, src) {
-        commit("setSrc", src);
-    },
-    getCurrentCard({ commit }) {
-        return state.card;
     },
     async saveCard({ commit, dispatch }, card) {
         dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });

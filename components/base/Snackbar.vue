@@ -18,7 +18,6 @@ export default {
             get() {
                 return this.$store.getters['snackbar/snackbarMessage'] != null
             },
-
             set(fullName) {
                 this.$store.dispatch("snackbar/setSnackbarMessage", { message: null }, { root: true });
             }

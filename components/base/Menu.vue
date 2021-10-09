@@ -2,7 +2,7 @@
     <div>
         <md-toolbar class="md-transparent"
                     md-elevation="0">Navigation</md-toolbar>
-        <md-list>
+        <md-list md-expand-single="true">
             <md-list-item @click="goHome()"
                           to="/">
                 <md-icon>home</md-icon>
@@ -76,10 +76,7 @@ export default {
         },
         createCard() {
             this.$emit('setMenuVisible')
-            this.$store.dispatch("cards/createCard").then(() => {
-                const card = this.$store.getters['cards/card']
-                this.$router.push('/admin/' + card.id);
-            });
+            this.$emit('createCard')
         }
     },
 }

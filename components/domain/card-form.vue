@@ -1,7 +1,6 @@
 <template>
     <form novalidate
           @submit.prevent>
-
         <md-card v-if="card">
             <md-card-content>
                 <div class="md-layout md-gutter">
@@ -11,6 +10,7 @@
                             <md-input name="title"
                                       id="title"
                                       v-model.trim="form.title"></md-input>
+                            <md-icon>title</md-icon>
                             <span class="md-error"
                                   v-if="!$v.form.title.required">The title is required</span>
                             <span class="md-error"
@@ -22,14 +22,33 @@
                                       id="src"
                                       v-model.trim="form.src"
                                       type="text"></md-input>
+                            <md-icon>image</md-icon>
                             <span class="md-error"
                                   v-if="!$v.form.src.required">The src is required</span>
+                        </md-field>
+                        <md-field :class="getValidationClass('imageFile')">
+                            <label for="imageFile">Upload Image</label>
+                            <md-input :disabled="disableButton"
+                                      type="file"
+                                      accept="image/png, image/jpeg"
+                                      name="imageFile"
+                                      id="imageFile"
+                                      v-model="form.imageFile"
+                                      @change.prevent="selectImageFile($event.target.files)" />
+                            <md-button class="md-icon-button"
+                                       :disabled="file==null"
+                                       @click="uploadImageFile()">
+                                <md-icon>file_upload</md-icon>
+                            </md-button>
+                            <md-input type="hidden"
+                                      v-model="imagePath"></md-input>
                         </md-field>
                         <md-field :class="getValidationClass('link')">
                             <label for="link">Link</label>
                             <md-input name="link"
                                       id="link"
                                       v-model.trim="form.link"></md-input>
+                            <md-icon>link</md-icon>
                         </md-field>
                         <md-field :class="getValidationClass('idTheme')">
                             <label for="idTheme">Theme</label>
@@ -41,25 +60,26 @@
                                            :key="item.id"
                                            :value="item.id">{{ item.title }}</md-option>
                             </md-select>
+                            <md-icon>book</md-icon>
                             <span class="md-error"
                                   v-if="!$v.form.idTheme.required">The Theme is required</span>
                         </md-field>
-                        <md-button :disabled.sync="disableButton"
+                        <md-button :disabled="disableButton"
                                    class="md-raised md-primary"
                                    type="submit"
                                    @click="saveCard">Save</md-button>
-                        <md-button :disabled.sync="disableButton"
+                        <md-button :disabled="disableButton"
                                    class="md-raised md-primary"
                                    type="submit"
                                    @click="resetCard">Cancel</md-button>
-                        <md-dialog-confirm :md-active.sync="showConfirm"
+                        <md-dialog-confirm :md-active="showConfirm"
                                            md-title="Confirm card deletion?"
                                            md-content="This is your last chance!!!"
                                            md-confirm-text="Yes"
                                            md-cancel-text="No"
                                            @md-cancel="onCancel"
                                            @md-confirm="onConfirm" />
-                        <md-button :disabled.sync="disableButton"
+                        <md-button :disabled="disableButton"
                                    class="md-raised md-primary"
                                    @click="showConfirm = true">Delete</md-button>
                     </div>
@@ -76,10 +96,10 @@
                            class="md-primary">Jump to source</md-button>
             </md-card-actions>
             <md-card-media>
-                <img v-if="src"
+                <img v-if="img"
                      :title="card.title"
                      :alt="card.title"
-                     :src="src">
+                     :src="img">
             </md-card-media>
         </md-card>
     </form>
@@ -102,7 +122,15 @@ export default {
             type: Object,
             default: null
         },
-        src: {
+        img: {
+            type: String,
+            default: null
+        },
+        themes: {
+            type: Array,
+            default: null
+        },
+        imagePath: {
             type: String,
             default: null
         }
@@ -112,11 +140,13 @@ export default {
             title: null,
             src: null,
             idTheme: null,
-            link: null
+            link: null,
+            imageFile: null
         },
-        firstLoad: true,
+        isFirstLoad: true,
         showConfirm: false,
-        disableButton: false
+        disableButton: false,
+        file: null
     }),
     validations: {
         form: {
@@ -135,18 +165,13 @@ export default {
             },
         }
     },
-    mounted() {
-        this.$store.dispatch("themes/getThemes")
-    },
     beforeUpdate() {
-        if (this.firstLoad) {
+        if (this.isFirstLoad) {
             this.resetCard()
-            this.firstLoad = false
+            this.isFirstLoad = false
         }
-    },
-    computed: {
-        themes() {
-            return this.$store.getters['themes/themes']
+        if (this.imagePath != null) {
+            this.form.src = this.imagePath
         }
     },
     methods: {
@@ -176,6 +201,8 @@ export default {
             this.form.link = this.card.link
             this.form.src = this.card.src
             this.form.idTheme = this.card.idTheme
+            this.form.imageFile = this.card.imageFile
+            this.$emit('resetImagePath')
         },
         onCancel() {
             this.showConfirm = false
@@ -184,7 +211,64 @@ export default {
             this.showConfirm = false
             this.disableButton = true
             this.$emit('deleteCard')
+        },
+        selectImageFile(files) {
+            if (!files.length) {
+                this.file = null
+                this.$store.dispatch("snackbar/setSnackbarMessage", { message: "Select a file to upload" }, { root: true });
+                return
+            }
+            this.file = files[0]
+
+            if (!this.file.type.match('image.*')) {
+                this.form.imageFile = null
+                this.$store.dispatch("snackbar/setSnackbarMessage", { message: "Select only image file to upload" }, { root: true });
+            }
+        },
+        uploadImageFile() {
+            this.disableButton = true
+            console.debug(this.file.name)
+            this.$emit("uploadImageFile", this.file)
+            this.disableButton = false
         }
     }
 }
 </script>
+
+<style scoped>
+.md-card {
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+.md-card-media img {
+    width: unset;
+    max-height: 60vh;
+    max-width: 100vw;
+}
+a {
+    font-size: 1rem;
+    letter-spacing: 0px;
+    text-decoration: none !important;
+    color: grey;
+}
+
+a:hover {
+    color: white;
+}
+@media (max-width: 400px) {
+    .md-card {
+        margin: 4px;
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        width: -webkit-fill-available;
+    }
+    .md-card-media img {
+        width: 100%;
+        max-height: 60vh;
+        max-width: 100vw;
+    }
+}
+</style>

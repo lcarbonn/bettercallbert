@@ -9,7 +9,7 @@
         <CardDetail :card="card"
                     :nextId="nextId"
                     :previousId="previousId"
-                    :src="src" />
+                    :img="img" />
     </div>
 </template>
 
@@ -38,8 +38,8 @@ export default {
         previousId() {
             return this.$store.getters['cards/previousId']
         },
-        src() {
-            return this.$store.getters['cards/src']
+        img() {
+            return this.$store.getters['cards/img']
         },
         isConnected() {
             return this.$store.getters['auth/isConnected'];
