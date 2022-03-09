@@ -28,6 +28,7 @@ export default {
         currentTheme: {
             get() {
                 const theme = this.$store.getters['themes/currentTheme']
+                // filter if current theme
                 if (theme) this.$store.dispatch("cards/filterCards", theme.id);
                 return theme
             },
