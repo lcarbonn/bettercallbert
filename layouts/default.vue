@@ -21,7 +21,7 @@
         <md-app-content @click="hideSearchVisible">
             <nuxt />
             <div class="md-layout md-alignment-bottom-center md-body-1">
-                <span>Copyright © 2021 - Agilized in Toulouse, France</span>
+                <span>Copyright © 2022 - Agilized in Toulouse, France</span>
             </div>
             <Snackbar />
         </md-app-content>
