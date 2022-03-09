@@ -20,9 +20,9 @@
     "nuxt-vue-material": "^1.2.0",
     "sass": "^1.49.7",
     "vue": "^2.6.14",
+    "vue-material": "^1.0.0-beta-11",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
-    "vue-material": "^1.0.0-beta-15",
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {

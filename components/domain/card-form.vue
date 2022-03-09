@@ -52,8 +52,7 @@
                         </md-field>
                         <md-field :class="getValidationClass('idTheme')">
                             <label for="idTheme">Theme</label>
-                            <md-select disabled
-                                       v-model="form.idTheme"
+                            <md-select v-model="form.idTheme"
                                        name="idTheme"
                                        id="idTheme">
                                 <md-option v-for="item in themes"
