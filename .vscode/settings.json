@@ -9,7 +9,7 @@
       // "source.organizeImports": true //
     }
   },
-  "editor.autoIndent": true, //
+  "editor.autoIndent": "full", //
   "editor.tabSize": 4, //
   "prettier.tabWidth": 4, //
   "html.format.wrapAttributes": "force-aligned",
