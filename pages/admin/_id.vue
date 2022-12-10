@@ -2,30 +2,26 @@
     <div class="md-layout md-alignment-top-center">
         <md-button v-if="!disableButton"
                    class="md-icon-button"
-                   :to='"/cards/"+id'>
+                   :to='"/cards/" + id'>
             <md-icon>preview</md-icon>
             <md-tooltip md-direction="top">Back</md-tooltip>
         </md-button>
-        <CardForm :card="card"
-                  :img="img"
-                  :themes="themes"
-                  :imagePath="imagePath"
-                  @saveCard="saveCard"
-                  @deleteCard="deleteCard"
-                  @uploadImageFile="uploadImageFile"
-                  @resetImagePath="resetImagePath" />
+        <DomainCardForm :card="card"
+                        :img="img"
+                        :themes="themes"
+                        :imagePath="imagePath"
+                        @saveCard="saveCard"
+                        @deleteCard="deleteCard"
+                        @uploadImageFile="uploadImageFile"
+                        @resetImagePath="resetImagePath" />
     </div>
 </template>
 
 <script>
 import authenticated from '~/mixins/authenticated.js';
-import CardForm from '~/components/domain/card-form';
 
 export default {
     mixins: [authenticated],
-    components: {
-        CardForm
-    },
     data: () => ({
         disableButton: false,
     }),

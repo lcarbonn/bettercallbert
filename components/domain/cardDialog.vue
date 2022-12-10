@@ -1,6 +1,10 @@
 <template>
     <div>
         <md-dialog :md-active.sync="showDialog">
+            <md-dialog-actions>
+                <md-button class="md-icon-button"
+                           @click="showDialog = false"><md-icon>close</md-icon></md-button>
+            </md-dialog-actions>
             <img v-if="img"
                  :title="title"
                  :alt="title"
@@ -11,7 +15,7 @@
 
 <script>
 export default {
-    name: 'CardDialog',
+    name: "CardDialog",
     props: {
         title: {
             type: String,
@@ -50,7 +54,7 @@ export default {
 
 <style scoped>
 img {
-    height: 80vh;
+    height: 72vh;
     max-width: 100vw;
 }
 </style>
