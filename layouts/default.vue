@@ -2,46 +2,36 @@
     <md-app md-waterfall
             md-mode="fixed">
         <md-app-toolbar class="md-small md-dense md-primary">
-            <Toolbar v-show="!searchVisible"
-                     :menus="themes"
-                     :isSingleCard="isSingleCard"
-                     @filterCards="filterCards"
-                     @setMenuVisible="setMenuVisible"
-                     @setSearchVisible="setSearchVisible" />
-            <Searchbar v-show="searchVisible"
-                       @search="search"
-                       @setSearchVisible="setSearchVisible" />
+            <BaseToolbar v-show="!searchVisible"
+                         :menus="themes"
+                         :isSingleCard="isSingleCard"
+                         @filterCards="filterCards"
+                         @setMenuVisible="setMenuVisible"
+                         @setSearchVisible="setSearchVisible" />
+            <BaseSearchbar v-show="searchVisible"
+                           @search="search"
+                           @setSearchVisible="setSearchVisible" />
         </md-app-toolbar>
         <md-app-drawer :md-active.sync="menuVisible">
-            <Menu :menus="themes"
-                  @filterCards="filterCards"
-                  @setMenuVisible="setMenuVisible"
-                  @createCard="createCard" />
+            <BaseMenu :menus="themes"
+                      @filterCards="filterCards"
+                      @setMenuVisible="setMenuVisible"
+                      @createCard="createCard" />
         </md-app-drawer>
         <md-app-content @click="hideSearchVisible">
             <nuxt />
             <div class="md-layout md-alignment-bottom-center md-body-1">
-                <span>Copyright © 2021 - Agilized in Toulouse, France</span>
+                <span>Copyright © 2022 - Agilized in Toulouse, France</span>
             </div>
-            <Snackbar />
+            <BaseSnackbar />
         </md-app-content>
     </md-app>
 </template>
 
 <script>
-import Toolbar from '~/components/base/Toolbar'
-import Searchbar from '~/components/base/Searchbar'
-import Menu from '~/components/base/Menu'
-import Snackbar from '~/components/base/Snackbar'
 
 export default {
     name: 'Overlap',
-    components: {
-        Toolbar,
-        Searchbar,
-        Menu,
-        Snackbar
-    },
     data() {
         return {
             menuVisible: false,
@@ -87,10 +77,11 @@ export default {
 <style lang="scss" scoped>
 div#__nuxt,
 #__layout,
-#__layout > div,
+#__layout>div,
 #app {
     min-height: 100vh;
 }
+
 html {
     font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -120,7 +111,7 @@ html {
     margin: 0;
 }
 
-.md-toolbar + .md-toolbar {
+.md-toolbar+.md-toolbar {
     margin-top: 16px;
 }
 

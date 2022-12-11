@@ -27,7 +27,10 @@ export default {
         },
         currentTheme: {
             get() {
-                return this.$store.getters['themes/currentTheme']
+                const theme = this.$store.getters['themes/currentTheme']
+                // filter if current theme
+                if (theme) this.$store.dispatch("cards/filterCards", theme.id);
+                return theme
             },
             set(newValue) {
                 // noting to do, just add a setter to avoid warning
