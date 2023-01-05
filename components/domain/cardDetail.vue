@@ -27,7 +27,7 @@
         </b-card-body>
         <b-card-img :src="img"
                     :alt="card.title"
-                    style="max-width: 100vh; max-height: 100vh; width:unset"></b-card-img>
+                    class="b-card-img"></b-card-img>
     </b-card>
     <!-- <div>
         <md-card md-with-hover
@@ -134,3 +134,18 @@ export default {
     }
 }
 </script>
+<style scoped>
+.b-card-img {
+    width: unset;
+    max-height: 100vh;
+    max-width: 100%;
+}
+
+@media (max-width: 400px) {
+    .b-card-img {
+        width: unset;
+        max-height: 60vh;
+        max-width: 100%;
+    }
+}
+</style>
