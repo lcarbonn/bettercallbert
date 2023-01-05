@@ -1,4 +1,4 @@
-import { collection, query, orderBy, getDocs } from "firebase/firestore"
+import { collection, query, orderBy, getDocs, getDoc, doc, startAfter, limit, endBefore } from "firebase/firestore"
 import { db } from '@/plugins/firebase.js'
 
 
@@ -24,47 +24,50 @@ export const getCards = async (callback) => {
     callback(list);
 };
 
-export const getCard = (callback, id) => {
-    firestore.collection("cards").doc(id).get().then((doc) => {
-        let card = null
-        if (doc.exists) {
-            card = doc.data()
-            card.id = doc.id
-        }
-        callback(card)
-    })
+export const getCard = async (callback, id) => {
+    const docRef = doc(db, "cards", id)
+    const docSnap = await getDoc(docRef)
+    let card = null
+    if (docSnap.exists) {
+        card = docSnap.data()
+        card.id = docSnap.id
+    }
+    callback(card)
+
+    // firestore.collection("cards").doc(id).get().then((doc) => {
+    //     let card = null
+    //     if (doc.exists) {
+    //         card = doc.data()
+    //         card.id = doc.id
+    //     }
+    //     callback(card)
+    // })
 };
 
-export const getNextId = (callback, id) => {
+export const getNextId = async (callback, id) => {
     let nextId = null
-    firestore.collection("cards").doc(id).get().then((doc) => {
-        let nextRef = firestore.collection('cards')
-            .orderBy('idTheme')
-            .startAfter(doc)
-            .limit(1);
-        nextRef.get().then((nextDocs) => {
-            nextDocs.forEach((nexDoc) => {
-                nextId = nexDoc.id;
-            });
-            callback(nextId)
-        });
+    const docRef = doc(db, "cards", id)
+    const docSnap = await getDoc(docRef)
+    const q = query(collection(db, "cards"), orderBy("idTheme"), startAfter(docSnap), limit(1))
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(nextDoc => {
+        nextId = nextDoc.id;
     })
+    callback(nextId)
 };
 
-export const getPreviousId = (callback, id) => {
+export const getPreviousId = async (callback, id) => {
     let previousId = null
-    firestore.collection("cards").doc(id).get().then((doc) => {
-        let nextRef = firestore.collection('cards')
-            .orderBy('idTheme')
-            .endBefore(doc);
-        nextRef.get().then((nextDocs) => {
-            nextDocs.forEach((nexDoc) => {
-                previousId = nexDoc.id;
+    const docRef = doc(db, "cards", id)
+    const docSnap = await getDoc(docRef)
+    const q = query(collection(db, "cards"), orderBy("idTheme"), endBefore(docSnap))
 
-            });
-            callback(previousId)
-        });
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(nextDoc => {
+        previousId = nextDoc.id;
     })
+    callback(previousId)
 };
 
 export const saveCard = async (card) => {

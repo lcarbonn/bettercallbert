@@ -8,7 +8,7 @@
           <b-col>
             <nuxt />
           </b-col>
-         </b-row>
+        </b-row>
       </b-container>
     </div>
     <div class="d-flex flex-column justify-content-end">
@@ -30,7 +30,7 @@ export default {
   }),
 
   created() {
-    console.debug("appVersion:"+this.appVersion)
+    console.debug("appVersion:" + this.appVersion)
   },
 };
 </script>
