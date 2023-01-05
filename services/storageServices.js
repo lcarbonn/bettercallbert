@@ -18,18 +18,18 @@ export const getImageSrc = (callback, src) => {
 export const uploadImageFile = (callback, file) => {
     // Create a reference to the destination where we're uploading
     // the file.
-    const storageRef = storage.ref();
-    const imageRef = storageRef.child("cards/" + file.name)
-    const metadata = {
-        contentType: file.type
-    }
-    const uploadTask = imageRef.put(file, metadata).then((snapshot) => {
-        snapshot.ref.getDownloadURL().then((url) => {
-            const paths = {
-                imagePath: imageRef.fullPath,
-                imageUrl: url
-            }
-            callback(paths)
-        })
-    })
+    // const storageRef = storage.ref();
+    // const imageRef = storageRef.child("cards/" + file.name)
+    // const metadata = {
+    //     contentType: file.type
+    // }
+    // const uploadTask = imageRef.put(file, metadata).then((snapshot) => {
+    //     snapshot.ref.getDownloadURL().then((url) => {
+    //         const paths = {
+    //             imagePath: imageRef.fullPath,
+    //             imageUrl: url
+    //         }
+    //         callback(paths)
+    //     })
+    // })
 };

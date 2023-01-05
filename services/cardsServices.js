@@ -33,15 +33,6 @@ export const getCard = async (callback, id) => {
         card.id = docSnap.id
     }
     callback(card)
-
-    // firestore.collection("cards").doc(id).get().then((doc) => {
-    //     let card = null
-    //     if (doc.exists) {
-    //         card = doc.data()
-    //         card.id = doc.id
-    //     }
-    //     callback(card)
-    // })
 };
 
 export const getNextId = async (callback, id) => {
@@ -72,17 +63,17 @@ export const getPreviousId = async (callback, id) => {
 
 export const saveCard = async (card) => {
     console.log("saveCard id=" + card.id)
-    await firestore.collection('cards').doc(card.id).update({
-        title: card.title,
-        link: card.link,
-        src: card.src,
-        idTheme: card.idTheme
-    })
+    // await firestore.collection('cards').doc(card.id).update({
+    //     title: card.title,
+    //     link: card.link,
+    //     src: card.src,
+    //     idTheme: card.idTheme
+    // })
 };
 
 export const deleteCard = async (id) => {
     console.log("deleteCard id=" + id)
-    await firestore.collection('cards').doc(id).delete()
+    // await firestore.collection('cards').doc(id).delete()
 };
 
 export const createCard = async () => {
@@ -92,7 +83,7 @@ export const createCard = async () => {
         "link": "",
         "src": "",
     }
-    const ref = await firestore.collection('cards').add(newCard)
-    newCard.id = ref.id
+    // const ref = await firestore.collection('cards').add(newCard)
+    // newCard.id = ref.id
     return newCard
 };
