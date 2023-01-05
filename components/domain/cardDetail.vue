@@ -8,6 +8,23 @@
         <template #header>
             <small>{{ card.title }}</small>
         </template>
+        <b-card-body>
+            <b-button v-if="previousId"
+                      :href="'/cards/' + previousId">
+                <b-icon icon="arrow-left-square"
+                        variant="primary" />
+            </b-button>
+            <b-button v-if="card.link"
+                      :href="card.link"
+                      target="_blank"
+                      variant="primary">Jump to source</b-button>
+            <b-button class="md-icon-button"
+                      v-if="nextId"
+                      :href="'/cards/' + nextId">
+                <b-icon icon="arrow-right-square"
+                        variant="primary" />
+            </b-button>
+        </b-card-body>
         <b-card-img :src="img"
                     :alt="card.title"
                     style="max-width: 100vh; max-height: 100vh; width:unset"></b-card-img>
@@ -52,8 +69,17 @@
 </template>
 
 <script>
+
+import { BIcon, BIconArrowRightSquare, BIconArrowLeftSquare } from 'bootstrap-vue'
+
 export default {
     name: "CardDetail",
+    components: {
+        BIcon,
+        BIconArrowRightSquare,
+        BIconArrowLeftSquare
+    },
+
     props: {
         card: {
             type: Object,
