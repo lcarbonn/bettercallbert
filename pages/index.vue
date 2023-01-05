@@ -1,48 +1,23 @@
 <template>
-    <div class="my-content">
-        <md-toolbar md-elevation="0"
-                    v-if="currentTheme">
-            <h3>{{currentTheme.title}}</h3>
-        </md-toolbar>
-        <Card v-for="card in cards"
-              :key="card.id"
-              :card="card" />
-    </div>
+  <b-row cols="1" cols-lg="2" cols-xl="5">
+      <b-col v-for="card in cards" :key="card.id" class="py-3">
+          <DomainCard :card="card"></DomainCard>
+      </b-col>
+  </b-row>
 </template>
 
 <script>
-import Card from '~/components/domain/card';
-
 export default {
-    components: {
-        Card
-    },
-    mounted() {
+  name: 'IndexPage',
+
+  mounted() {
         this.$store.dispatch("cards/getCards");
-        this.$store.dispatch("layout/setSingleCard", false);
+        // this.$store.dispatch("layout/setSingleCard", false);
     },
-    computed: {
-        cards() {
-            return this.$store.getters['cards/cards']
-        },
-        currentTheme: {
-            get() {
-                const theme = this.$store.getters['themes/currentTheme']
-                // filter if current theme
-                if (theme) this.$store.dispatch("cards/filterCards", theme.id);
-                return theme
-            },
-            set(newValue) {
-                // noting to do, just add a setter to avoid warning
-            }
-        }
+  computed: {
+      cards() {
+          return this.$store.getters['cards/cards']
+      },
     }
 }
 </script>
-<style scoped>
-.my-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-</style>

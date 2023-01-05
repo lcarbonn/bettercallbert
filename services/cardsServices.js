@@ -1,23 +1,27 @@
-import { firestore } from '@/plugins/firebase.js';
+import { collection, query, orderBy, getDocs } from "firebase/firestore"
+import { db } from '@/plugins/firebase.js'
 
-export const getCards = (callback) => {
-    firestore.collection(`cards`).orderBy('idTheme').onSnapshot(querySnapshot => {
-        const list = [];
-        let card = {}
-        querySnapshot.forEach(doc => {
-            // console.debug(`get card:${doc.id} => ${doc.data().title}`);
-            card = {}
-            card = doc.data()
-            card.id = doc.id
-            if (card.src.indexOf("http") == -1) {
-                card.img = null
-            } else {
-                card.img = card.src
-            }
-            list.push(card);
-        });
-        callback(list);
+
+export const getCards = async (callback) => {
+
+    const q = query(collection(db, "cards"), orderBy("idTheme"));
+
+    const querySnapshot = await getDocs(q);
+    const list = [];
+    let card = {}
+
+    querySnapshot.forEach(doc => {
+        card = {}
+        card = doc.data()
+        card.id = doc.id
+        if (card.src.indexOf("http") == -1) {
+            card.img = null
+        } else {
+            card.img = card.src
+        }
+        list.push(card);
     });
+    callback(list);
 };
 
 export const getCard = (callback, id) => {

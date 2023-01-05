@@ -1,9 +1,11 @@
+import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from '@/plugins/firebase.js';
 
 // get the url for download image
 export const getImageSrc = (callback, src) => {
-    const storageRef = storage.ref();
-    storageRef.child(src).getDownloadURL().then(function (url) {
+    console.debug("getImageSrc src:" + src);
+    const storageRef = ref(storage, src)
+    getDownloadURL(storageRef).then(function (url) {
         // console.debug("url:" + url);
         callback(url)
     }).catch(function (error) {

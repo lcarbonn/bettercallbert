@@ -1,20 +1,18 @@
 <template>
     <nuxt-link :to="'/cards/'+card.id">
-        <md-card md-with-hover>
-            <md-card-media-cover>
-                <md-card-media md-ratio="1:1">
-                    <img v-if="card.img"
-                         :title="card.title"
-                         :alt="card.title"
-                         :src="card.img">
-                </md-card-media>
-                <md-card-area class="my-solid">
-                    <md-card-header>
-                        <span class="md-title">{{card.title}}</span>
-                    </md-card-header>
-                </md-card-area>
-            </md-card-media-cover>
-        </md-card>
+        <b-card 
+            :img-src="card.img"
+            :img-alt="card.title"
+            class="h-100"
+            bg-variant="secondary"
+            text-variant="white"
+            header-bg-variant="primary"
+            overlay
+        >
+            <template #header>
+                <small>{{card.title}}</small>
+            </template>
+        </b-card>
     </nuxt-link>
 </template>
 
@@ -28,16 +26,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-.md-card {
-    width: 320px;
-    margin: 4px;
-    display: inline-block;
-    vertical-align: top;
-}
-
-.my-solid {
-    background-color: rgba(0, 0, 0, 0.54);
-}
-</style>

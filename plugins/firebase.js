@@ -1,9 +1,8 @@
 // Import Firebase
-import firebase from "firebase/app";
-import 'firebase/auth';
-import 'firebase/database';
-import 'firebase/firestore';
-import 'firebase/storage';
+import { initializeApp } from "firebase/app"
+import { getAnalytics } from "firebase/analytics"
+import { getFirestore } from "firebase/firestore"
+import { getStorage } from "firebase/storage"
 
 // Initialize Firebase
 var firebaseConfig = {
@@ -12,27 +11,13 @@ var firebaseConfig = {
     databaseURL: "https://bettercallbert.firebaseio.com",
     projectId: "bettercallbert",
     storageBucket: "bettercallbert.appspot.com",
-    messagingSenderId: "110642051311"
-};
-!firebase.apps.length ? firebase.initializeApp(firebaseConfig) : '';
+    messagingSenderId: "110642051311",
+    appId: "1:110642051311:web:48c6b911e8086ff8bbc31a",
+    measurementId: "G-T2R7DS2NB1"};
 
-export const GoogleProvider = new firebase.auth.GoogleAuthProvider();
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
-export const storage = firebase.storage();
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+const analytics = getAnalytics(firebaseApp);
 
-export default ctx => {
-    const { store } = ctx;
-
-    return new Promise((resolve, reject) => {
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                store.dispatch('auth/setActiveUser', user).then(() => {
-                    resolve();
-                });
-            } else {
-                resolve();
-            }
-        });
-    });
-};
+export const db = getFirestore();
+export const storage = getStorage(firebaseApp);

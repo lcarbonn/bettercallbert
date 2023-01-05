@@ -1,75 +1,64 @@
 export default {
+  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+
+  // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
-  /*
-  ** Headers of the page
-  */
+
+  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: "Better Call Bert",
-    title: process.env.npm_package_name || '',
+    title: 'Better Call Bert',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: 'Better Call Bert' },
+      { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
 
-  /*
-  ** Manifest for standalone app
-  */
-  manifest: {
-    name: 'Better Call Bert',
-    short_name: 'BetterCallBert',
-    display: 'standalone'
-  },
-
-  /*
-  ** Customize the progress-bar color
-  */
-  loading: { color: '#fff' },
-
-  /*
-  ** Global CSS
-  */
+  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/assets/css/custom-theme.scss',
+    '~/assets/css/custom-theme.scss'
   ],
 
-  /*
-  ** Plugins to load before mounting the App
-  */
+  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/firebase.js' },
-    { src: '~/plugins/themes.js' },
-    { src: '~/plugins/swiped-events.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
-  /*
-  ** Nuxt.js modules
-  */
-  modules: [
-    '@nuxtjs/pwa',
-    ['nuxt-vue-material', {
-      theme: 'default',
-      components: ['MdDrawer', 'MdRadio', 'MdMenu', 'MdContent', 'MdList', 'MdButton',
-        'MdToolbar', 'MdIcon', 'MdApp', 'MdCard', 'MdField',
-        'MdCheckbox', 'MdSnackbar', 'MdSwitch', 'MdTooltip',
-        "MdDivider", "MdDialog", "MdDialogConfirm"
-      ]
-    }],
-
+  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+  buildModules: [
   ],
 
-  /*
-  ** Build configuration
-  */
+  // Modules: https://go.nuxtjs.dev/config-modules
+  modules: [
+    // https://go.nuxtjs.dev/bootstrap
+    ['bootstrap-vue/nuxt',
+      {
+        icon: true
+      }
+    ],    
+    // https://go.nuxtjs.dev/pwa
+    '@nuxtjs/pwa',
+  ],
+
+  // PWA module configuration: https://go.nuxtjs.dev/pwa
+  pwa: {
+    manifest: {
+      name: 'Better Call Bert',
+      short_name: 'bettercallbert',
+      display: 'standalone',
+      description: 'Better Call Bert',
+      lang: 'fr-FR'
+    }
+  },
+
+  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
 }

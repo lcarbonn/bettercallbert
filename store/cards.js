@@ -70,7 +70,7 @@ export const actions = {
             commit("setCards", cards);
             commit("setFullCards", cards);
             cards.forEach((card) => {
-                if (!card.img && card.src.indexOf("http") == -1) {
+                if (!card.img && card.src && card.src.indexOf("http") == -1) {
                     dispatch("getCardImg", card)
                 }
             })
