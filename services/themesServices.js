@@ -1,4 +1,4 @@
-import { collection, query, orderBy, getDocs } from "firebase/firestore"
+import { collection, query, orderBy, getDocs, doc, getDoc } from "firebase/firestore"
 import { db } from '@/plugins/firebase.js'
 
 
@@ -16,4 +16,15 @@ export const getThemes = async (callback) => {
         list.push(theme);
     });
     callback(list);
+};
+
+export const getTheme = async (callback, id) => {
+    const docRef = doc(db, "themes", id)
+    const docSnap = await getDoc(docRef)
+    let theme = null
+    if (docSnap.exists) {
+        theme = docSnap.data()
+        theme.id = docSnap.id
+    }
+    callback(theme)
 };
