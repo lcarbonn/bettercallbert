@@ -69,11 +69,11 @@ export default {
       this.$emit('filterCards', idTheme)
     },
 
-    logout() {
-      this.$store.dispatch('auth/signOut').then(() => {
-        this.$router.push('/')
-      });
-    }
+    // logout() {
+    //   this.$store.dispatch('auth/signOut').then(() => {
+    //     this.$router.push('/')
+    //   });
+    // }
   }
 }
 </script>

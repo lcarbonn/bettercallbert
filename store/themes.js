@@ -1,26 +1,19 @@
-import { getThemes, getTheme } from '~/services/themesServices'
+import { getThemes } from '~/services/themesServices'
 
 export const state = () => ({
-    themes: [],
-    currentTheme: null
+    themes: []
 });
 
 export const getters = {
     themes: state => {
         return state.themes;
-    },
-    currentTheme: state => {
-        return state.currentTheme;
     }
 };
 
 export const mutations = {
     setThemes(state, payload) {
         state.themes = payload;
-    },
-    setCurrentTheme(state, payload) {
-        state.currentTheme = payload;
-    },
+    }
 };
 
 export const actions = {
@@ -29,15 +22,5 @@ export const actions = {
             commit("setThemes", themes);
         };
         getThemes(callback, this);
-    },
-    setCurrentTheme({ commit, dispatch }, idTheme) {
-        if (idTheme == null) {
-            commit("setCurrentTheme", null);
-        } else {
-            const callback = theme => {
-                commit("setCurrentTheme", theme);
-            };
-            getTheme(callback, idTheme);
-        }
-    },
+    }
 };
