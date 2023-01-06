@@ -37,19 +37,36 @@
                         @keyup="search()"></b-form-input>
         </b-nav-form>
 
+        <b-nav-item-dropdown text="Settings"
+                             v-show="isConnected">
+          <b-dropdown-item @click="createCard()"
+                           to="#"
+                           variant="primary">Add card</b-dropdown-item>
+        </b-nav-item-dropdown>
+
+        <b-nav-item-dropdown right>
+          <!-- Using 'button-content' slot -->
+          <template #button-content>
+            <em><b-icon icon="person"></b-icon></em>
+          </template>
+          <b-dropdown-item v-show="!isConnected"
+                           href="/login">Login</b-dropdown-item>
+          <b-dropdown-item v-show="isConnected"
+                           @click="logout()">Logout</b-dropdown-item>
+        </b-nav-item-dropdown>
+
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </template>
 
 <script>
-import { BIcon, BIconHouse, BIconPerson } from 'bootstrap-vue'
+import { BIcon, BIconPerson } from 'bootstrap-vue'
 
 export default {
   name: 'NavbarComp',
   components: {
     BIcon,
-    BIconHouse,
     BIconPerson
   },
   data: () => ({
@@ -65,36 +82,24 @@ export default {
   },
 
   computed: {
-    // player() {
-    //   return this.$store.getters["players/player"];
-    // },
-    // game() {
-    //   return this.$store.getters["games/game"];
-    // },
-    // isAnonymous() {
-    //   return this.$store.getters['auth/isAnonymous'];
-    // },
-    // isConnected() {
-    //     return this.$store.getters['auth/isConnected'];
-    // },
-    // userEmail() {
-    //   return this.$store.getters['auth/getUserEmail'];
-    // }
-
+    isConnected() {
+      return this.$store.getters['auth/isConnected'];
+    }
   },
+
   methods: {
     filterCards(idTheme) {
       this.$emit('filterCards', idTheme)
     },
     search() {
       this.$emit('search', this.textsearch)
+    },
+    logout() {
+      this.$store.dispatch('auth/signOut').then(() => {
+        //force back to home
+        this.$router.go('/')
+      })
     }
-
-    // logout() {
-    //   this.$store.dispatch('auth/signOut').then(() => {
-    //     this.$router.push('/')
-    //   });
-    // }
   }
 }
 </script>
