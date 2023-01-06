@@ -6,36 +6,25 @@
     <b-navbar-brand href="/">
       <b-avatar variant="primary"
                 rounded
-                src="~/static/icon.png"></b-avatar> Better Call Bert
+                src="~/static/icon.png"
+                @click="v - b - toggle.sidebar - 1"></b-avatar> Better Call Bert
     </b-navbar-brand>
 
-    <!-- <b-navbar-nav>
-      <b-nav-item>Better Call Bert</b-nav-item>
-      <b-nav-item v-if="player">{{ $t('player') }} : {{ player.name }}</b-nav-item>
-    </b-navbar-nav> -->
-    <!-- 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-    <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown right>
-          <template #button-content>
-            <em v-if="!userEmail"><b-icon icon="person"></b-icon></em>
-            <em v-if="userEmail">{{userEmail}} <b-icon icon="person"></b-icon></em>
-          </template>
-          <b-dropdown-item
-              v-show="!isConnected || isAnonymous"
-              href="/login">{{$t('navbarLogin')}}</b-dropdown-item>
-          <b-dropdown-item
-              v-show="isConnected && !isAnonymous"
-                href="/admin">{{$t('navbarGameList')}}</b-dropdown-item>
-          <b-dropdown-item 
-              v-show="isConnected  && !isAnonymous" 
-              @click="logout()">{{$t('navbarLogout')}}</b-dropdown-item>
+    <b-collapse id="nav-collapse"
+                is-nav>
+      <b-navbar-nav>
+        <b-nav-item-dropdown text="Filter">
+          <b-dropdown-item v-for="theme in themes"
+                           :key="theme.id"
+                           :id="theme.id"
+                           @click="filterCards(theme.id)"
+                           to="#"
+                           variant="primary">{{ theme.title }}</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
-    </b-collapse> -->
-
+    </b-collapse>
   </b-navbar>
 </template>
 
@@ -48,6 +37,13 @@ export default {
     BIcon,
     BIconHouse,
     BIconPerson
+  },
+
+  props: {
+    themes: {
+      type: Array,
+      default: null
+    },
   },
 
   computed: {
@@ -69,6 +65,10 @@ export default {
 
   },
   methods: {
+    filterCards(idTheme) {
+      this.$emit('filterCards', idTheme)
+    },
+
     logout() {
       this.$store.dispatch('auth/signOut').then(() => {
         this.$router.push('/')

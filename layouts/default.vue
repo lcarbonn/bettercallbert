@@ -2,7 +2,8 @@
 <template>
   <div class="d-flex flex-column justify-content-between min-vh-100">
     <div>
-      <BaseNavbar></BaseNavbar>
+      <BaseNavbar :themes="themes"
+                  @filterCards="filterCards"></BaseNavbar>
       <b-container fluid>
         <b-row>
           <b-col>
@@ -32,5 +33,30 @@ export default {
   created() {
     console.debug("appVersion:" + this.appVersion)
   },
+  mounted() {
+    this.$store.dispatch("themes/getThemes")
+  },
+
+  computed: {
+    themes() {
+      return this.$store.getters['themes/themes']
+    }
+  },
+  methods: {
+    filterCards(idTheme) {
+      this.$store.dispatch("themes/setCurrentTheme", idTheme);
+      this.$store.dispatch("cards/filterCards", idTheme);
+    },
+    // search(textsearch) {
+    //   this.$store.dispatch("themes/setCurrentTheme", null);
+    //   this.$store.dispatch("cards/search", textsearch);
+    // },
+    // createCard() {
+    //   this.$store.dispatch("cards/createCard").then(() => {
+    //     const card = this.$store.getters['cards/card']
+    //     this.$router.push('/admin/' + card.id);
+    //   });
+    // }
+  }
 };
 </script>
