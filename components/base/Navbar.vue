@@ -29,13 +29,11 @@
                            variant="primary">{{ theme.title }}</b-dropdown-item>
         </b-nav-item-dropdown>
 
-        <b-nav-form>
-          <b-form-input size="sm"
-                        class="mr-sm-2"
-                        placeholder="Search"
-                        v-model="textsearch"
-                        @keyup="search()"></b-form-input>
-        </b-nav-form>
+        <b-form-input size="sm"
+                      class="mr-sm-2"
+                      placeholder="Search"
+                      v-model="textsearch"
+                      @keyup="search()"></b-form-input>
 
         <b-nav-item-dropdown text="Settings"
                              v-show="isConnected">
