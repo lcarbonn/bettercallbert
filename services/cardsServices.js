@@ -1,4 +1,4 @@
-import { collection, query, orderBy, getDocs, getDoc, doc, startAfter, limit, endBefore, updateDoc } from "firebase/firestore"
+import { collection, query, orderBy, getDocs, getDoc, doc, startAfter, limit, endBefore, updateDoc, deleteDoc } from "firebase/firestore"
 import { db } from '@/plugins/firebase.js'
 
 
@@ -77,8 +77,8 @@ export const saveCard = async (card) => {
 };
 
 export const deleteCard = async (id) => {
-    console.log("deleteCard id=" + id)
-    // await firestore.collection('cards').doc(id).delete()
+    console.debug("deleteCard id=" + id)
+    await deleteDoc(doc(db, "cards", id));
 };
 
 export const createCard = async () => {

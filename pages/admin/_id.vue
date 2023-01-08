@@ -66,7 +66,10 @@ export default {
             this.$store.dispatch("cards/saveCard", card)
         },
         deleteCard() {
-            this.$store.dispatch("cards/deleteCard", this.id)
+            this.$store.dispatch("cards/deleteCard", this.id).then(() => {
+                //force back to home
+                this.$router.push('/')
+            })
         },
         uploadImageFile(file) {
             this.$store.dispatch("storage/uploadImageFile", file)
