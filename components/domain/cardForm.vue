@@ -109,6 +109,7 @@
                     <b-col lg="12"
                            class="my-1">
                         <b-button @click="saveCard"
+                                  :disabled="!Boolean(srcState && titleState)"
                                   size="sm"
                                   v-b-tooltip.hover
                                   title="Save"><b-icon icon="save" /></b-button>
@@ -150,111 +151,6 @@
             </b-container>
         </b-card-body>
     </b-card>
-
-    <!-- <form novalidate
-          @submit.prevent>
-        <md-card v-if="card">
-            <md-card-content>
-                <div class="md-layout md-gutter">
-                    <div class="md-layout-item md-small-size-100">
-                        <md-field :class="getValidationClass('title')">
-                            <label for="title">Title</label>
-                            <md-input name="title"
-                                      id="title"
-                                      v-model.trim="form.title"></md-input>
-                            <md-icon>title</md-icon>
-                            <span class="md-error"
-                                  v-if="!$v.form.title.required">The title is required</span>
-                            <span class="md-error"
-                                  v-else-if="!$v.form.title.minlength">Invalid title</span>
-                        </md-field>
-                        <md-field :class="getValidationClass('src')">
-                            <label for="src">Source</label>
-                            <md-input name="src"
-                                      id="src"
-                                      v-model.trim="form.src"
-                                      type="text"></md-input>
-                            <md-icon>image</md-icon>
-                            <span class="md-error"
-                                  v-if="!$v.form.src.required">The src is required</span>
-                        </md-field>
-                        <md-field :class="getValidationClass('imageFile')">
-                            <label for="imageFile">Upload Image</label>
-                            <md-input :disabled="disableButton"
-                                      type="file"
-                                      accept="image/png, image/jpeg"
-                                      name="imageFile"
-                                      id="imageFile"
-                                      v-model="form.imageFile"
-                                      @change.prevent="selectImageFile($event.target.files)" />
-                            <md-button class="md-icon-button"
-                                       :disabled="file==null"
-                                       @click="uploadImageFile()">
-                                <md-icon>file_upload</md-icon>
-                            </md-button>
-                            <md-input type="hidden"
-                                      v-model="imagePath"></md-input>
-                        </md-field>
-                        <md-field :class="getValidationClass('link')">
-                            <label for="link">Link</label>
-                            <md-input name="link"
-                                      id="link"
-                                      v-model.trim="form.link"></md-input>
-                            <md-icon>link</md-icon>
-                        </md-field>
-                        <md-field :class="getValidationClass('idTheme')">
-                            <label for="idTheme">Theme</label>
-                            <md-select v-model="form.idTheme"
-                                       name="idTheme"
-                                       id="idTheme">
-                                <md-option v-for="item in themes"
-                                           :key="item.id"
-                                           :value="item.id">{{ item.title }}</md-option>
-                            </md-select>
-                            <md-icon>book</md-icon>
-                            <span class="md-error"
-                                  v-if="!$v.form.idTheme.required">The Theme is required</span>
-                        </md-field>
-                        <md-button :disabled="disableButton"
-                                   class="md-raised md-primary"
-                                   type="submit"
-                                   @click="saveCard">Save</md-button>
-                        <md-button :disabled="disableButton"
-                                   class="md-raised md-primary"
-                                   type="submit"
-                                   @click="resetCard">Cancel</md-button>
-                        <md-dialog-confirm :md-active="showConfirm"
-                                           md-title="Confirm card deletion?"
-                                           md-content="This is your last chance!!!"
-                                           md-confirm-text="Yes"
-                                           md-cancel-text="No"
-                                           @md-cancel="onCancel"
-                                           @md-confirm="onConfirm" />
-                        <md-button :disabled="disableButton"
-                                   class="md-raised md-primary"
-                                   @click="showConfirm = true">Delete</md-button>
-                    </div>
-                </div>
-            </md-card-content>
-            <md-divider></md-divider>
-            
-            <md-card-header>
-                <span class="md-title">{{form.title}}</span>
-            </md-card-header>
-            <md-card-actions md-alignment="space-between">
-                <md-button v-if="form.link"
-                           :href="form.link"
-                           target="_blank"
-                           class="md-primary">Jump to source</md-button>
-            </md-card-actions>
-            <md-card-media>
-                <img v-if="img"
-                     :title="card.title"
-                     :alt="card.title"
-                     :src="img">
-            </md-card-media>
-        </md-card>
-    </form> -->
 </template>
 
 <script>
@@ -316,7 +212,6 @@ export default {
         themeOptions() {
             return this.genThemeOptions(this.themes)
         }
-
     },
     methods: {
         saveCard() {
