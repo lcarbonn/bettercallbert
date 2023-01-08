@@ -175,7 +175,7 @@ export const actions = {
         dispatch("snackbar/setSnackbarMessage", { message: "" }, { root: true });
         try {
             console.log("creating card");
-            const card = await createCard(this);
+            const card = await createCard();
             commit("setCard", card);
             dispatch("snackbar/setSnackbarMessage", { message: "Card created" }, { root: true });
         } catch (error) {

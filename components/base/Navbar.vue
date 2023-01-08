@@ -92,6 +92,12 @@ export default {
     search() {
       this.$emit('search', this.textsearch)
     },
+    createCard() {
+      this.$store.dispatch("cards/createCard").then(() => {
+        const card = this.$store.getters['cards/card']
+        this.$router.push('/admin/' + card.id);
+      });
+    },
     logout() {
       this.$store.dispatch('auth/signOut').then(() => {
         //force back to home

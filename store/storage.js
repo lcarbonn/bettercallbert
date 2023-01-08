@@ -31,7 +31,6 @@ export const actions = {
         try {
             console.debug("uploading image");
             const callback = paths => {
-                console.debug("uploaded image:" + paths);
                 commit("setImagePath", paths);
                 dispatch("snackbar/setSnackbarMessage", { message: "Image uploaded" }, { root: true });
             }

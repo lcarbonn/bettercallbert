@@ -29,6 +29,7 @@ export const uploadImageFile = (callback, file) => {
                 imagePath: storageRef.fullPath,
                 imageUrl: url
             }
+            console.debug("storage path=" + paths.imagePath + ', url=' + paths.imageUrl)
             callback(paths)
         })
     })

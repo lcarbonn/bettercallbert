@@ -195,11 +195,9 @@ export default {
             if (!this.selectedCard && newCard) {
                 this.selectedCard = JSON.parse(JSON.stringify(newCard))
             }
-        }
-    },
-    beforeUpdate() {
-        if (this.imagePath != null) {
-            this.form.src = this.imagePath
+        },
+        imagePath(newImg, oldImg) {
+            this.selectedCard.src = newImg
         }
     },
     computed: {
