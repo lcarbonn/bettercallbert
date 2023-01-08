@@ -27,7 +27,6 @@ export const mutations = {
 
 export const actions = {
     uploadImageFile({ commit, dispatch }, imageFile) {
-        dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
         dispatch("snackbar/setSnackbarMessage", { message: "Uploading image" }, { root: true });
         try {
             console.debug("uploading image");
@@ -35,13 +34,11 @@ export const actions = {
                 console.debug("uploaded image:" + paths);
                 commit("setImagePath", paths);
                 dispatch("snackbar/setSnackbarMessage", { message: "Image uploaded" }, { root: true });
-                dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
             }
             uploadImageFile(callback, imageFile);
         } catch (error) {
             console.log(error)
             dispatch("snackbar/setSnackbarMessage", { message: "Error occured while uploading image" }, { root: true });
-            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         }
     },
     resetImagePath({ commit }) {

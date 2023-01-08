@@ -1,28 +1,33 @@
 <template>
     <b-container>
+        <b-button v-show="isConnected"
+                  id="updateButton"
+                  variant="secondary"
+                  :to='"/admin/" + id'>
+            <b-icon icon="gear"></b-icon>
+        </b-button>
+        <b-tooltip target="updateButton"
+                   triggers="hover">Update</b-tooltip>
+
         <DomainCardDetail :card="card"
                           :nextId="nextId"
                           :previousId="previousId"
                           :img="img"
                           class="py-3" />
     </b-container>
-    <!-- <div class="md-layout md-alignment-top-center">
-        <md-button class="md-icon-button"
-                   :to="'/admin/' + id"
-                   v-show="isConnected">
-            <md-icon>build</md-icon>
-            <md-tooltip md-direction="top">Update</md-tooltip>
-        </md-button>
-        <DomainCardDetail :card="card"
-                          :nextId="nextId"
-                          :previousId="previousId"
-                          :img="img" />
-    </div> -->
 </template>
 
 <script>
+import { BIcon, BIconGear } from 'bootstrap-vue'
 
 export default {
+    name: "cardPage",
+
+    components: {
+        BIcon,
+        BIconGear
+    },
+
     mounted() {
         this.$store.dispatch("cards/getCard", this.id)
         // this.$store.dispatch("layout/setSingleCard", true);

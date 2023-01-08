@@ -151,44 +151,36 @@ export const actions = {
         commit("setCard", card);
     },
     async saveCard({ commit, dispatch }, card) {
-        dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
         dispatch("snackbar/setSnackbarMessage", { message: null }, { root: true });
         try {
             await saveCard(card);
+            commit("setCard", card);
             dispatch("snackbar/setSnackbarMessage", { message: "Card saved" }, { root: true });
-            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         } catch (error) {
             console.log(error)
             dispatch("snackbar/setSnackbarMessage", { message: "Error occured while saving card" }, { root: true });
-            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         }
     },
     async deleteCard({ commit, dispatch }, id) {
-        dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
         dispatch("snackbar/setSnackbarMessage", { message: null }, { root: true });
         try {
             await deleteCard(id);
             dispatch("snackbar/setSnackbarMessage", { message: "Card deleted" }, { root: true });
-            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         } catch (error) {
             console.log(error)
             dispatch("snackbar/setSnackbarMessage", { message: "Error occured while deleting card" }, { root: true });
-            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         }
     },
     async createCard({ commit, dispatch }) {
-        dispatch("snackbar/setIsLoading", { isLoading: true }, { root: true });
         dispatch("snackbar/setSnackbarMessage", { message: "" }, { root: true });
         try {
             console.log("creating card");
             const card = await createCard(this);
             commit("setCard", card);
             dispatch("snackbar/setSnackbarMessage", { message: "Card created" }, { root: true });
-            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         } catch (error) {
             console.log(error)
             dispatch("snackbar/setSnackbarMessage", { message: "Error occured while creating card" }, { root: true });
-            dispatch("snackbar/setIsLoading", { isLoading: false }, { root: true });
         }
     }
 };

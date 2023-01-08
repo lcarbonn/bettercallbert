@@ -23,10 +23,13 @@
 
 <script>
 
+import notAuthenticated from '~/mixins/notAuthenticated.js';
+
 import { version } from '../package.json';
 
 export default {
   name: "DefaultLayout",
+  mixins: [notAuthenticated],
 
   data: () => ({
     appVersion: version

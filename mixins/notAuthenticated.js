@@ -18,9 +18,7 @@ export default {
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 this.$store.dispatch('auth/setActiveUser', user)
             } else {
-                this.$store.dispatch('auth/setActiveUser', { user: null })
-                route.nextRoute = this.$router.currentRoute;
-                this.$router.push('/login');
+                // nothing
             }
         });
     }

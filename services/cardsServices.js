@@ -1,4 +1,4 @@
-import { collection, query, orderBy, getDocs, getDoc, doc, startAfter, limit, endBefore } from "firebase/firestore"
+import { collection, query, orderBy, getDocs, getDoc, doc, startAfter, limit, endBefore, updateDoc } from "firebase/firestore"
 import { db } from '@/plugins/firebase.js'
 
 
@@ -63,12 +63,17 @@ export const getPreviousId = async (callback, id) => {
 
 export const saveCard = async (card) => {
     console.log("saveCard id=" + card.id)
-    // await firestore.collection('cards').doc(card.id).update({
-    //     title: card.title,
-    //     link: card.link,
-    //     src: card.src,
-    //     idTheme: card.idTheme
-    // })
+    if (!card) return null
+    console.debug("start updateCard id=" + card.id)
+    const cardRef = doc(db, "cards", card.id)
+    await updateDoc(cardRef, {
+        title: card.title,
+        link: card.link,
+        src: card.src,
+        idTheme: card.idTheme
+    })
+    console.debug("end updateCard id=" + card.id)
+
 };
 
 export const deleteCard = async (id) => {

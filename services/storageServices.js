@@ -1,4 +1,4 @@
-import { ref, getDownloadURL } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { storage } from '@/plugins/firebase.js';
 
 // get the url for download image
@@ -18,18 +18,18 @@ export const getImageSrc = (callback, src) => {
 export const uploadImageFile = (callback, file) => {
     // Create a reference to the destination where we're uploading
     // the file.
-    // const storageRef = storage.ref();
-    // const imageRef = storageRef.child("cards/" + file.name)
-    // const metadata = {
-    //     contentType: file.type
-    // }
-    // const uploadTask = imageRef.put(file, metadata).then((snapshot) => {
-    //     snapshot.ref.getDownloadURL().then((url) => {
-    //         const paths = {
-    //             imagePath: imageRef.fullPath,
-    //             imageUrl: url
-    //         }
-    //         callback(paths)
-    //     })
-    // })
+    const storageRef = ref(storage, "cards/" + file.name)
+    const metadata = {
+        contentType: file.type
+    }
+    // Upload the file and metadata
+    const uploadTask = uploadBytes(storageRef, file, metadata).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+            const paths = {
+                imagePath: storageRef.fullPath,
+                imageUrl: url
+            }
+            callback(paths)
+        })
+    })
 };
