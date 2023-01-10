@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import authenticated from '~/mixins/authenticated.js';
 import { BIcon, BIconArrowUpLeftSquare } from 'bootstrap-vue'
 
 export default {
@@ -31,8 +30,6 @@ export default {
         BIcon,
         BIconArrowUpLeftSquare
     },
-
-    mixins: [authenticated],
     data: () => ({
         disableButton: false,
     }),

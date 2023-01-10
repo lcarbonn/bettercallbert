@@ -5,10 +5,9 @@
 </template>
 
 <script>
-import authenticated from '~/mixins/authenticated.js';
 
 export default {
-    mixins: [authenticated]
+    name: 'AdminPage',
 }
 
 </script>

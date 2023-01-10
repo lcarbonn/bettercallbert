@@ -36,7 +36,7 @@
                       @keyup="search()"></b-form-input>
 
         <b-nav-item-dropdown text="Settings"
-                             v-show="isConnected">
+                             v-show="!isAnonymous">
           <b-dropdown-item @click="createCard()"
                            to="#"
                            variant="primary">Add card</b-dropdown-item>
@@ -47,9 +47,9 @@
           <template #button-content>
             <em><b-icon icon="person"></b-icon></em>
           </template>
-          <b-dropdown-item v-show="!isConnected"
-                           href="/login">Login</b-dropdown-item>
-          <b-dropdown-item v-show="isConnected"
+          <b-dropdown-item v-show="isAnonymous"
+                           @click="login()">Login</b-dropdown-item>
+          <b-dropdown-item v-show="!isAnonymous"
                            @click="logout()">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
 
@@ -60,6 +60,7 @@
 
 <script>
 import { BIcon, BIconPerson } from 'bootstrap-vue'
+import { setNextPath } from '~/mixins/authenticated.js';
 
 export default {
   name: 'NavbarComp',
@@ -80,8 +81,8 @@ export default {
   },
 
   computed: {
-    isConnected() {
-      return this.$store.getters['auth/isConnected'];
+    isAnonymous() {
+      return this.$store.getters['auth/isAnonymous'];
     }
   },
 
@@ -98,10 +99,13 @@ export default {
         this.$router.push('/admin/' + card.id);
       });
     },
+    login() {
+      setNextPath(this.$router.currentRoute)
+      this.$router.push('/login')
+    },
     logout() {
       this.$store.dispatch('auth/signOut').then(() => {
-        //force back to home
-        this.$router.go('/')
+        this.$router.push('/')
       })
     }
   }

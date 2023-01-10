@@ -1,6 +1,6 @@
 <template>
     <b-container>
-        <b-button v-show="isConnected"
+        <b-button v-show="!isAnonymous"
                   id="updateButton"
                   variant="secondary"
                   :to='"/admin/" + id'>
@@ -48,8 +48,8 @@ export default {
         img() {
             return this.$store.getters['cards/img']
         },
-        isConnected() {
-            return this.$store.getters['auth/isConnected'];
+        isAnonymous() {
+            return this.$store.getters['auth/isAnonymous'];
         }
     }
 

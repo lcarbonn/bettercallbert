@@ -5,22 +5,38 @@ export const route = () => ({
 });
 
 export const getNextPath = () => {
-    return route.nextRoute ? route.nextRoute.path : "/"
+    let path = route.nextRoute ? route.nextRoute.path : "/"
+    path = path != "/login" ? path : "/"
+    return path
 };
 
+export const setNextPath = (newPath) => {
+    route.nextRoute = newPath
+};
+
+
 export default {
-    mounted() {
+    beforeCreate() {
         // Redirect to login if user not connected trying to access authenticated pages
         const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
+            const path = this.$router.currentRoute.path
+            console.debug("currentRoute:" + path)
+            console.debug("user=" + user)
             if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
-                this.$store.dispatch('auth/setActiveUser', user)
+                console.debug("user anonymous=" + user.isAnonymous)
+                console.debug("user email=" + user.email)
+                // User is signed in
+                // User is anonymous and want go to admin, redirect to login
+                if (user.isAnonymous && path.indexOf('/admin') != -1) {
+                    console.debug("go to login")
+                    route.nextRoute = this.$router.currentRoute;
+                    this.$router.push('/login')
+                }
             } else {
-                this.$store.dispatch('auth/setActiveUser', { user: null })
-                route.nextRoute = this.$router.currentRoute;
-                this.$router.push('/login');
+                // if no user, login anonymously
+                console.debug("signInAnonymously")
+                this.$store.dispatch("auth/signInAnonymously")
             }
         });
     }

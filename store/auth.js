@@ -1,17 +1,18 @@
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signInAnonymously, signOut } from "firebase/auth";
 
 
 export const state = () => ({
     authUser: {
         uid: null,
         email: null,
+        isAnonymous: true
     }
 });
 
 export const getters = {
-    isConnected: state => {
-        console.debug("isConnected=" + (!!state.authUser?.uid))
-        return !!state.authUser?.uid
+    isAnonymous: state => {
+        console.debug("isAnonymous=" + (state.authUser?.isAnonymous))
+        return state.authUser?.isAnonymous
     }
 };
 
@@ -22,27 +23,44 @@ export const mutations = {
 };
 
 export const actions = {
+    signInAnonymously({ commit }) {
+        const auth = getAuth();
+        console.debug("auth signInAnonymously")
+        signInAnonymously(auth)
+            .then((userCredential) => {
+                // Signed in..
+                const user = userCredential.user;
+                commit('setUser', { user: { uid: user.uid, email: user.email, isAnonymous: user.isAnonymous } });
+                console.debug("auth signInAnonymously done")
+            })
+            .catch((e) => {
+                console.log("e:" + e)
+                commit('setUser', { user: null });
+                dispatch("snackbar/setSnackbarMessage", { message: "Error login" }, { root: true });
+            });
+    },
     setActiveUser({ commit }, payload) {
         commit('setUser', { user: { uid: payload.uid, email: payload.email } })
     },
-    signInWithEmailAndPassword({ commit }, payload) {
+    signInWithEmailAndPassword({ commit, dispatch }, payload) {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, payload.email, payload.password)
             .then((userCredential) => {
-                commit('setUser', { user: { uid: userCredential.user.uid, email: userCredential.user.email } })
+                const user = userCredential.user;
+                commit('setUser', { user: { uid: user.uid, email: user.email, isAnonymous: user.isAnonymous } });
+                dispatch("snackbar/setSnackbarMessage", { message: "Welcomme " + user.email }, { root: true });
             })
             .catch(e => {
                 console.log("e:" + e)
+                commit('setUser', { user: null });
+                dispatch("snackbar/setSnackbarMessage", { message: "Error login : " + e }, { root: true });
             });
     },
-    signOut({ commit }) {
+    signOut({ commit, dispatch }) {
         const auth = getAuth();
-        signOut(auth)
-            .then(() => {
-                commit('setUser', { user: null })
-            })
-            .catch(e => {
-                console.log("e:" + e)
-            });
+        console.debug("auth signOut")
+        dispatch("signInAnonymously").then(() => {
+            console.debug("auth signOut done")
+        })
     }
 };

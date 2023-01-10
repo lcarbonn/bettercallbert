@@ -23,13 +23,13 @@
 
 <script>
 
-import notAuthenticated from '~/mixins/notAuthenticated.js';
+import authenticated from '~/mixins/authenticated.js';
 
 import { version } from '../package.json';
 
 export default {
   name: "DefaultLayout",
-  mixins: [notAuthenticated],
+  mixins: [authenticated],
 
   data: () => ({
     appVersion: version
@@ -37,6 +37,10 @@ export default {
 
   created() {
     console.debug("appVersion:" + this.appVersion)
+  },
+
+  mounted() {
+    this.$store.dispatch("themes/getThemes")
   },
 
   computed: {
@@ -56,17 +60,6 @@ export default {
       this.$store.dispatch("themes/setCurrentTheme", null);
       this.$store.dispatch("cards/search", textsearch);
     },
-
-    // search(textsearch) {
-    //   this.$store.dispatch("themes/setCurrentTheme", null);
-    //   this.$store.dispatch("cards/search", textsearch);
-    // },
-    // createCard() {
-    //   this.$store.dispatch("cards/createCard").then(() => {
-    //     const card = this.$store.getters['cards/card']
-    //     this.$router.push('/admin/' + card.id);
-    //   });
-    // }
   }
 };
 </script>
