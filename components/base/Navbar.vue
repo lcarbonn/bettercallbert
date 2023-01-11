@@ -73,20 +73,22 @@ export default {
     BIconPerson
   },
   data: () => ({
-    textsearch: ''
+    textsearch: null
   }),
 
   props: {
     themes: {
       type: Array,
       default: null
-    },
-    currentTheme: null
+    }
   },
 
   computed: {
     isAnonymous() {
       return this.$store.getters['auth/isAnonymous'];
+    },
+    currentTheme() {
+      return this.$store.getters['themes/currentTheme']
     }
   },
 
@@ -98,6 +100,7 @@ export default {
     },
     search() {
       this.$emit('search', this.textsearch)
+      this.$router.push('/');
     },
     createCard() {
       this.filterCards(null)

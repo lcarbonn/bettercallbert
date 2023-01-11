@@ -8,7 +8,8 @@ export const state = () => ({
     nextId: null,
     previousId: null,
     img: null,
-    filteredTheme: null
+    currentTheme: null,
+    currentSearch: null
 });
 
 export const getters = {
@@ -30,9 +31,13 @@ export const getters = {
     img: state => {
         return state.img
     },
-    filteredTheme: state => {
-        return state.filteredTheme
+    currentTheme: state => {
+        return state.currentTheme
+    },
+    currentSearch: state => {
+        return state.currentSearch
     }
+
 };
 
 export const mutations = {
@@ -66,8 +71,11 @@ export const mutations = {
     setTitle(state, payload) {
         state.card.title = payload
     },
-    setFilteredTheme(state, payload) {
-        state.filteredTheme = payload
+    setCurrentTheme(state, payload) {
+        state.currentTheme = payload
+    },
+    setCurrentSearch(state, payload) {
+        state.currentSearch = payload
     }
 };
 
@@ -81,8 +89,8 @@ export const actions = {
                     dispatch("getCardImg", card)
                 }
             })
-            if (state.filteredTheme) {
-                dispatch("filterCards", state.filteredTheme)
+            if (state.currentTheme) {
+                dispatch("filterCards", state.currentTheme)
             }
         }
         getCards(callback);
@@ -98,7 +106,7 @@ export const actions = {
         getImageSrc(callback, card.src);
     },
     filterCards({ commit, state }, idTheme) {
-        commit("setFilteredTheme", idTheme)
+        commit("setCurrentTheme", idTheme)
         let cards = [];
         if (idTheme == null) {
             cards = state.fullCards
@@ -112,13 +120,14 @@ export const actions = {
         commit("setCards", cards);
     },
     search({ commit, state }, textsearch) {
+        const st = textsearch ? textsearch.trim() : textsearch
+        commit("setCurrentSearch", st)
         let cards = [];
-        if (textsearch.trim() == '') {
-            textsearch = textsearch.trim();
+        if (!st) {
             cards = state.fullCards
         } else {
             state.fullCards.forEach((card) => {
-                if (card.title.toLowerCase().includes(textsearch.toLowerCase())) {
+                if (card.title.toLowerCase().includes(st.toLowerCase())) {
                     cards.push(card);
                 }
             })

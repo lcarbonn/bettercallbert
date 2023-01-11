@@ -3,7 +3,6 @@
   <div class="d-flex flex-column justify-content-between min-vh-100">
     <div>
       <BaseNavbar :themes="themes"
-                  :currentTheme="currentTheme"
                   @filterCards="filterCards"
                   @search="search"></BaseNavbar>
       <b-container fluid>
@@ -47,9 +46,6 @@ export default {
     themes() {
       return this.$store.getters['themes/themes']
     },
-    currentTheme() {
-      return this.$store.getters['themes/currentTheme']
-    }
   },
   methods: {
     filterCards(idTheme) {
