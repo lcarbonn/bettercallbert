@@ -7,7 +7,8 @@ export const state = () => ({
     card: null,
     nextId: null,
     previousId: null,
-    img: null
+    img: null,
+    filteredTheme: null
 });
 
 export const getters = {
@@ -28,6 +29,9 @@ export const getters = {
     },
     img: state => {
         return state.img
+    },
+    filteredTheme: state => {
+        return state.filteredTheme
     }
 };
 
@@ -61,11 +65,14 @@ export const mutations = {
     },
     setTitle(state, payload) {
         state.card.title = payload
+    },
+    setFilteredTheme(state, payload) {
+        state.filteredTheme = payload
     }
 };
 
 export const actions = {
-    getCards({ commit, dispatch }) {
+    getCards({ commit, dispatch, state }) {
         const callback = cards => {
             commit("setCards", cards);
             commit("setFullCards", cards);
@@ -74,6 +81,9 @@ export const actions = {
                     dispatch("getCardImg", card)
                 }
             })
+            if (state.filteredTheme) {
+                dispatch("filterCards", state.filteredTheme)
+            }
         }
         getCards(callback);
     },
@@ -88,6 +98,7 @@ export const actions = {
         getImageSrc(callback, card.src);
     },
     filterCards({ commit, state }, idTheme) {
+        commit("setFilteredTheme", idTheme)
         let cards = [];
         if (idTheme == null) {
             cards = state.fullCards

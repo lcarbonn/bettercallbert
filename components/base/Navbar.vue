@@ -21,6 +21,10 @@
                     class="ml-auto">
 
         <b-nav-item-dropdown text="Filter">
+          <b-dropdown-item id="reset"
+                           @click="filterCards(null)"
+                           to="#"
+                           variant="primary">Reset filter</b-dropdown-item>
           <b-dropdown-item v-for="theme in themes"
                            :key="theme.id"
                            :id="theme.id"
@@ -88,6 +92,7 @@ export default {
 
   methods: {
     filterCards(idTheme) {
+      this.textsearch = ""
       this.$emit('filterCards', idTheme)
     },
     search() {
