@@ -40,7 +40,7 @@ export const actions = {
             });
     },
     setActiveUser({ commit }, payload) {
-        commit('setUser', { user: { uid: payload.uid, email: payload.email } })
+        commit('setUser', { user: { uid: payload.uid, email: payload.email, isAnonymous: payload.isAnonymous } })
     },
     signInWithEmailAndPassword({ commit, dispatch }, payload) {
         const auth = getAuth();

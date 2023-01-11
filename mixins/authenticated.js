@@ -27,6 +27,7 @@ export default {
                 console.debug("user anonymous=" + user.isAnonymous)
                 console.debug("user email=" + user.email)
                 // User is signed in
+                this.$store.dispatch('auth/setActiveUser', user)
                 // User is anonymous and want go to admin, redirect to login
                 if (user.isAnonymous && path.indexOf('/admin') != -1) {
                     console.debug("go to login")
