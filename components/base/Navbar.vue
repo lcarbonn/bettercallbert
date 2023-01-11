@@ -94,11 +94,13 @@ export default {
     filterCards(idTheme) {
       this.textsearch = ""
       this.$emit('filterCards', idTheme)
+      this.$router.push('/');
     },
     search() {
       this.$emit('search', this.textsearch)
     },
     createCard() {
+      this.filterCards(null)
       this.$store.dispatch("cards/createCard").then(() => {
         const card = this.$store.getters['cards/card']
         this.$router.push('/admin/' + card.id);
