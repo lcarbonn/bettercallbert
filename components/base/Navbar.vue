@@ -105,7 +105,10 @@ export default {
     },
     logout() {
       this.$store.dispatch('auth/signOut').then(() => {
-        this.$router.push('/')
+        let path = this.$router.currentRoute.path
+        path = path.replace("/admin/", "/cards/")
+        setNextPath(path)
+        this.$router.push(path)
       })
     }
   }
