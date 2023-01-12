@@ -68,7 +68,7 @@ export const saveCard = async (card) => {
     const cardRef = doc(db, "cards", card.id)
     await updateDoc(cardRef, {
         title: card.title,
-        link: card.link,
+        link: card.link ? card.link : "",
         src: card.src,
         idTheme: card.idTheme
     })

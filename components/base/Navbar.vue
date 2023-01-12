@@ -11,7 +11,7 @@
     </b-navbar-brand>
 
     <b-navbar-nav v-if="currentTheme">
-      <b-nav-item>{{ currentTheme.title }}</b-nav-item>
+      <b-nav-text>Theme : {{ currentTheme.title }}</b-nav-text>
     </b-navbar-nav>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

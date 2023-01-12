@@ -1,5 +1,6 @@
 <template>
-    <nuxt-link :to="'/cards/' + card.id">
+    <nuxt-link :to="'/cards/' + card.id"
+               class="nodecoLink">
         <b-card :img-src="card.img"
                 :img-alt="card.title"
                 class="h-100"
@@ -30,3 +31,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+.nodecoLink {
+    text-decoration: none !important;
+}
+</style>
