@@ -43,18 +43,22 @@ export const actions = {
         commit('setUser', { user: { uid: payload.uid, email: payload.email, isAnonymous: payload.isAnonymous } })
     },
     signInWithEmailAndPassword({ commit, dispatch }, payload) {
-        const auth = getAuth();
-        signInWithEmailAndPassword(auth, payload.email, payload.password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                commit('setUser', { user: { uid: user.uid, email: user.email, isAnonymous: user.isAnonymous } });
-                dispatch("snackbar/setSnackbarMessage", { message: "Welcomme " + user.email }, { root: true });
-            })
-            .catch(e => {
-                console.log("e:" + e)
-                commit('setUser', { user: null });
-                dispatch("snackbar/setSnackbarMessage", { message: "Error login : " + e }, { root: true });
-            });
+        return new Promise((resolve, reject) => {
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, payload.email, payload.password)
+                .then((userCredential) => {
+                    const user = userCredential.user
+                    commit('setUser', { user: { uid: user.uid, email: user.email, isAnonymous: user.isAnonymous } })
+                    dispatch("snackbar/setSnackbarMessage", { message: "Welcomme " + user.email }, { root: true })
+                    resolve()
+                })
+                .catch(e => {
+                    console.log("e:" + e)
+                    commit('setUser', { user: null })
+                    dispatch("snackbar/setSnackbarMessage", { message: "Wrong email/password" }, { root: true })
+                    reject(e)
+                });
+        });
     },
     signOut({ commit, dispatch }) {
         const auth = getAuth();

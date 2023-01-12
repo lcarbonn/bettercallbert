@@ -67,7 +67,8 @@ export default {
                     this.$router.push(getNextPath());
                 })
                 .catch(e => {
-                    console.error(e)
+                    //stay there
+                    console.log(e)
                 });
 
         },
