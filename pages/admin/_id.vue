@@ -13,6 +13,7 @@
                         :imageUrl="imageUrl"
                         :themes="themes"
                         :imagePath="imagePath"
+                        :theme="getVariantTheme(card)"
                         @saveCard="saveCard"
                         @deleteCard="deleteCard"
                         @uploadImageFile="uploadImageFile"
@@ -22,6 +23,7 @@
 
 <script>
 import { BIcon, BIconArrowUpLeftSquare } from 'bootstrap-vue'
+import { getThemeColor } from '/commons/commons.js';
 
 export default {
     name: "adminCardParge",
@@ -73,6 +75,10 @@ export default {
         },
         resetImagePath() {
             this.$store.dispatch("storage/resetImagePath")
+        },
+        getVariantTheme(card) {
+            if (card) return getThemeColor(card.idTheme, this.themes)
+            return null
         }
     }
 }

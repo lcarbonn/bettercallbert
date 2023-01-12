@@ -6,12 +6,14 @@
            :key="card.id"
            class="py-3">
       <DomainCard :card="card"
-                  :theme="getVariantTheme(card)"></DomainCard>
+                  :theme="getVariantTheme(card.idTheme)"></DomainCard>
     </b-col>
   </b-row>
 </template>
 
 <script>
+import { getThemeColor } from '/commons/commons.js';
+
 export default {
   name: 'IndexPage',
 
@@ -28,14 +30,8 @@ export default {
     }
   },
   methods: {
-    getVariantTheme(card) {
-      let color = ""
-      this.themes.forEach(theme => {
-        if (theme.id == card.idTheme) {
-          color = theme.color
-        }
-      });
-      return color
+    getVariantTheme(themeId) {
+      return getThemeColor(themeId, this.themes)
     }
   }
 

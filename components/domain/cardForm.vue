@@ -129,7 +129,7 @@
                         <b-card v-if="card"
                                 bg-variant="secondary"
                                 text-variant="white"
-                                header-bg-variant="primary"
+                                :header-bg-variant="getVariantTheme(selectedCard.idTheme)"
                                 img-bottom
                                 align="center">
                             <template #header>
@@ -155,6 +155,7 @@
 
 <script>
 import { BIcon, BIconUpload, BIconSave, BIconArrowCounterclockwise, BIconTrash } from 'bootstrap-vue'
+import { getThemeColor } from '/commons/commons.js';
 
 export default {
     name: 'CardForm',
@@ -248,6 +249,9 @@ export default {
                 )
             })
             return opts
+        },
+        getVariantTheme(themeId) {
+            return getThemeColor(themeId, this.themes)
         }
     }
 }

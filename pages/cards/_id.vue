@@ -9,8 +9,7 @@
         <b-tooltip target="updateButton"
                    triggers="hover">Update</b-tooltip>
 
-        <DomainCardDetail v-if="card"
-                          :card="card"
+        <DomainCardDetail :card="card"
                           :nextId="nextId"
                           :previousId="previousId"
                           :img="img"
@@ -21,6 +20,7 @@
 
 <script>
 import { BIcon, BIconGear } from 'bootstrap-vue'
+import { getThemeColor } from '/commons/commons.js';
 
 export default {
     name: "cardPage",
@@ -60,15 +60,9 @@ export default {
     },
     methods: {
         getVariantTheme(card) {
-            let color = ""
-            this.themes.forEach(theme => {
-                if (theme.id == card.idTheme) {
-                    color = theme.color
-                }
-            });
-            return color
+            if (card) return getThemeColor(card.idTheme, this.themes)
+            return null
         }
     }
-
 }
 </script>
