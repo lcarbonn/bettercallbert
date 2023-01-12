@@ -2,7 +2,7 @@
     <b-card v-if="card"
             bg-variant="secondary"
             text-variant="white"
-            header-bg-variant="primary"
+            :header-bg-variant="theme"
             img-bottom
             align="center">
         <template #header>
@@ -29,20 +29,6 @@
                     :alt="card.title"
                     class="b-card-img"></b-card-img>
     </b-card>
-    <!-- <div>
-            <md-card-media v-if="img">
-                <img :title="card.title"
-                     :alt="card.title"
-                     :src="img"
-                     @click="showDialogIn = true">
-            </md-card-media>
-            <DomainCardDialog v-if="img"
-                              :title="card.title"
-                              :img="img"
-                              :showDialogIn="showDialogIn"
-                              @closeDialog="closeDialog" />
-
-            </div> -->
 </template>
 
 <script>
@@ -73,11 +59,14 @@ export default {
         img: {
             type: String,
             default: null
-        }
+        },
+        theme: {
+            type: String,
+            default: null
+        },
+
     },
-    // data: () => ({
-    //     showDialogIn: false
-    // }),
+
     mounted() {
         this.setupListeners()
     },

@@ -9,10 +9,12 @@
         <b-tooltip target="updateButton"
                    triggers="hover">Update</b-tooltip>
 
-        <DomainCardDetail :card="card"
+        <DomainCardDetail v-if="card"
+                          :card="card"
                           :nextId="nextId"
                           :previousId="previousId"
                           :img="img"
+                          :theme="getVariantTheme(card)"
                           class="py-3" />
     </b-container>
 </template>
@@ -30,6 +32,7 @@ export default {
 
     mounted() {
         this.$store.dispatch("cards/getCard", this.id)
+        this.$store.dispatch("themes/getThemes")
     },
 
     computed: {
@@ -49,7 +52,21 @@ export default {
             return this.$store.getters['cards/img']
         },
         isAnonymous() {
-            return this.$store.getters['auth/isAnonymous'];
+            return this.$store.getters['auth/isAnonymous']
+        },
+        themes() {
+            return this.$store.getters['themes/themes']
+        }
+    },
+    methods: {
+        getVariantTheme(card) {
+            let color = ""
+            this.themes.forEach(theme => {
+                if (theme.id == card.idTheme) {
+                    color = theme.color
+                }
+            });
+            return color
         }
     }
 
