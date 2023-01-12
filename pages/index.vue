@@ -5,7 +5,8 @@
     <b-col v-for="card in cards"
            :key="card.id"
            class="py-3">
-      <DomainCard :card="card"></DomainCard>
+      <DomainCard :card="card"
+                  :theme="getVariantTheme(card)"></DomainCard>
     </b-col>
   </b-row>
 </template>
@@ -16,11 +17,27 @@ export default {
 
   mounted() {
     this.$store.dispatch("cards/getCards");
+    this.$store.dispatch("themes/getThemes")
   },
   computed: {
     cards() {
       return this.$store.getters['cards/cards']
     },
+    themes() {
+      return this.$store.getters['themes/themes']
+    }
+  },
+  methods: {
+    getVariantTheme(card) {
+      let color = ""
+      this.themes.forEach(theme => {
+        if (theme.id == card.idTheme) {
+          color = theme.color
+        }
+      });
+      return color
+    }
   }
+
 }
 </script>
