@@ -26,6 +26,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/firebase.js' },
+    { src: '~/plugins/swiped-events.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -42,7 +44,7 @@ export default {
       {
         icon: true
       }
-    ],    
+    ],
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
   ],
