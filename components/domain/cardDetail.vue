@@ -10,7 +10,8 @@
         </template>
         <b-card-body>
             <b-button v-if="previousId"
-                      :href="'/cards/' + previousId">
+                      :href="'/cards/' + previousId"
+                      size="lg">
                 <b-icon icon="arrow-left-square"
                         variant="primary" />
             </b-button>
@@ -18,16 +19,23 @@
                       :href="card.link"
                       target="_blank"
                       variant="primary">Jump to source</b-button>
-            <b-button class="md-icon-button"
-                      v-if="nextId"
-                      :href="'/cards/' + nextId">
+            <b-button v-if="nextId"
+                      :href="'/cards/' + nextId"
+                      size="lg">
                 <b-icon icon="arrow-right-square"
                         variant="primary" />
             </b-button>
         </b-card-body>
-        <b-card-img :src="img"
-                    :alt="card.title"
-                    class="b-card-img"></b-card-img>
+        <b-link href="#"
+                @click="showDialog">
+            <b-card-img :src="img"
+                        :alt="card.title"
+                        class="b-card-img"></b-card-img>
+        </b-link>
+        <DomainCardDialog :title="card.title"
+                          :img="img"
+                          :theme="theme">
+        </DomainCardDialog>
     </b-card>
 </template>
 
@@ -76,6 +84,9 @@ export default {
         document.removeEventListener('swiped-right', this.swipeRightHandler)
     },
     methods: {
+        showDialog() {
+            this.$bvModal.show('modal-card')
+        },
         setupListeners() {
             document.addEventListener("keyup", this.eventHandler)
             // swiped-left
@@ -93,10 +104,7 @@ export default {
         },
         swipeLeftHandler(e) {
             if (this.nextId) this.$router.push('/cards/' + this.nextId)
-        },
-        // closeDialog() {
-        //     this.showDialogIn = false
-        // }
+        }
     }
 }
 </script>
