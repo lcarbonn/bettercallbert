@@ -4,7 +4,7 @@
          cols-xl="5">
     <b-col v-for="card in cards"
            :key="card.id"
-           class="py-3">
+           class="p-1">
       <DomainCard :card="card"
                   :theme="getVariantTheme(card.idTheme)"></DomainCard>
     </b-col>

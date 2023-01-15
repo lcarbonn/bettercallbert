@@ -1,8 +1,7 @@
 <template>
   <b-navbar toggleable="lg"
             type="dark"
-            variant="primary"
-            class="sticky-top">
+            variant="primary">
     <b-navbar-brand href="/">
       <b-avatar variant="primary"
                 rounded
@@ -10,29 +9,11 @@
                 @click="v - b - toggle.sidebar - 1"></b-avatar> Better Call Bert
     </b-navbar-brand>
 
-    <b-navbar-nav v-if="currentTheme">
-      <b-nav-text>{{ currentTheme.title }}</b-nav-text>
-    </b-navbar-nav>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse"
                 is-nav>
-      <b-navbar-nav v-if="themes"
-                    class="ml-auto">
-
-        <b-nav-item-dropdown text="Filter">
-          <b-dropdown-item id="reset"
-                           @click="filterCards(null)"
-                           to="#"
-                           variant="primary">Reset filter</b-dropdown-item>
-          <b-dropdown-item v-for="theme in themes"
-                           :key="theme.id"
-                           :id="theme.id"
-                           @click="filterCards(theme.id)"
-                           to="#"
-                           variant="primary">{{ theme.title }}</b-dropdown-item>
-        </b-nav-item-dropdown>
-
+      <b-navbar-nav class="ml-auto">
         <b-form-input size="sm"
                       class="mr-sm-2"
                       placeholder="Search"
@@ -76,28 +57,13 @@ export default {
     textsearch: null
   }),
 
-  props: {
-    themes: {
-      type: Array,
-      default: null
-    }
-  },
-
   computed: {
     isAnonymous() {
       return this.$store.getters['auth/isAnonymous'];
-    },
-    currentTheme() {
-      return this.$store.getters['themes/currentTheme']
     }
   },
 
   methods: {
-    filterCards(idTheme) {
-      this.textsearch = ""
-      this.$emit('filterCards', idTheme)
-      this.$router.push('/');
-    },
     search() {
       this.$emit('search', this.textsearch)
       this.$router.push('/');

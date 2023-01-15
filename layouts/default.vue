@@ -2,9 +2,10 @@
 <template>
   <div class="d-flex flex-column justify-content-between min-vh-100">
     <div>
-      <BaseNavbar :themes="themes"
-                  @filterCards="filterCards"
-                  @search="search"></BaseNavbar>
+      <BaseNavbar @search="search"></BaseNavbar>
+      <BaseNavbarTheme :themes="themes"
+                       @filterCards="filterCards"></BaseNavbarTheme>
+
       <b-container fluid>
         <b-row>
           <b-col>
