@@ -1,16 +1,18 @@
 <!-- Main page -->
 <template>
   <div class="d-flex flex-column justify-content-between min-vh-100">
-    <BaseNavbar @search="search"></BaseNavbar>
-    <BaseNavbarTheme :themes="themes"
-                     @filterCards="filterCards"></BaseNavbarTheme>
-    <b-container fluid>
-      <b-row>
-        <b-col>
-          <nuxt />
-        </b-col>
-      </b-row>
-    </b-container>
+    <div>
+      <BaseNavbar :themes="themes"
+                  @filterCards="filterCards"
+                  @search="search"></BaseNavbar>
+      <b-container fluid>
+        <b-row>
+          <b-col>
+            <nuxt />
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
     <div class="d-flex flex-column justify-content-end">
       <BaseSnackbar></BaseSnackbar>
       <BaseFooter :appVersion="appVersion"></BaseFooter>
@@ -47,17 +49,13 @@ export default {
   },
   methods: {
     filterCards(idTheme) {
-      this.$store.dispatch("themes/setCurrentTheme", idTheme)
-      this.$store.dispatch("cards/filterCards", idTheme)
+      this.$store.dispatch("themes/setCurrentTheme", idTheme);
+      this.$store.dispatch("cards/filterCards", idTheme);
     },
     search(textsearch) {
-      this.resetNav()
-      this.$store.dispatch("themes/setCurrentTheme", null)
-      this.$store.dispatch("cards/search", textsearch)
+      this.$store.dispatch("themes/setCurrentTheme", null);
+      this.$store.dispatch("cards/search", textsearch);
     },
-    resetNav() {
-      this.filterCards(null)
-    }
   }
 };
 </script>

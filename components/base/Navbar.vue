@@ -2,48 +2,48 @@
   <b-navbar toggleable="lg"
             type="dark"
             variant="primary"
-            sticky>
+            class="sticky-top">
     <b-navbar-brand href="/">
       <b-avatar variant="primary"
                 rounded
-                src="~/static/icon.png"></b-avatar> Better Call Bert
+                src="~/static/icon.png"></b-avatar>
     </b-navbar-brand>
+
+    <b-navbar-nav small
+                  class="d-flex flex-row flex-wrap justify-content-start">
+      <b-nav-item v-for="theme in themes"
+                  :key="theme.id"
+                  :id="theme.id"
+                  :active="isActive(theme.id)"
+                  @click="filterCards(theme.id)"
+                  href="#"
+                  class="pr-1">
+        <span class="theme-border">{{ theme.title.toUpperCase() }}</span>
+      </b-nav-item>
+    </b-navbar-nav>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse"
                 is-nav>
-      <b-navbar-nav class="ml-auto">
-
-        <b-nav-item-dropdown text="Filter">
-          <b-dropdown-item id="reset"
-                           @click="filterCards(null)"
-                           to="#"
-                           variant="primary">Reset filter</b-dropdown-item>
-          <b-dropdown-item v-for="theme in themes"
-                           :key="theme.id"
-                           :id="theme.id"
-                           @click="filterCards(theme.id)"
-                           to="#"
-                           variant="primary">{{ theme.title }}</b-dropdown-item>
-        </b-nav-item-dropdown>
+      <b-navbar-nav v-if="themes"
+                    class="ml-auto">
 
         <b-form-input size="sm"
                       class="mr-sm-2"
                       placeholder="Search"
                       v-model="textsearch"
                       @keyup="search()"></b-form-input>
-        <!-- Add card navbar -->
+
         <b-nav-item-dropdown text="Settings"
-                             v-show="!isAnonymous"
-                             right>
+                             v-show="!isAnonymous">
           <b-dropdown-item @click="createCard()"
                            to="#"
                            variant="primary">Add card</b-dropdown-item>
         </b-nav-item-dropdown>
 
         <b-nav-item-dropdown right>
-          <!-- User navbar -->
+          <!-- Using 'button-content' slot -->
           <template #button-content>
             <em><b-icon icon="person"></b-icon></em>
           </template>
@@ -82,16 +82,24 @@ export default {
   computed: {
     isAnonymous() {
       return this.$store.getters['auth/isAnonymous'];
+    },
+    currentTheme() {
+      return this.$store.getters['themes/currentTheme']
     }
   },
 
   methods: {
+    filterCards(idTheme) {
+      this.textsearch = ""
+      this.$emit('filterCards', idTheme)
+
+    },
     search() {
       this.$emit('search', this.textsearch)
-      this.$router.push('/');
+      // this.$router.push('/');
     },
     createCard() {
-      this.$emit('resetNav')
+      this.filterCards(null)
       this.$store.dispatch("cards/createCard").then(() => {
         const card = this.$store.getters['cards/card']
         this.$router.push('/admin/' + card.id);
@@ -108,6 +116,10 @@ export default {
         setNextPath(path)
         this.$router.push(path)
       })
+    },
+    isActive(idTheme) {
+      if (this.currentTheme) return idTheme == this.currentTheme.id
+      return false
     }
   }
 }
