@@ -3,8 +3,7 @@
             v-if="themes"
             toggleable="lg"
             type="dark"
-            variant="primary"
-            sticky>
+            variant="primary">
     <b-navbar-nav small
                   class="d-flex flex-row flex-wrap justify-content-start">
       <b-nav-item v-for="theme in themes"
@@ -12,24 +11,17 @@
                   :id="theme.id"
                   :active="isActive(theme.id)"
                   @click="filterCards(theme.id)"
-                  href="#theme"
-                  variant="primary"
+                  href="#"
                   class="pr-1">
-        <span style=" border-top: 1px #ffffff solid;">{{ theme.title.toUpperCase() }}</span>
+        <span class="theme-border">{{ theme.title.toUpperCase() }}</span>
       </b-nav-item>
     </b-navbar-nav>
   </b-navbar>
 </template>
 
 <script>
-import { BIcon, BIconPerson } from 'bootstrap-vue'
-
 export default {
-  name: 'NavbarComp',
-  components: {
-    BIcon,
-    BIconPerson
-  },
+  name: 'NavbarThemeComp',
 
   props: {
     themes: {
@@ -39,9 +31,6 @@ export default {
   },
 
   computed: {
-    isAnonymous() {
-      return this.$store.getters['auth/isAnonymous'];
-    },
     currentTheme() {
       return this.$store.getters['themes/currentTheme']
     }
@@ -60,3 +49,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.theme-border {
+  border-top: 1px #ffffff solid;
+}
+</style>
