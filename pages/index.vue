@@ -23,8 +23,6 @@ export default {
 
   mounted() {
     this.$store.commit('navbar/setSinglePage', false)
-    this.$store.dispatch("cards/getCards");
-    this.$store.dispatch("themes/getThemes")
   },
   computed: {
     cards() {

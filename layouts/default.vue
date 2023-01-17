@@ -39,6 +39,7 @@ export default {
   },
 
   mounted() {
+    this.$store.dispatch("cards/getCards");
     this.$store.dispatch("themes/getThemes")
   },
 
