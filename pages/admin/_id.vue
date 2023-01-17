@@ -36,6 +36,7 @@ export default {
         disableButton: false,
     }),
     mounted() {
+        this.$store.commit('navbar/setSinglePage', true)
         this.$store.dispatch("cards/getCard", this.id)
         this.$store.dispatch("themes/getThemes")
         this.$store.dispatch("storage/resetImagePath")

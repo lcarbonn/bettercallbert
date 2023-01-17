@@ -5,8 +5,12 @@
     <b-col v-for="card in cards"
            :key="card.id"
            class="py-3">
-      <DomainCard :card="card"
-                  :theme="getVariantTheme(card.idTheme)"></DomainCard>
+      <nuxt-link :to="'/cards/' + card.id"
+                 class="nodecoLink">
+
+        <DomainCard :card="card"
+                    :theme="getVariantTheme(card.idTheme)"></DomainCard>
+      </nuxt-link>
     </b-col>
   </b-row>
 </template>
@@ -18,6 +22,7 @@ export default {
   name: 'IndexPage',
 
   mounted() {
+    this.$store.commit('navbar/setSinglePage', false)
     this.$store.dispatch("cards/getCards");
     this.$store.dispatch("themes/getThemes")
   },
@@ -32,8 +37,15 @@ export default {
   methods: {
     getVariantTheme(themeId) {
       return getThemeColor(themeId, this.themes)
+    },
+    goToCard(card) {
+      this.$router.push('/cards/' + card.id)
     }
   }
-
 }
 </script>
+<style scoped>
+.nodecoLink {
+  text-decoration: none !important;
+}
+</style>

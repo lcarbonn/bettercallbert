@@ -55,7 +55,7 @@ export default {
     search(textsearch) {
       this.$store.dispatch("themes/setCurrentTheme", null);
       this.$store.dispatch("cards/search", textsearch);
-    },
+    }
   }
 };
 </script>

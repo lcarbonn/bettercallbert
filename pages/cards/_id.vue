@@ -31,6 +31,7 @@ export default {
     },
 
     mounted() {
+        this.$store.commit('navbar/setSinglePage', true)
         this.$store.dispatch("cards/getCard", this.id)
         this.$store.dispatch("themes/getThemes")
     },

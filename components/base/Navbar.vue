@@ -85,6 +85,9 @@ export default {
     },
     currentTheme() {
       return this.$store.getters['themes/currentTheme']
+    },
+    isSinglePage() {
+      return this.$store.getters['navbar/isSinglePage']
     }
   },
 
@@ -92,11 +95,12 @@ export default {
     filterCards(idTheme) {
       this.textsearch = ""
       this.$emit('filterCards', idTheme)
+      if (this.isSinglePage) this.$router.push('/');
 
     },
     search() {
       this.$emit('search', this.textsearch)
-      // this.$router.push('/');
+      if (this.isSinglePage) this.$router.push('/');
     },
     createCard() {
       this.filterCards(null)
