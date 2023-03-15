@@ -2,13 +2,17 @@
   <b-row cols="1"
          cols-lg="2"
          cols-xl="5">
-    <b-col v-for="card in cards"
+    <b-col v-if="!cards"><b-spinner label="Loading..."></b-spinner></b-col>
+    <b-col v-else
+           v-for="card in cards"
            :key="card.id"
            class="py-3">
       <nuxt-link :to="'/cards/' + card.id"
                  class="nodecoLink">
-
-        <DomainCard :card="card"
+        <b-spinner v-if="!card.img"
+                   label="Loading..."></b-spinner>
+        <DomainCard v-else
+                    :card="card"
                     :theme="getVariantTheme(card.idTheme)"></DomainCard>
       </nuxt-link>
     </b-col>
