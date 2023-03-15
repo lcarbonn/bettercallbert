@@ -6,7 +6,7 @@
     <b-navbar-brand href="/">
       <b-avatar variant="primary"
                 rounded
-                src="~/static/icon.png"></b-avatar>
+                src="~/static/icon.png"></b-avatar> BetterCallBert
     </b-navbar-brand>
 
     <b-navbar-nav small
