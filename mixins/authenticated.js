@@ -1,44 +1,34 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-
 export const route = () => ({
-    nextRoute: null
+    path: null
 });
 
-export const getNextPath = () => {
-    let path = route.nextRoute ? route.nextRoute.path : "/"
-    path = path != "/login" ? path : "/"
-    return path
-};
+export const setPath = (path) => {
+    if (path.indexOf("/login") == -1) route.path = path
+}
 
 export const setNextPath = (newPath) => {
     route.nextRoute = newPath
 };
 
+export const getNextPath = () => {
+    let path = route.path ? route.path : "/"
+    return path
+};
 
 export default {
     beforeCreate() {
-        // Redirect to login if user not connected trying to access authenticated pages
-        const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
-            const path = this.$router.currentRoute.path
-            console.debug("currentRoute:" + path)
-            console.debug("user=" + user)
-            if (user) {
-                console.debug("user anonymous=" + user.isAnonymous)
-                console.debug("user email=" + user.email)
-                // User is signed in
-                this.$store.dispatch('auth/setActiveUser', user)
-                // User is anonymous and want go to admin, redirect to login
-                if (user.isAnonymous && path.indexOf('/admin') != -1) {
-                    console.debug("go to login")
-                    route.nextRoute = this.$router.currentRoute;
-                    this.$router.push('/login')
-                }
-            } else {
-                // if no user, login anonymously
-                console.debug("signInAnonymously")
-                this.$store.dispatch("auth/signInAnonymously")
-            }
-        });
+        // get current path for after login
+        const path = this.$router.currentRoute.path
+        setPath(path)
+        if (!this.$store.getters['auth/isConnected']) {
+            this.$router.push('/login');
+        }
+        // User is anonymous and want go to admin, redirect to login
+        if (this.$store.getters['auth/isAnonymous'] && path.indexOf('/admin') != -1) {
+            console.debug("go to login")
+            route.nextRoute = this.$router.currentRoute;
+            this.$router.push('/login')
+        }
+
     }
 };

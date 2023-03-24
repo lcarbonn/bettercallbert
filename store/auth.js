@@ -10,6 +10,9 @@ export const state = () => ({
 });
 
 export const getters = {
+    isConnected: state => {
+        return !!state.authUser?.uid
+    },
     isAnonymous: state => {
         console.debug("isAnonymous=" + (state.authUser?.isAnonymous))
         return state.authUser?.isAnonymous
