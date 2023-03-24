@@ -26,15 +26,21 @@
 
     <b-collapse id="nav-collapse"
                 is-nav>
-      <b-navbar-nav v-if="themes"
+      <b-navbar-nav small
+                    v-if="themes"
                     class="ml-auto">
-
-        <b-form-input size="sm"
-                      class="mr-sm-2"
-                      placeholder="Search"
-                      v-model="textsearch"
-                      @keyup="search()"></b-form-input>
-
+        <b-form-group>
+          <b-input-group>
+            <b-form-input id="textsearch"
+                          placeholder="Search"
+                          v-model="textsearch"
+                          @keyup="search()"></b-form-input>
+            <b-input-group-append>
+              <b-button :disabled="!textsearch"
+                        @click="textsearch = null; search()"><b-icon icon="x" /></b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
         <b-nav-item-dropdown text="Settings"
                              v-show="!isAnonymous">
           <b-dropdown-item @click="createCard()"
@@ -59,14 +65,15 @@
 </template>
 
 <script>
-import { BIcon, BIconPerson } from 'bootstrap-vue'
+import { BIcon, BIconPerson, BIconX } from 'bootstrap-vue'
 import { setNextPath } from '~/mixins/authenticated.js';
 
 export default {
   name: 'NavbarComp',
   components: {
     BIcon,
-    BIconPerson
+    BIconPerson,
+    BIconX
   },
   data: () => ({
     textsearch: null
