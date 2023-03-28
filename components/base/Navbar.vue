@@ -10,6 +10,7 @@
     </b-navbar-brand>
 
     <b-navbar-nav small
+                  v-if="themes"
                   class="d-flex flex-row flex-wrap justify-content-start">
       <b-nav-item v-for="theme in themes"
                   :key="theme.id"
@@ -18,7 +19,10 @@
                   @click="filterCards(theme.id)"
                   href="#"
                   class="pr-1">
-        <span class="theme-border">{{ theme.title.toUpperCase() }}</span>
+        <span style="border-bottom-style: solid;"
+              :class="getThemeColor(theme)">
+          <!-- <span> -->
+          {{ theme.title.toUpperCase() }}</span>
       </b-nav-item>
     </b-navbar-nav>
 
@@ -27,9 +31,8 @@
     <b-collapse id="nav-collapse"
                 is-nav>
       <b-navbar-nav small
-                    v-if="themes"
                     class="ml-auto">
-        <b-form-group>
+        <b-nav-form>
           <b-input-group>
             <b-form-input id="textsearch"
                           placeholder="Search"
@@ -40,7 +43,7 @@
                         @click="textsearch = null; search()"><b-icon icon="x" /></b-button>
             </b-input-group-append>
           </b-input-group>
-        </b-form-group>
+        </b-nav-form>
         <b-nav-item-dropdown text="Settings"
                              v-show="!isAnonymous">
           <b-dropdown-item @click="createCard()"
@@ -131,6 +134,10 @@ export default {
     isActive(idTheme) {
       if (this.currentTheme) return idTheme == this.currentTheme.id
       return false
+    },
+    getThemeColor(theme) {
+      let style = "border-" + theme.color
+      return style
     }
   }
 }
