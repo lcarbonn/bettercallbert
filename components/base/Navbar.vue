@@ -104,7 +104,8 @@ export default {
   methods: {
     filterCards(idTheme) {
       this.textsearch = ""
-      this.$emit('filterCards', idTheme)
+      if (this.isActive(idTheme)) this.$emit('filterCards')
+      else this.$emit('filterCards', idTheme)
       if (this.isSinglePage) this.$router.push('/');
 
     },
