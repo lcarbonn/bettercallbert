@@ -8,7 +8,6 @@ export interface ICard {
     idTheme: number,
     link?: string,
     src?: string,
-    img?:string,
     color?:string,
     image?:string
 }
@@ -23,7 +22,6 @@ export class Card implements ICard {
     idTheme: number
     src?: string
     link?: string
-    img?:string
     color?:string
     image?:string
 
