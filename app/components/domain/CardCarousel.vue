@@ -10,14 +10,7 @@
     :prev="{ onClick: gotoPrevious }"
     :next="{ onClick: gotoNext }"
     @select="gotoCard">
-    <UPageCard
-      :title="item.title"
-      :to="item.link"
-      target="_blank"
-      variant="subtle"
-      :class="getBgColor(item.color)">
-      <img :src="item.src"/>
-    </UPageCard>
+    <DomainCard :card="item" :to="item.link"/>
   </UCarousel>
 </template>
 

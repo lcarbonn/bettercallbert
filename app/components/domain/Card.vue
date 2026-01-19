@@ -1,10 +1,11 @@
 <template>
   <UPageCard
     :title="card.title"
-    :to="'/card/'+card.id"
+    :to="to"
     variant="subtle"
     :class="bgColor">
-    <img :src="card.src" :alt="card.title"/>
+    <img v-if="card.image" :src="card.image" :alt="card.title"/>
+    <img v-else :src="card.src" :alt="card.title"/>
   </UPageCard>
 </template>
 
@@ -13,6 +14,7 @@
   // props
   const props = defineProps<{
       card:ICard;
+      to:string|undefined
   }>()
 
   const bgColor = computed (() => {

@@ -9,7 +9,8 @@ export interface ICard {
     link?: string,
     src?: string,
     img?:string,
-    color?:string
+    color?:string,
+    image?:string
 }
 
 /**
@@ -24,6 +25,7 @@ export class Card implements ICard {
     link?: string
     img?:string
     color?:string
+    image?:string
 
     /**
      * Card constructor
@@ -38,5 +40,8 @@ export class Card implements ICard {
         this.idTheme= theme?theme.value:undefined
         const color = raw["Color"][0]
         this.color = color?color.value:"primary"
+        const image = raw["Image"][0]
+        console.log("image:", image)
+        this.image = image?image.url:undefined
     }
 }
