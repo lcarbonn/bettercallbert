@@ -7,7 +7,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const api = $fetch.create({
     baseURL: BASEROW_URL,
     onRequest ({ request, options, error }) {
-      options.headers.set("Content-Type", "application/json");
+      // options.headers.set("Content-Type", "application/json");
       if(TOKEN) {
             options.headers.set("Authorization", `Token ${TOKEN}`);
       }

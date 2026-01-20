@@ -55,3 +55,52 @@ export const getCard = async (id:number) :Promise<ICard> => {
   return item
 }
 
+/**
+ * Update the card
+ */
+export const updateCard = async (card:ICard) :Promise<ICard> => {
+  const config = useRuntimeConfig();
+  const CARD_TABLE_ID = config.public.tableCard;
+  const { $api } = useNuxtApp();
+
+  const endpoint = `/api/database/rows/table/${CARD_TABLE_ID}/${card.id}/?user_field_names=true`
+  const raw = await $api(endpoint, {
+        method:"PATCH",
+        body: JSON.stringify(card.toRaw())
+      });
+  const item = new Card(raw)
+
+  return item
+}
+
+/**
+ * Delete the card
+ */
+export const deleteCard = async (id:number) :Promise<void> => {
+  const config = useRuntimeConfig();
+  const CARD_TABLE_ID = config.public.tableCard;
+  const { $api } = useNuxtApp();
+
+  const endpoint = `/api/database/rows/table/${CARD_TABLE_ID}/${id}/`
+  const raw = await $api(endpoint, {
+        method:"DELETE",
+      });
+  return
+}
+
+/**
+ * Create thecard
+ */
+export const createCard = async (card:ICard) :Promise<ICard> => {
+  const config = useRuntimeConfig();
+  const CARD_TABLE_ID = config.public.tableCard;
+  const { $api } = useNuxtApp();
+
+  const endpoint = `/api/database/rows/table/${CARD_TABLE_ID}/?user_field_names=true`
+  const raw = await $api(endpoint, {
+        method:"POST",
+        body:JSON.stringify(card.toRaw()),
+      });
+  const item = new Card(raw)
+  return item
+}

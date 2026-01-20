@@ -1,3 +1,5 @@
+import type { SelectItem } from "@nuxt/ui";
+
 /**
  * cause UPageCard doesn't manage dynamic class bg color ????
  * @param color 
@@ -29,3 +31,17 @@ export const getBgColor = (color:string|undefined) => {
         break;
     }
   }
+
+  /**
+ * Build options for input select based on themes list
+ * @return options as SelectItem[]
+ */
+export const getThemeOptions = (themes:ITheme[]) :SelectItem[] => {
+    const opts:SelectItem[] = []
+    themes.forEach(theme => {
+        opts.push(
+          {value: theme.title, label: theme.title }
+        )
+    });
+  return opts
+}

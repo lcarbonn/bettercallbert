@@ -1,3 +1,5 @@
+import type { SelectItem } from "@nuxt/ui";
+
 /**
  * Get all themes
  * @returns Themes

@@ -1,12 +1,17 @@
 <template>
-
+  <div>
+  <UTooltip v-if="loggedIn" title="Update Card">
+    <UButton icon="streamline-color:pencil" class="mr-1" :to="'/form/'+id" size="sm"/>
+  </UTooltip>
   <DomainCardCarousel :items="cards" :index="index" class="mt-2"/>
-
+  </div>
 </template>
 <script setup lang="ts">
 
   const id:number = Number(useRoute().params.id).valueOf()
   const card = await getCard(id)
+
+  const { loggedIn } = useUserSession()
 
   const cards = []
   let index = 0

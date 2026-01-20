@@ -43,7 +43,8 @@ async function refreshAccessToken(event:any): Promise<boolean> {
   await setUserSession(event, {
     access_token:data.access_token,
     secure:{
-      access_token:data.access_token
+      access_token:data.access_token,
+      refresh_token:data.refresh_token
     }
   })
 

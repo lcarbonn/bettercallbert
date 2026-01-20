@@ -5,7 +5,7 @@
     variant="subtle"
     :class="bgColor">
     <img v-if="card.image" :src="card.image" :alt="card.title"/>
-    <img v-else :src="card.src" :alt="card.title"/>
+    <img v-else-if="card.src" :src="card.src" :alt="card.title"/>
   </UPageCard>
 </template>
 
@@ -14,7 +14,7 @@
   // props
   const props = defineProps<{
       card:ICard;
-      to:string|undefined
+      to?:string
   }>()
 
   const bgColor = computed (() => {

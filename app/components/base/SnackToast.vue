@@ -19,7 +19,7 @@
             })
         else
             toast.add({
-                title:'Noco Lowco Time Tracker',
+                title:'Better Call Bert',
                 description: ''+newMessage.message,
                 color:'primary',
                 icon:'mdi:information'

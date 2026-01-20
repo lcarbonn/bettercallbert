@@ -5,11 +5,13 @@
 export interface ICard {
     id:number,
     title: string,
-    idTheme: number,
+    theme: string,
     link?: string,
     src?: string,
     color?:string,
-    image?:string
+    image?:string,
+    imageName?:string,
+    toRaw() :any
 }
 
 /**
@@ -19,27 +21,42 @@ export interface ICard {
 export class Card implements ICard {
     id:number
     title: string
-    idTheme: number
+    theme: string
     src?: string
     link?: string
     color?:string
     image?:string
+    imageName?:string
 
     /**
      * Card constructor
      * @param raw data
      */
     constructor(raw:any) {
-        this.id = raw["Id"]
+        this.id = raw.id
         this.title = raw["Title"]
         this.src = raw["Src"]
         this.link = raw["Link"]
         const theme = raw["Theme"][0]
-        this.idTheme= theme?theme.value:undefined
+        this.theme= theme?theme.value:undefined
         const color = raw["Color"][0]
         this.color = color?color.value:"primary"
         const image = raw["Image"][0]
-        console.log("image:", image)
+        // console.log("image:", image)
         this.image = image?image.url:undefined
+        this.imageName = image?image.visible_name:undefined
     }
+    toRaw() :any {
+      const raw =
+        {
+        id:this.id,
+        ["Title"]: this.title,
+        ["Src"]: this.src,
+        ["Link"]: this.link,
+        ["Theme"]: [this.theme],
+        }
+      return raw
+    }
+
+
 }

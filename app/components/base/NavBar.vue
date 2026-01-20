@@ -61,8 +61,8 @@
   // get user session
   const { loggedIn, user, clear: clearSession } = useUserSession()
 
-  const userEmail = computed(() => {
-    return user.value?.username
+  const userName = computed(() => {
+    return user.value?.first_name
   })
 
   // get themes
@@ -99,11 +99,25 @@
     });
 
     // loggedIn/logout mngt
-    if (!loggedIn.value) return items
+    if (!loggedIn.value) {
+      items.push(
+        {
+          icon:"streamline-color:user-circle-single-flat",
+          children: [
+            {
+            label: 'Login',
+            icon: 'streamline-color:login-1-flat',
+            to:'/login'
+          }]
+        },
+      )
+
+    }
+   
     else {
       items.push(
         {
-          label: userEmail.value,
+          label: userName.value,
           icon:"streamline-color:user-circle-single-flat",
           children: [
             {
