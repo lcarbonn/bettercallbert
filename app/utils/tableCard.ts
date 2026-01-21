@@ -3,7 +3,7 @@
  * @public
  */
 export interface ICard {
-    id:number,
+    id?:number,
     title: string,
     theme: string,
     link?: string,
@@ -19,7 +19,7 @@ export interface ICard {
  * @public
  */
 export class Card implements ICard {
-    id:number
+    id?:number
     title: string
     theme: string
     src?: string
@@ -32,7 +32,10 @@ export class Card implements ICard {
      * Card constructor
      * @param raw data
      */
-    constructor(raw:any) {
+    constructor(raw?:any) {
+        this.title = "New Card"
+        this.theme = "No Theme"
+        if(!raw) return
         this.id = raw.id
         this.title = raw["Title"]
         this.src = raw["Src"]

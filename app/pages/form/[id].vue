@@ -1,9 +1,5 @@
 <template>
   <div>
-    <UTooltip title="Back to Card">
-      <UButton icon="streamline-color:xrp-circle-flat" class="mr-1" :to="'/card/'+id" size="sm"/>
-    </UTooltip>
-
     <DomainCardForm 
       v-if="card"
         :card="card"
@@ -14,6 +10,9 @@
         @reset-card="resetCard"
         @upload-image="uploadImage"
     />
+    <UTooltip title="Back to Card">
+      <UButton icon="streamline-color:xrp-circle-flat" class="mr-1" :to="'/card/'+id" size="sm"/>
+    </UTooltip>
   </div>
 </template>
 <script setup lang="ts">
@@ -38,7 +37,7 @@
     messageToSnack("Card updated")
   }
   const callDeleteCard = async () => {
-    if(!card.value) return
+    if(!card.value?.id) return
     await deleteCard(card.value.id)
     messageToSnack("Card deleteCard")
     await navigateTo('/')
@@ -53,6 +52,7 @@
     if(file && card.value?.id) {
       const resp = await uploadFileToTable(file, card.value.id)
       card.value = resp
+      messageToSnack("Image uploaded")
     }
   }
 

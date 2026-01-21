@@ -1,9 +1,9 @@
 <template>
   <div>
+  <DomainCardCarousel :items="cards" :index="index" class="mt-2"/>
   <UTooltip v-if="loggedIn" title="Update Card">
     <UButton icon="streamline-color:pencil" class="mr-1" :to="'/form/'+id" size="sm"/>
   </UTooltip>
-  <DomainCardCarousel :items="cards" :index="index" class="mt-2"/>
   </div>
 </template>
 <script setup lang="ts">
@@ -16,7 +16,7 @@
   const cards = []
   let index = 0
 
-  const prevId = card.id -1
+  const prevId = card.id?card.id-1:0
   let prevCard
   try {
     prevCard = await getCard(prevId)
@@ -28,7 +28,7 @@
 
   cards.push(card)
 
-  const nextId = card.id + 1
+  const nextId = card.id?card.id+1:0
   let nextCard
   try {
     nextCard = await getCard(nextId) 

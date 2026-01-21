@@ -2,6 +2,7 @@
   <UCarousel
     ref="carousel"
     class="mt-2"
+    auto-height
     :items="items"
     v-slot="{ item }"
     :start-index = "index"

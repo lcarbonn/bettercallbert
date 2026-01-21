@@ -121,17 +121,32 @@
           icon:"streamline-color:user-circle-single-flat",
           children: [
             {
+            label: 'Add card',
+            icon: 'streamline-color:add-1-flat',
+            onSelect: () => {
+              addCard()
+              }
+            },
+            {
             label: 'Sign Out',
             icon: 'streamline-color:logout-1-flat',
             onSelect: () => {
               signOut()
-            },
-          }]
+              }
+            }
+          ]
         },
       )
     }
     return items
   })
+
+  const addCard = async () => {
+    let card = new Card()
+    card = await createCard(card)
+    await navigateTo('/form/'+card.id)
+    messageToSnack("Card added")
+  }
 
   const signOut = async () => {
     await clearSession()
