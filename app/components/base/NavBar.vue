@@ -53,6 +53,7 @@
 
   // for search
   const searchText = ref<string>()
+    
   const searchCards = async () => {
     useSearchText().value = searchText.value
     await navigateTo('/')

@@ -3,7 +3,7 @@
     variant="subtle"
     :class="bgColor">
     <template #title>
-      <UTooltip v-if="loggedIn" title="Update Card">
+      <UTooltip v-if="loggedIn" title="Edit Card">
         <UButton icon="streamline-color:pencil" class="mr-1" :to="'/form/'+card.id" size="sm"/>
       </UTooltip>
       <span>{{ card.title }}</span>

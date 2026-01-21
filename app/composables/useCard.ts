@@ -2,20 +2,15 @@
  * Get all cards
  * @returns Cards
  */
-export const getAllCards = async (filter?:Filter) :Promise<ICard[]>=> {
+export const scrollCards = async (pagination:Pagination, filter?:Filter) :Promise<IBaserowListResponse>=> {
   const config = useRuntimeConfig();
   const CARD_TABLE_ID = config.public.tableCard;
   const { $api } = useNuxtApp();
 
-  const pagination = {
-    pageIndex : 0,
-    pageSize : 200
-  }
-
   const endpoint = `/api/database/rows/table/${CARD_TABLE_ID}/?user_field_names=true`;
   const queryBase = {
       page: pagination.pageIndex?pagination.pageIndex+1:1,
-      size: pagination.pageSize,
+      size: pagination.pageSize?pagination.pageSize:100,
       order_by: '+Theme,+Id',
     }
     const queryFilters = new BaserowFilterBuilder()
@@ -35,7 +30,8 @@ export const getAllCards = async (filter?:Filter) :Promise<ICard[]>=> {
     const card = new Card(raw)
     cards.push(card)
   })
-  return cards
+  respList.results = cards
+  return respList
 }
 
 /**
