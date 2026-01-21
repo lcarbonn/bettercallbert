@@ -1,5 +1,5 @@
 <template>
-  <div>
+
     <DomainCardForm 
       v-if="card"
         :card="card"
@@ -10,10 +10,7 @@
         @reset-card="resetCard"
         @upload-image="uploadImage"
     />
-    <UTooltip title="Back to Card">
-      <UButton icon="streamline-color:xrp-circle-flat" class="mr-1" :to="'/card/'+id" size="sm"/>
-    </UTooltip>
-  </div>
+
 </template>
 <script setup lang="ts">
 

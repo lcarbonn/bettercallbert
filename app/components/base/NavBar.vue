@@ -7,8 +7,8 @@
     </template>
 
     <UNavigationMenu 
-      :items="items">
-    </UNavigationMenu>
+      :items="items"
+      content-orientation="vertical"/>
 
     <template #right>
       <UFieldGroup>

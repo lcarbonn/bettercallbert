@@ -1,10 +1,7 @@
 <template>
-  <div>
+
   <DomainCardCarousel :items="cards" :index="index" class="mt-2"/>
-  <UTooltip v-if="loggedIn" title="Update Card">
-    <UButton icon="streamline-color:pencil" class="mr-1" :to="'/form/'+id" size="sm"/>
-  </UTooltip>
-  </div>
+
 </template>
 <script setup lang="ts">
 

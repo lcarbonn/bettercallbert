@@ -1,10 +1,15 @@
 <template>
   <div>
     <UPageCard
-      :title="card.title"
       variant="subtle"
       >
-      <template #body>
+      <template #title>
+        <UTooltip title="Back to Card">
+          <UButton icon="streamline-color:xrp-circle-flat" class="mr-1" :to="'/card/'+card.id" size="sm"/>
+        </UTooltip>
+        {{ card.title }}
+      </template>
+      <template #description>
         <UPageGrid class="lg:grid-cols-3">
           <UFormField label="Title" required :error="titleState">
             <UInput id="title" v-model="card.title" placeholder="Set the card title" class="w-full"/>

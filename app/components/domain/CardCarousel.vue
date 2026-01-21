@@ -11,7 +11,7 @@
     :prev="{ onClick: gotoPrevious }"
     :next="{ onClick: gotoNext }"
     @select="gotoCard">
-    <DomainCard :card="item" :to="item.link"/>
+    <DomainCardDetail :card="item" :to="item.link"/>
   </UCarousel>
 </template>
 

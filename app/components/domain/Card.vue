@@ -2,6 +2,7 @@
   <UPageCard
     :title="card.title"
     :to="to"
+    target="_blank"
     variant="subtle"
     :class="bgColor">
     <img v-if="card.image" :src="card.image" :alt="card.title"/>
