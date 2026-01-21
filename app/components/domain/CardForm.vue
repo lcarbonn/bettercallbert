@@ -49,7 +49,7 @@
         </UTooltip>
       </template>
     </UPageCard>
-    <DomainCard :card="card" :to="card.link"></DomainCard>
+    <DomainCard :card="card" :to="card.link" target="_blank"></DomainCard>
     <UiSimpleModal
       :open="modalDelete"
       title="Delete card"
@@ -71,6 +71,7 @@
   const modalDelete = ref(new ModalShow())
   const file = ref<File|null|undefined>(null)
 
+  // form states
   const titleState = computed(() => {
     return (props.card.title == null || props.card.title =="")
   })
@@ -86,6 +87,8 @@
       return (props.card.src.indexOf('http')>-1) ? false : true
     }
   })
+
+  // options
   const themeOptions = computed(() => {
     if(props.themes) return getThemeOptions(props.themes)
   })

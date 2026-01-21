@@ -2,7 +2,7 @@
   <UPageCard
     :title="card.title"
     :to="to"
-    target="_blank"
+    :target="target"
     variant="subtle"
     :class="bgColor">
     <img v-if="card.image" :src="card.image" :alt="card.title"/>
@@ -15,7 +15,8 @@
   // props
   const props = defineProps<{
       card:ICard;
-      to?:string
+      to?:string;
+      target?:string;
   }>()
 
   const bgColor = computed (() => {
