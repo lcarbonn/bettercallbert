@@ -1,10 +1,16 @@
 <template>
-  <div class="fixed pt-1 bottom-0 left-0 right-0 z-40 backdrop-blur-lg bg-white/80 dark:bg-gray-900/80 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-    <USeparator type="dashed" color="primary"
-      :avatar="{
-        src: '/icon-64x64.png'
-      }"/>
-    <UFooter class="text-xs">Copyright © {{year}} - Agilisé à Toulouse, France - V{{appVersion}}</UFooter>
+  <div>
+    <UFooter>
+      <template #top>
+        <USeparator type="dashed" color="primary"
+          :avatar="{
+            src: '/icon-64x64.png'
+        }"/>
+      </template>
+      <template #default>
+        <span>Copyright © {{year}} - Agilisé à Toulouse, France - V{{appVersion}}</span>
+      </template>
+    </UFooter>
    </div>
 </template>
 
