@@ -4,7 +4,7 @@
       :avatar="{
         src: '/icon-64x64.png'
       }"/>
-    <UFooter class="text-xs md:text-base">Copyright © {{year}} - Agilisé à Toulouse, France - V{{appVersion}}</UFooter>
+    <UFooter class="text-xs">Copyright © {{year}} - Agilisé à Toulouse, France - V{{appVersion}}</UFooter>
    </div>
 </template>
 
