@@ -43,14 +43,17 @@
   const open = ref(false)
 
   const modes = [
-    { label: 'system', icon: appConfig.ui.icons.system },
-    { label: 'light', icon: appConfig.ui.icons.light },
     { label: 'dark', icon: appConfig.ui.icons.dark },
+    { label: 'light', icon: appConfig.ui.icons.light },
+    { label: 'system', icon: appConfig.ui.icons.system },
   ]
+  const getModeByLabel = (label: string) => {
+    return modes.find(mode => mode.label === label)
+  }
 
   // default
   const selectedMode = ref(modes[0])
-  if(selectedMode.value) colorMode.preference = selectedMode.value.label
+  if(colorMode.preference) selectedMode.value = getModeByLabel(colorMode.preference)
 
   watch(selectedMode, value => {
     if(value) colorMode.preference = value.label
