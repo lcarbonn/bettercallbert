@@ -1,6 +1,6 @@
 # Build Stage 1
 
-FROM node:25-alpine AS build
+FROM node:26-slim AS build
 WORKDIR /app
 
 # RUN corepack enable
@@ -19,7 +19,7 @@ RUN npm run build
 
 # Build Stage 2
 
-FROM node:25-alpine AS prod
+FROM node:26-slim AS prod
 WORKDIR /app
 
 # Only `.output` folder is needed from the build stage
